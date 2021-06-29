@@ -1,0 +1,18 @@
+1- crear login
+2- redirigir al inicio 
+3- en inicio se mostraran posteos, con el contenido del posteo, el autor, y sus comentarios
+4- en un sidebar o navbar mostrar opciones de home, library, buzon, perfil, directorio
+5- si es admin en el home, dar opcion de hacer post
+
+
+-crear vista login
+-crear componente navbar
+-crear vista de posteos
+-crear componente posteo
+-crear vista de posteo
+-crear vista de perfil
+-crear listado de perfiles(directorio)
+-crear vista de biblioteca
+-crear vista de buzon
+-crear componente de mensaje
+-crear componente de slider para home

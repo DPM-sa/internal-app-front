@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+/*Sidebar*/
+.active {
+  color: '#4fc3f7';
+}
