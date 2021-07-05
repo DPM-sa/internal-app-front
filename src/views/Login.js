@@ -1,44 +1,21 @@
 import React, { useState } from 'react'
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import axios from 'axios';
+import { useStateValue } from '../StateProvider';
+import { useHistory } from 'react-router-dom';
+import './Login.css'
 
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
 const Login = () => {
+    const [{ }, dispatch] = useStateValue()
     const [form, setForm] = useState({
-        user: "",
+        username: "",
         password: ""
     })
-    const { user, password } = form
-    const classes = useStyles();
+
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const history = useHistory()
+    const { username, password } = form
 
     const handleChange = (e) => {
         setForm({
@@ -49,75 +26,61 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("user:", user, "password:", password)
+        let headers = {
+            'Content-Type': 'application/json'
+        }
+        setLoading(true)
+        axios.post('https://internal-app-dpm.herokuapp.com/login',
+            {
+                "user": `${username}`,
+                "password": `${password}`
+            },
+            { headers }
+        ).then(resp => {
+            dispatch({
+                type: 'LOGIN',
+                token: resp.data.token,
+                user: resp.data.usuario
+            })
+            setLoading(false)
+            setError(false)
+            history.push('/home')
+        }).catch(() => {
+            setLoading(false)
+            setError(true)
+        })
     }
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign in
-                </Typography>
-                <form onSubmit={handleSubmit} className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="user"
-                        autoComplete="email"
-                        autoFocus
-                        value={user}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={password}
-                        onChange={handleChange}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
-                    </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
+        <div className="Login">
+            <div className="card login-card">
+                <div className="row no-gutters">
+                    <div className="col-md-5">
+                        <img src="https://www.bootstrapdash.com/demo/login-template-free-2/assets/images/login.jpg" alt="login" className="login-card-img" />
+                    </div>
+                    <div className="col-md-7">
+                        <div className="card-body">
+                            <div className="brand-wrapper">
+                                <img src="https://laguia.online/business/veGwa/asset/fb.jpg" alt="logo" className="logo" />
+                            </div>
+                            <p className="login-card-description">Inicia sesión</p>
+                            <form onSubmit={handleSubmit}>
+                                <div className="form-group">
+                                    <label className="sr-only">Nombre de usuario</label>
+                                    <input type="text" value={username} name="username" onChange={handleChange} className="form-control" placeholder="Nombre de usuario" />
+                                </div>
+                                <div className="form-group mb-4">
+                                    <label className="sr-only">Password</label>
+                                    <input type="password" value={password} name="password" onChange={handleChange} className="form-control" placeholder="Contraseña" />
+                                </div>
+                                <input name="login" className="btn btn-block login-btn mb-4" type="submit" value="Iniciar sesión" />
+                            </form>
+                            <p className="forgot-password-link">Olvidaste tu contraseña?</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-        </Container>
+        </div>
     );
 }
 

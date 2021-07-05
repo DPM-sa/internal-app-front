@@ -1,18 +1,34 @@
-1- crear login
-2- redirigir al inicio 
-3- en inicio se mostraran posteos, con el contenido del posteo, el autor, y sus comentarios
-4- en un sidebar o navbar mostrar opciones de home, library, buzon, perfil, directorio
-5- si es admin en el home, dar opcion de hacer post
-
-
--crear vista login
--crear componente navbar
--crear vista de posteos
--crear componente posteo
--crear vista de posteo
--crear vista de perfil
--crear listado de perfiles(directorio)
--crear vista de biblioteca
--crear vista de buzon
--crear componente de mensaje
--crear componente de slider para home
+-tarjetas con imagen de fondo completa-
+-crear buscador por titulo-
+-crear filtro por tag-
+-crear boton de ver más-
+-modal en vertical-
+-achicar imagen-
+-establecer ancho de carousel-
+-formatear fechas que vienen desde backend-
+-crear boton para ordenar por mas reciente o mas viejo-
+-conectar busqueda de post-
+-conectar filtrar por tag-
+-conectar cargar mas posts-
+-conectar comentarios-
+-conectar hacer comentarios-
+-conectar cantidad comentarios en peticion-
+-conectar cantidad likes en peticion-
+-conectar directorio-
+-conectar buscar en directorio-
+-conectar biblioteca-
+-crear vista de sugerencias-
+-conectar mis sugerencias
+-crear vista de perfil-
+-crear editar mi perfil-
+-probar los routing-
+-crear vista de login con bootstrap-
+-crear modal de ver perfil-
+-conectar vista de perfil
+-habilitar subida de fotos de perfil
+-crear en backend ordenamiento por mas reciente o mas antiguo
+-crear tag "todos"
+-poner spinner de carga
+-crear alerta de no se encontro ningun post
+-crear en backend fecha de comentario
+-crear en usuario fecha de nacimiento

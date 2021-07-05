@@ -1,0 +1,8 @@
+.carousel {
+    width: 90%;
+    margin: 80px auto 0px;
+    border-radius: 6px;
+}
+.carousel-inner {
+    border-radius: 6px;
+}

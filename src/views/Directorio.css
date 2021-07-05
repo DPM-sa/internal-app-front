@@ -1,0 +1,73 @@
+.Directorio__search {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 10%;
+    padding: 20px;
+    border-radius:6px;
+}
+.Directorio__search form{
+    width: 100%;
+}
+.Directorio__search-input {
+    padding: 10px;
+}
+
+.Directorio__list {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 90%;
+    margin: 20px auto 0px;
+}
+
+.Directorio__list-header.list-group-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    text-align: center;
+}
+
+.Directorio__list-header-section {
+    flex: 0 1 33%;
+}
+
+.Directorio__list-control.list-group-item {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+.Directorio__list-control-section.name {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.Directorio__list-control-section{
+    flex: 0 1 33%;
+}
+.Directorio__list-image {
+    width: 40px;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+.modalBody{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.modalBody__img{
+    width: 100px;
+    border-radius: 50px;
+}
+@media screen and (min-width:576px){
+    .Directorio__list-control-section.name {
+        flex-direction: row;
+    }
+    .Directorio__search form{
+        width: 50%;
+    }
+}

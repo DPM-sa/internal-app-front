@@ -1,0 +1,26 @@
+.Biblioteca__title {
+    margin-top: 5%;
+}
+
+.Biblioteca__files-section {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.Biblioteca__file {
+    flex: 0 1 45%;
+    margin: 5px;
+}
+@media screen and (min-width:576px){
+    .Biblioteca__file {
+        flex: 0 1 30%;
+    }
+}
+@media screen and (min-width:768px){
+    .Biblioteca__file {
+        flex: 0 1 19%;
+    }
+}
