@@ -47,23 +47,32 @@ const Directorio = () => {
     return (
         <>
             <NavbarProfile />
-            <div className="Directorio__search card">
-                <form onSubmit={handleSubmit} className="input-group">
-                    <input value={search} name="search" onChange={handleInputChange} type="text" className="Directorio__search-input form-control" placeholder="Ingresa el nombre de un empleado" />
-                    <button onClick={handleSubmit} className="btn btn-primary input-group-text"><i className="fas fa-search"></i></button>
+            <div className="Directorio__search">
+                <form onSubmit={handleSubmit}>
+                    <input value={search} name="search" onChange={handleInputChange} type="text" className="Directorio__search-input" placeholder="Busca un colaraborador/a por nombre" />
+                    <i className="fas fa-search Directorio__search-icon"></i>
                 </form>
+                <div className="dropdown">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ordenar alfabeticamente
+                    </button>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a className="dropdown-item" href="#">Más recientes</a></li>
+                        <li><a className="dropdown-item" href="#">Más antiguos</a></li>
+                    </ul>
+                </div>
             </div>
-            <ul className="Directorio__list list-group">
-                <div className="Directorio__list-header list-group-item">
-                    <span className="Directorio__list-header-section">Nombre</span>
+            <ul className="Directorio__list">
+                <div className="Directorio__list-header">
+                    <span className="Directorio__list-header-section">Nombre y apellido</span>
                     <span className="Directorio__list-header-section">Cargo</span>
                     <span className="Directorio__list-header-section">Sector</span>
                 </div>
                 {
                     users.map(user => (
-                        <div key={user._id} className="Directorio__list-control list-group-item" onClick={() => handleClick(user)}>
+                        <div key={user._id} className="Directorio__list-control" onClick={() => handleClick(user)}>
                             <div className="Directorio__list-control-section name">
-                                <img className="Directorio__list-image" src="./assets/no-image.jpg" />
+                                {user.image ? <img className="Directorio__list-image" src="./assets/no-image.jpg" /> : <i class="far fa-user Directorio__user-no-image"></i>}
                                 {user.nombre} {user.apellido}
                             </div>
                             <div className="Directorio__list-control-section charge">
@@ -82,7 +91,7 @@ const Directorio = () => {
                 </Modal.Header>
                 {user &&
                     <Modal.Body className="modalBody">
-                        <img src="./assets/no-image.jpg" className="modalBody__img"/>
+                        <img src="./assets/no-image.jpg" className="modalBody__img" />
                         <h5>{user.nombre} {user.apellido}</h5>
                     </Modal.Body>
                 }

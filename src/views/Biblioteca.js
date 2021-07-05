@@ -22,17 +22,28 @@ const Biblioteca = () => {
     return (
         <>
             <NavbarProfile />
-            <h1 className="Biblioteca__title">Biblioteca de archivos</h1>
+            <div className="Biblioteca__search">
+                <form>
+                    <input name="search" type="text" className="Biblioteca__search-input" placeholder="Buscar un archivo por nombre" />
+                    <i className="fas fa-search Biblioteca__search-icon"></i>
+                </form>
+                <div className="dropdown">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ordenar alfabeticamente
+                    </button>
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a className="dropdown-item" href="#">Más recientes</a></li>
+                        <li><a className="dropdown-item" href="#">Más antiguos</a></li>
+                    </ul>
+                </div>
+            </div>
             <div className="Biblioteca__files-section">
                 {
                     files.map(file => (
-                        <div key={file._id} className="card Biblioteca__file" >
-                            <img src="./assets/file-image.png" className="card-img-top" />
-                            <div className="card-body">
-                                <h5 className="card-title">{file.title}</h5>
-                                <p className="card-text">build on thehe bulk of the card's content.</p>
-                                <a href="#" className="btn btn-primary">Descargar <i className="fas fa-file-download"></i></a>
-                            </div>
+                        <div key={file._id} className="Biblioteca__file" >
+                            <i class="far fa-file-alt Biblioteca__file-icon"></i>
+                            <h5 className="card-title text-center">{file.title}</h5>
+                            <a href="#" className="Biblioteca__file-download">Descargar<i class="fas fa-download"></i></a>
                         </div>
                     ))
                 }

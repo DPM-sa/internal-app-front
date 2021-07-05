@@ -1,12 +1,12 @@
 .PostSection {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     width: 90%;
     margin: 0 auto;
 }
 
-.PostSection__search.card {
+.PostSection__search {
     border-radius: 6px;
     padding: 20px;
     width: 90%;
@@ -17,44 +17,91 @@
     align-items: center;
 }
 
-.PostSection__search-form.input-group {
+.PostSection__search-form {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     width: 100%;
+}
+
+.PostSection__search-form i {
+    left: 15%;
+    position: absolute;
+    color: #004580;
 }
 
 .PostSection__search-input {
     width: 100%;
     padding: 10px;
+    padding-left: 50px;
+    border-radius: 40px;
+    border: 2px solid #004580;
+    margin-right: 5px;
 }
 
-.PostSection__filters{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    flex-direction: row;
+.PostSection__search-input::placeholder {
+    color: #004580;
+}
+
+.PostSection__tag {
     margin-top: 10px;
 }
 
-button.btn.btn-primary.PostSection__loadmore{
+.PostSection__filters {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+button.btn.PostSection__loadmore {
     display: block;
     margin: 20px auto;
+    background-color: #004580;
+    color: white;
+    border-radius: 40px;
 }
-@media screen and (min-width:576px){
-    .PostSection__search.card {
+
+button#dropdownMenuButton1 {
+    background-color: white;
+    color: #004580;
+    border-radius: 40px;
+    border: 2px solid;
+    padding: 12px;
+    flex: 0 1 49%;
+    width: 100%;
+}
+
+@media screen and (min-width:576px) {
+    .PostSection__search {
         flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
     }
-    .PostSection__search-form.input-group {
-        width: 50%;
+    .PostSection__search-form {
+        flex: 0 1 49%;
     }
     .PostSection__search-form i {
-        right: 51%;
+        left: 9%;
     }
-    .PostSection__tag{
+    .PostSection__tag {
         margin-right: 10px;
-    }
-    .PostSection__filters{
-        width: 50%;
-        justify-content: flex-end;
+        flex: 0 1 49%;
+        margin-left: 5px;
         margin-top: 0;
+    }
+    .PostSection__filters {
+        flex: 0 1 49%;
+        margin-top: 0;
+        flex-direction: row;
+    }
+    .PostSection__date{
+        flex: 0 1 49%;
+    }
+}
+@media screen and (min-width:767px) {
+    .PostSection__search-form i {
+        left: 8%;
     }
 }

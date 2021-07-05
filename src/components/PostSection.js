@@ -28,6 +28,7 @@ const PostSection = () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/posts?limite=${postsToShow}`, { headers })
             .then(resp => {
                 setMaxPosts(resp.data.cuantos)
+                console.log(resp)
                 dispatch({
                     type: "SET_POSTS",
                     posts: resp.data.posts
@@ -92,20 +93,33 @@ const PostSection = () => {
 
     return (
         <>
-            <div className="PostSection__search card">
+            <div className="PostSection__search">
 
-                <form onSubmit={handleSubmit} className="PostSection__search-form input-group">
-                    <input value={search} name="search" onChange={handleInputChange} className="PostSection__search-input form-control" placeholder="Busca un post por título" type="text" />
-                    <button onClick={handleSubmit} className="btn btn-primary input-group-text"><i className="fas fa-search"></i></button>
+                <form onSubmit={handleSubmit} className="PostSection__search-form">
+                    <input value={search} name="search" onChange={handleInputChange} className="PostSection__search-input" placeholder="Busca un post por título" type="text" />
+                    <i className="fas fa-search"></i>
                 </form>
 
                 <div className="PostSection__filters">
 
-                    <div className="dropdown PostSection__tag">
+                    <div className="dropdown PostSection__date">
                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Filtrar por tag
+                            Ordenar por más nuevos
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a className="dropdown-item" href="#">Más recientes</a></li>
+                            <li><a className="dropdown-item" href="#">Más antiguos</a></li>
+                        </ul>
+                    </div>
+
+                    <div className="dropdown PostSection__tag">
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Filtrar por categorias
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <span className="dropdown-item">Todos</span>
+                            </li>
                             {
                                 tags.map((item, idx) => (
                                     <li key={idx}>
@@ -113,16 +127,6 @@ const PostSection = () => {
                                     </li>
                                 ))
                             }
-                        </ul>
-                    </div>
-
-                    <div className="dropdown">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i className="fas fa-sliders-h"></i>
-                        </button>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a className="dropdown-item" href="#">Más recientes</a></li>
-                            <li><a className="dropdown-item" href="#">Más antiguos</a></li>
                         </ul>
                     </div>
 
@@ -138,10 +142,10 @@ const PostSection = () => {
                 postSelected && <ModalPost />
             }
             {
-               (posts.length > 0 && postsToShow >= maxPosts)
+                (posts.length > 0 && postsToShow >= maxPosts)
                     ? <p className="text-center">No hay mas posts para mostrar</p>
-                    : <button onClick={showMorePosts} className="btn btn-primary PostSection__loadmore">
-                        Cargar más publicaciones
+                    : <button onClick={showMorePosts} className="btn PostSection__loadmore">
+                        + Cargar más publicaciones
                     </button>
             }
 

@@ -1,8 +1,29 @@
 .carousel {
-    width: 90%;
     margin: 80px auto 0px;
     border-radius: 6px;
 }
+
+.carousel-caption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    align-items: flex-start;
+}
+
+button.Carousel-btn.btn {
+    background-color: #004580;
+    color: white;
+    border-radius: 30px;
+    padding: 10px 30px;
+}
+
 .carousel-inner {
     border-radius: 6px;
+}
+
+@media screen and (min-width:576px) {
+    .carousel-item {
+        height: 500px;
+    }
 }

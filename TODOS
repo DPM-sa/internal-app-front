@@ -24,10 +24,10 @@
 -probar los routing-
 -crear vista de login con bootstrap-
 -crear modal de ver perfil-
--conectar vista de perfil
--habilitar subida de fotos de perfil
+-conectar vista de perfil-
+-habilitar subida de fotos de perfil-
 -crear en backend ordenamiento por mas reciente o mas antiguo
--crear tag "todos"
+-crear tag "todos"-
 -poner spinner de carga
 -crear alerta de no se encontro ningun post
 -crear en backend fecha de comentario

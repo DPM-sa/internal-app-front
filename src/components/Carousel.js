@@ -29,12 +29,11 @@ const Carousel = () => {
                         <img
                             className="d-block w-100"
                             src={item.image}
-                            alt="First slide"
                         />
                         <CarouselBt.Caption>
                             <h3>{item.title}</h3>
                             <p>{item.content}</p>
-                            <button className="btn btn-primary">Ver más</button>
+                            <button className="Carousel-btn btn">+ Ver más</button>
                         </CarouselBt.Caption>
                     </CarouselBt.Item>
                 ))

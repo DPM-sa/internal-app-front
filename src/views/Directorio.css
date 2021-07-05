@@ -3,36 +3,63 @@
     margin: 0 auto;
     margin-top: 10%;
     padding: 20px;
-    border-radius:6px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
 }
-.Directorio__search form{
+
+.Directorio__search form {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
 }
+
 .Directorio__search-input {
+    width: 100%;
     padding: 10px;
+    padding-left: 50px;
+    border-radius: 40px;
+    border: 2px solid #004580;
+    margin-right: 5px;
+}
+
+.Directorio__search-input::placeholder {
+    color: #004580;
+}
+
+.Directorio__search-icon {
+    position: absolute;
+    color: #004580;
+    left: 13%;
 }
 
 .Directorio__list {
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 90%;
-    margin: 20px auto 0px;
+    margin: 0 auto;
+    padding: 0 20px;
+    border: 2px solid #004580;
+    color: #004580;
 }
 
-.Directorio__list-header.list-group-item {
+.Directorio__list-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
     text-align: center;
+    border-bottom: 2px solid #004580;
 }
 
 .Directorio__list-header-section {
     flex: 0 1 33%;
 }
 
-.Directorio__list-control.list-group-item {
+.Directorio__list-control {
     padding: 10px;
     display: flex;
     flex-direction: row;
@@ -41,33 +68,61 @@
     text-align: center;
     cursor: pointer;
 }
+
 .Directorio__list-control-section.name {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
-.Directorio__list-control-section{
+
+.Directorio__list-control-section {
     flex: 0 1 33%;
 }
+
 .Directorio__list-image {
     width: 40px;
     border-radius: 50px;
     margin-right: 10px;
 }
-.modalBody{
+
+i.far.fa-user.Directorio__user-no-image {
+    background-color: #004580;
+    color: white;
+    padding: 10px 12px;
+    font-size: 20px;
+    border-radius: 27px;
+    margin-right: 10px;
+}
+
+.modalBody {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.modalBody__img{
+
+.modalBody__img {
     width: 100px;
     border-radius: 50px;
 }
-@media screen and (min-width:576px){
+
+@media screen and (min-width:576px) {
     .Directorio__list-control-section.name {
         flex-direction: row;
     }
-    .Directorio__search form{
+    .Directorio__search form {
         width: 50%;
+        margin-bottom: 0;
+    }
+    .Directorio__search {
+        flex-direction: row;
+    }
+    .Directorio__search-icon {
+        left: 9%;
+    }
+}
+
+@media screen and (min-width:768px) {
+    .Directorio__search-icon {
+        left: 8%;
     }
 }

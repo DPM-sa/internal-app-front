@@ -1,0 +1,32 @@
+.Options {
+    width: 90%;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.Option {
+    flex: 0 1 calc(90% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(0, 68, 126);
+    background: linear-gradient(180deg, rgba(0, 68, 126, 1) 40%, rgba(0, 27, 51, 1) 100%);
+    margin-right: 5px;
+    margin-bottom: 10px;
+    color: white;
+    border-radius: 20px;
+    font-size: 30px;
+    padding: 20px;
+}
+.Option i {
+    margin-right: 10px;
+}
+@media screen and (min-width:576px){
+    .Option {
+        flex: 0 1 calc(49% - 1rem);
+    }
+}

@@ -123,6 +123,7 @@ a {
 
 .nav__link {
   color: var(--first-color-light);
+  cursor: pointer;
 }
 
 .nav__link:hover {
@@ -215,7 +216,7 @@ a {
     padding: 1.4rem 0;
   }
   .nav__link {
-    color: var(--dark-color);
+    color: #004580;
   }
   .nav__link:hover {
     color: var(--first-color);
@@ -233,9 +234,13 @@ a {
     padding: .5rem 1.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: .5rem;
+    background-color: white;
   }
   .dropdown__item {
     margin: .5rem 0;
+  }
+  ul.dropdown__menu{
+    padding: 10px;
   }
 }
 

@@ -1,17 +1,17 @@
 .Post {
     margin-bottom: 10px;
     position: relative;
-    box-shadow: 0px 3px 10px 1px rgba(0, 0, 0, 0.75);
     color: white;
-    border-radius: 6px;
+    border-radius: 20px;
     height: 300px;
+    margin-right: 5px;
 }
 
 .Post__top-image {
     width: 100%;
     height: 100%;
     position: relative;
-    border-radius: 6px;
+    border-radius: 20px;
 }
 
 .liked {
@@ -21,16 +21,16 @@
 .Post__top-date {
     display: flex;
     flex-direction: row;
-    background-color: gray;
     align-items: center;
     position: absolute;
     top: 0;
-    padding: 5px;
-    border-radius: 6px;
+    padding: 10px;
+    font-weight: 500;
+    justify-content: space-around;
+    border-bottom: 2px solid #004580;
+    color: #004580;
 }
-.day, .month{
-    margin-right: 5px;
-}
+
 .Post__bottom-actions {
     display: flex;
     flex-direction: row;
@@ -53,6 +53,8 @@
 
 .Post__bottom-tag {
     margin: 0px 10px 0px 0px;
+    background-color: white;
+    color: #004580;
 }
 
 .Post__bottom {
@@ -61,24 +63,17 @@
     bottom: 0;
     width: 100%;
 }
-
-.Post__bottom-button {
-    margin: 0 auto;
-    display: block;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 10px;
+button.btn.Post__see-more{
+    background-color: white;
+    border-radius: 40px;
+    color: #004580;
+    padding: 10px 20px;
+    font-weight: 500;
 }
 
 @media screen and (min-width:576px) {
     .Post {
         flex: 0 1 calc(90% - 1rem);
-    }
-    .Post__top-date {
-        flex-direction: column;
-    }
-    .day, .month{
-        margin-right: 0;
     }
 }
 

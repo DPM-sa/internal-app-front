@@ -41,9 +41,7 @@ const Post = ({ title, content, post, date, comments }) => {
             <div className="Post">
                 <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="Post__top-image" />
                 <div className="Post__top-date">
-                    <span className="day">{day} </span>
-                    <span className="month">{month} </span>
-                    <span className="year">{year} </span>
+                    {day} - {month} - {year}
                 </div>
 
                 <div className="Post__bottom">
@@ -72,14 +70,14 @@ const Post = ({ title, content, post, date, comments }) => {
                         {
                             post.tags.length > 0
                             && post.tags.map(tag => (
-                                <span className="Post__bottom-tag badge bg-secondary">
+                                <span className="Post__bottom-tag badge">
                                     #{tag}
                                 </span>
                             ))
                         }
                     </div>
-                    <button onClick={() => handleOpenModal(post)} className="btn btn-primary">
-                        Ver más
+                    <button onClick={() => handleOpenModal(post)} className="btn Post__see-more">
+                        + Ver más
                     </button>
                 </div>
 
