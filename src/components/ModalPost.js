@@ -6,22 +6,28 @@ import './ModalPost.css'
 
 const ModalPost = () => {
     const [{ postSelected, comments, token, user }, dispatch] = useStateValue()
+
     const [form, setForm] = useState({
         comment: ''
     })
+    const { comment } = form
+
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [postLikes, setPostLikes] = useState(0)
-    const { comment } = form
+
+    
     const handleInputChange = (e) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         })
     }
+
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         await axios.post(`https://internal-app-dpm.herokuapp.com/post/${postSelected._id}`,
@@ -29,7 +35,7 @@ const ModalPost = () => {
                 "content": `${comment}`
             },
             { headers })
-            .then(async (resp) => {
+            .then(async () => {
                 await axios.get(`https://internal-app-dpm.herokuapp.com/post/${postSelected._id}/comments`, { headers })
                     .then(async (resp) => {
                         dispatch({
@@ -40,6 +46,7 @@ const ModalPost = () => {
                     })
             })
     }
+
     const handleClose = async (e) => {
         dispatch({
             type: "SELECT_POST",
@@ -47,6 +54,7 @@ const ModalPost = () => {
             comments: null
         })
     }
+
     useEffect(() => {
         if (postSelected.likes.length > 0 && postSelected.likes.find(like => like._id === user._id)) {
             setIsPostLiked(true)
@@ -55,6 +63,7 @@ const ModalPost = () => {
         }
         setPostLikes(postSelected.likes.length)
     }, [])
+
     const handleLike = async () => {
         await axios.put(`https://internal-app-dpm.herokuapp.com/post/${postSelected._id}/like`, {}, { headers })
             .then(async () => {
@@ -65,6 +74,7 @@ const ModalPost = () => {
                     })
             })
     }
+
     return (
         <Modal className="ModalPost" show={postSelected} onHide={handleClose}>
             <Modal.Body className="ModalPost__content">
@@ -118,7 +128,6 @@ const ModalPost = () => {
                         : <p>No hay comentarios, realiza uno</p>
 
                 }
-
             </Modal.Body>
         </Modal>
     )

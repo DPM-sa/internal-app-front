@@ -26,9 +26,19 @@
 -crear modal de ver perfil-
 -conectar vista de perfil-
 -habilitar subida de fotos de perfil-
--crear en backend ordenamiento por mas reciente o mas antiguo
 -crear tag "todos"-
 -poner spinner de carga
--crear alerta de no se encontro ningun post
--crear en backend fecha de comentario
--crear en usuario fecha de nacimiento
+-crear en backend fecha de comentario-
+-crear en usuario fecha de nacimiento-
+-crear en backend ordenamiento por mas reciente o mas antiguo-
+-crear alerta de no se encontro ningun post-
+-crear footer-
+-maquetar nueva seccion de perfil
+-maquetar modales
+-mejoras generales
+-revisar lo de renovacion de token
+-revisar lo de autenticacion
+-agrandar ancho de navbar-
+-mas gruesos bordes generales
+-crear pantalla de login
+-agregar banner a las pantallas

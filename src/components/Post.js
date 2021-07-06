@@ -4,7 +4,7 @@ import { useStateValue } from '../StateProvider'
 import moment from 'moment'
 import axios from 'axios'
 
-const Post = ({ title, content, post, date, comments }) => {
+const Post = ({ title, content, post, date, commentsLength }) => {
 
     const [{ token, user }, dispatch] = useStateValue()
     const headers = {
@@ -21,7 +21,8 @@ const Post = ({ title, content, post, date, comments }) => {
                 })
             })
     }
-    const commentsLength = comments.filter(comment => post._id === comment.postId)
+    const commentsLengthNumber = commentsLength.filter(comment => post._id === comment.postId)
+
     const fecha = moment(date).format('D MMM YYYY')
     const fechaArr = fecha.split(" ")
     const fechaObj = {}
@@ -62,19 +63,20 @@ const Post = ({ title, content, post, date, comments }) => {
 
                         <span>
                             <i className="far fa-comments"></i>
-                            {commentsLength.length}
+                            {commentsLengthNumber.length}
                         </span>
-                    </div>
 
-                    <div className="Post__bottom-tags">
-                        {
+                        <span>
+                            <i class="fas fa-tags"></i>
+                            {
                             post.tags.length > 0
                             && post.tags.map(tag => (
-                                <span className="Post__bottom-tag badge">
-                                    #{tag}
+                                <span className="Post__bottom-tag">
+                                    {tag}
                                 </span>
                             ))
                         }
+                        </span>
                     </div>
                     <button onClick={() => handleOpenModal(post)} className="btn Post__see-more">
                         + Ver más

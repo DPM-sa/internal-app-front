@@ -51,8 +51,12 @@ const NavbarProfile = () => {
                                 <span activeClassName="active" className="nav__link">Mi Perfil <i class='bx bx-chevron-down dropdown__icon'></i></span>
 
                                 <ul class="dropdown__menu">
-                                    <li class="dropdown__item"><NavLink exact to="/miperfil" class="nav__link">Mis Datos</NavLink></li>
-                                    <li class="dropdown__item"><NavLink exact to="/login" class="nav__link">Cerrar Sesión</NavLink></li>
+                                    <li class="dropdown__item">
+                                        <NavLink exact to="/miperfil" class="nav__link">Mis Datos</NavLink>
+                                    </li>
+                                    <li class="dropdown__item">
+                                        <NavLink exact to="/login" class="nav__link">Cerrar Sesión</NavLink>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

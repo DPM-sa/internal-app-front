@@ -14,21 +14,23 @@ const PostSection = () => {
     }
 
     const [maxPosts, setMaxPosts] = useState(0)
-    const [comments, setComments] = useState([])
     const [postsToShow, setPostsToShow] = useState(2)
+
+    const [commentsLength, setCommentsLength] = useState([])
+    
+    const [isSearching, setIsSearching] = useState(false)
+    const [tags, setTags] = useState([])
+
     const [form, setForm] = useState({
         search: ""
     })
-
-    const [tags, setTags] = useState([])
-
     const { search } = form
 
     const getPosts = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/posts?limite=${postsToShow}`, { headers })
+        setIsSearching(false)
+        await axios.get(`https://internal-app-dpm.herokuapp.com/posts?limite=10`, { headers })
             .then(resp => {
                 setMaxPosts(resp.data.cuantos)
-                console.log(resp)
                 dispatch({
                     type: "SET_POSTS",
                     posts: resp.data.posts
@@ -36,37 +38,42 @@ const PostSection = () => {
             })
     }
 
+    const getTags = async () => {
+        await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
+            .then(resp => {
+                setTags(resp.data.arrayWithoutRepeatedTags)
+            })
+    }
+
+    const getComments = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/comments`, { headers })
+            .then(resp => {
+                setCommentsLength(resp.data.commentsDB)
+            })
+    }
+
     useEffect(() => {
-        const getTags = async () => {
-            await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
-                .then(resp => {
-                    setTags(resp.data.arrayWithoutRepeatedTags)
-                })
-        }
-        const getComments = async () => {
-            await axios.get(`https://internal-app-dpm.herokuapp.com/comments`, { headers })
-                .then(resp => {
-                    setComments(resp.data.commentsDB)
-                })
-        }
         getTags()
+    }, [])
+
+    useEffect(() => {
         getComments()
     }, [])
 
     useEffect(() => {
         getPosts()
-    }, [postsToShow])
+    }, [])
 
     const handleSubmit = async (e) => {
+        setIsSearching(false)
         e.preventDefault()
         await axios.get(`https://internal-app-dpm.herokuapp.com/posts/buscar/${search}`, { headers })
             .then(resp => {
-                if (resp.data.postDB.length > 0) {
-                    dispatch({
-                        type: "SET_POSTS",
-                        posts: resp.data.postDB
-                    })
-                }
+                dispatch({
+                    type: "SET_POSTS",
+                    posts: resp.data.postDB
+                })
+                setIsSearching(true)
             })
     }
 
@@ -78,6 +85,7 @@ const PostSection = () => {
     }
 
     const searchByTag = async (tag) => {
+        setIsSearching(false)
         await axios.get(`https://internal-app-dpm.herokuapp.com/tag/${tag}`, { headers })
             .then(resp => {
                 dispatch({
@@ -90,7 +98,15 @@ const PostSection = () => {
     const showMorePosts = () => {
         setPostsToShow(postsToShow + 2)
     }
-
+    const reversePosts = () => {
+        dispatch({
+            type: "SET_POSTS",
+            posts: posts.sort((a, b) => {
+                return new Date(a.date).getTime() -
+                    new Date(b.date).getTime()
+            })
+        })
+    }
     return (
         <>
             <div className="PostSection__search">
@@ -107,8 +123,8 @@ const PostSection = () => {
                             Ordenar por más nuevos
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a className="dropdown-item" href="#">Más recientes</a></li>
-                            <li><a className="dropdown-item" href="#">Más antiguos</a></li>
+                            <li onClick={getPosts} className="dropdown-item">Más recientes</li>
+                            <li onClick={reversePosts} className="dropdown-item">Más antiguos</li>
                         </ul>
                     </div>
 
@@ -118,7 +134,7 @@ const PostSection = () => {
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li>
-                                <span className="dropdown-item">Todos</span>
+                                <span onClick={getPosts} className="dropdown-item">Todos</span>
                             </li>
                             {
                                 tags.map((item, idx) => (
@@ -133,20 +149,47 @@ const PostSection = () => {
                 </div>
 
             </div>
+
             <div className="PostSection">
-                {posts.map(post => (
-                    <Post key={post._id} comments={comments} title={post.title} content={post.content} post={post} date={post.date} />
-                ))}
+                {
+                    (isSearching && posts.length > 0)
+                    &&
+                    <>
+                        <div className="PostSection__alert-no-posts">
+                            <p>Resultados de la busqueda: {search}</p>
+                            <button className="PostSection__alert-button" onClick={getPosts}>Volver</button>
+                        </div>
+                        {
+                            posts.map(post => (
+                                <Post key={post._id} commentsLength={commentsLength} title={post.title} content={post.content} post={post} date={post.date} />
+                            ))
+                        }
+                    </>
+                }
+                {
+                    (isSearching && posts.length === 0)
+                    &&
+                    <div className="PostSection__alert-no-posts">
+                        <p>No se encontraron resultados con la busqueda: {search}</p>
+                        <button className="PostSection__alert-button" onClick={getPosts}>Volver</button>
+                    </div>
+                }
+                {
+                    !isSearching &&
+                    posts.map(post => (
+                        <Post key={post._id} commentsLength={commentsLength} title={post.title} content={post.content} post={post} date={post.date} />
+                    ))
+                }
             </div>
+
             {
                 postSelected && <ModalPost />
             }
             {
-                (posts.length > 0 && postsToShow >= maxPosts)
-                    ? <p className="text-center">No hay mas posts para mostrar</p>
-                    : <button onClick={showMorePosts} className="btn PostSection__loadmore">
-                        + Cargar más publicaciones
-                    </button>
+                posts.length !== 0 &&
+                <button onClick={showMorePosts} className="btn PostSection__loadmore">
+                    + Cargar más publicaciones
+                </button>
             }
 
         </>

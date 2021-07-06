@@ -6,31 +6,39 @@ import { Modal } from 'react-bootstrap'
 import './Directorio.css'
 const Directorio = () => {
     const [{ token }] = useStateValue()
+
     const [users, setUsers] = useState([])
+
     const [form, setForm] = useState({
         search: ''
     })
-    const [user, setUser] = useState(null)
     const { search } = form
+
+    const [user, setUser] = useState(null)
+    
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+
+    const getEmployees = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/usuarios`, { headers })
+            .then(resp => {
+                setUsers(resp.data.usuarios)
+            })
+    }
+
     useEffect(() => {
-        const getEmployees = async () => {
-            await axios.get(`https://internal-app-dpm.herokuapp.com/usuarios`, { headers })
-                .then(resp => {
-                    setUsers(resp.data.usuarios)
-                })
-        }
         getEmployees()
     }, [])
+
     const handleInputChange = (e) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         })
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         await axios.get(`https://internal-app-dpm.herokuapp.com/users/buscar/${search}`, { headers })
@@ -38,12 +46,15 @@ const Directorio = () => {
                 setUsers(resp.data.userDB)
             })
     }
+
     const handleClick = (user) => {
         setUser(user)
     }
+
     const handleClose = () => {
         setUser(null)
     }
+
     return (
         <>
             <NavbarProfile />
@@ -62,12 +73,15 @@ const Directorio = () => {
                     </ul>
                 </div>
             </div>
+            
             <ul className="Directorio__list">
+
                 <div className="Directorio__list-header">
                     <span className="Directorio__list-header-section">Nombre y apellido</span>
                     <span className="Directorio__list-header-section">Cargo</span>
                     <span className="Directorio__list-header-section">Sector</span>
                 </div>
+
                 {
                     users.map(user => (
                         <div key={user._id} className="Directorio__list-control" onClick={() => handleClick(user)}>
@@ -85,6 +99,7 @@ const Directorio = () => {
                     ))
                 }
             </ul>
+
             <Modal show={user} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Usuario</Modal.Title>

@@ -55,6 +55,28 @@
     margin-top: 10px;
 }
 
+.PostSection__alert-no-posts {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border-radius: 40px;
+    background-color: #004580;
+    color: white;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.PostSection__alert-no-posts p{
+    margin: 0;
+}
+.PostSection__alert-button {
+    border: none;
+    background-color: white;
+    border-radius: 40px;
+    color: #004580;
+    padding: 5px 20px;
+}
+
 button.btn.PostSection__loadmore {
     display: block;
     margin: 20px auto;
@@ -96,10 +118,11 @@ button#dropdownMenuButton1 {
         margin-top: 0;
         flex-direction: row;
     }
-    .PostSection__date{
+    .PostSection__date {
         flex: 0 1 49%;
     }
 }
+
 @media screen and (min-width:767px) {
     .PostSection__search-form i {
         left: 8%;

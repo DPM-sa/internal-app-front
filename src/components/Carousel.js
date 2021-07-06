@@ -7,17 +7,20 @@ import './Carousel.css'
 const Carousel = () => {
     const [{ token }] = useStateValue()
     const [slider, setSlider] = useState([])
+
+    const headers = {
+        'Content-Type': 'application/json',
+        "token": `${token}`
+    }
+
+    const getSlider = async () => {
+        await axios.get('https://internal-app-dpm.herokuapp.com/sliders', { headers })
+            .then(resp => {
+                setSlider(resp.data.slidersDB)
+            })
+    }
+
     useEffect(() => {
-        const headers = {
-            'Content-Type': 'application/json',
-            "token": `${token}`
-        }
-        const getSlider = async () => {
-            await axios.get('https://internal-app-dpm.herokuapp.com/sliders', { headers })
-                .then(resp => {
-                    setSlider(resp.data.slidersDB)
-                })
-        }
         getSlider()
     }, [])
 

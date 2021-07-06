@@ -38,7 +38,7 @@ a {
 }
 
 .bd-grid {
-  max-width: 1024px;
+  width: 90%;
   display: grid;
   grid-template-columns: 100%;
   margin-left: 1.5rem;

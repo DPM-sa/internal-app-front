@@ -68,43 +68,6 @@
     margin: 10px;
 }
 
-.ModalPost__form-control {
-    display: flex;
-    flex-direction: column;
-}
-
-.ModalPost__submit {
-    align-self: flex-end;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 6px;
-}
-
-.ModalPost__comment {
-    border: 1px solid gray;
-    padding: 10px;
-    height: auto;
-    margin: 5px 0;
-    border-radius: 10px;
-}
-
-.ModalPost__comment-user {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.ModalPost__comment-img {
-    width: 50px;
-    border-radius: 50px;
-    margin-right: 10px;
-}
-
-.ModalPost__comments {
-    display: flex;
-    flex-direction: column;
-}
-
 .comment-box {
     width: 100%;
     float: left;
