@@ -1,19 +1,21 @@
 .Login {
     font-family: "Karla", sans-serif;
-    background-color: #d0d0ce;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .brand-wrapper {
     margin-bottom: 19px;
     display: flex;
     justify-content: center;
 }
+
 .brand-wrapper .logo {
     height: 37px;
 }
+
 .login-card {
     border: 0;
     border-radius: 27.5px;
@@ -21,6 +23,11 @@
     overflow: hidden;
     width: 90%;
 }
+
+.card.login-card {
+    border-radius: 40px;
+}
+
 .login-card-img {
     border-radius: 0;
     position: absolute;
@@ -28,62 +35,93 @@
     height: 100%;
     object-fit: cover;
 }
+
 .login-card .card-body {
     padding: 85px 60px 60px;
 }
-@media (max-width: 422px) {
-    .login-card .card-body {
-        padding: 35px 24px;
-   }
+
+.Login__img-content {
+    color: white;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
+@media screen and (max-width:400px) {
+    .Login__logo{
+        width: 90%;
+    }
+}
+@media screen and (max-width:767px) {
+    .login-card-img {
+        position: relative;
+        height: 250px;
+        object-position: 20% 8%;
+    }
+    .login-card .card-body {
+        padding: 35px 30px;
+    }
+    .Login__img-content {
+        top: 0;
+    }
+}
+
 .login-card-description {
     font-size: 25px;
-    color: #000;
+    color: #004580;
     font-weight: normal;
     margin-bottom: 23px;
 }
+
+.Login__label {
+    color: #004580;
+    font-weight: 600;
+}
+
 .login-card .form-control {
-    border: 1px solid #d5dae2;
-    padding: 15px 25px;
+    border: 2px solid #004580;
+    padding: 20px;
     margin-bottom: 20px;
     min-height: 45px;
-    font-size: 13px;
     line-height: 15;
     font-weight: normal;
+    border-radius: 40px;
 }
+
 .login-card .form-control::placeholder {
-    color: #919aa3;
+    color: #004580;
 }
-.login-card .login-btn {
-    padding: 13px 20px 12px;
-    background-color: #000;
-    border-radius: 4px;
-    font-size: 17px;
-    font-weight: bold;
-    line-height: 20px;
-    color: #fff;
-    margin-bottom: 24px;
+
+.Login__button {
+    background-color: #004580;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
 }
-.login-card .login-btn:hover {
-    border: 1px solid #000;
-    background-color: transparent;
-    color: #000;
-}
+
 .login-card .forgot-password-link {
     font-size: 14px;
-    color: #919aa3;
-    margin-bottom: 12px;
+    color: #004580;
+    margin-bottom: 0;
 }
+
 .login-card-footer-text {
     font-size: 16px;
     color: #0d2366;
     margin-bottom: 60px;
 }
+
 @media (max-width: 767px) {
     .login-card-footer-text {
         margin-bottom: 24px;
-   }
+    }
 }
+
 .login-card-footer-nav a {
     font-size: 14px;
     color: #919aa3;

@@ -11,7 +11,7 @@
     align-items: flex-start;
 }
 
-button.Carousel-btn.btn {
+a.Carousel-btn {
     background-color: #004580;
     color: white;
     border-radius: 30px;

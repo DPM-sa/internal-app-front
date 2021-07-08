@@ -1,13 +1,53 @@
-.ModalPost {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+.fade.ModalPost.modal.show {
+    padding-left: 0;
+}
+.ModalPost .modal-content{
+    border-radius: 20px;
+}
+
+.ModalPost__img {
+    width: 100%;
+    position: relative;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.ModalPost .modal-header {
+    padding: 0px 0px;
+    height: 300px;
+    border-bottom: none;
+    overflow: hidden;
+}
+
+.ModalPost-content {
+    position: absolute;
+    color: white;
+    padding-left: 20px;
+    padding-top: 10%;
+}
+
+.ModalPost button.close {
+    position: absolute;
+    color: white;
+    right: 2%;
+    background: #004580;
+    margin: 10px;
+    padding: 0px 7px 5px;
+    border-radius: 40px;
+    opacity: 1;
+}
+
+.ModalPost-actions {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    z-index: 1;
+    flex-wrap: wrap;
+}
+
+.ModalPost-actions i {
+    margin: 0 10px;
+}
+
+.ModalPost-tag {
+    margin: 0 5px;
 }
 
 .ModalPost__content {
@@ -15,57 +55,18 @@
     flex-direction: column;
     background: white;
     position: absolute;
-    height: 500px;
-    overflow-y: scroll;
-    border-radius: 6px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     overflow-x: hidden;
 }
-
-.ModalPost__content::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 6px;
-    background-color: #F5F5F5;
+.ModalPost__content-text{
+    color: #004580;
+    font-weight: 500;
 }
 
-.ModalPost__content::-webkit-scrollbar {
-    width: 12px;
-    background-color: #F5F5F5;
-    border-radius: 6px;
-}
-
-.ModalPost__content::-webkit-scrollbar-thumb {
-    border-radius: 6px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    background-color: #555;
-}
-
-.ModalPost__tags {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-
-.ModalPost__tag {
-    padding: 8px;
-    font-size: 8px;
-    border-radius: 10px;
-    margin: 10px 10px 10px 0px;
-    background-color: gray;
-}
-
-.ModalPost__center {
-    background-color: teal;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: relative;
-    top: -4px;
-    padding: 10px;
-    color: white;
-}
-
-.ModalPost__center i {
-    margin: 10px;
+.ModalPost__content-comments-label{
+    color: #004580;
+    font-weight: 500;
 }
 
 .comment-box {
@@ -74,17 +75,19 @@
     height: 100%;
     background-color: #FAFAFA;
     margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    border-radius: 20px;
+    border: 3px solid #004580;
     padding-left: 10px;
     padding-top: 10px;
 }
+
 .add-comment {
     background-color: transparent;
     border: none;
     position: relative;
     padding: 0;
 }
+
 .commenter-pic {
     width: 50px;
     height: 50px;
@@ -94,42 +97,37 @@
     overflow: hidden;
     background-color: #fff;
 }
-.add-comment input {
-    border-top: 0px;
-    border-bottom: 1px solid #ccc;
-    border-left: 0px;
-    border-right: 0px;
-    outline: 0px;
-    box-shadow: none;
-    border-radius: 0;
+
+.ModalPost__content-input{
+    border: 3px solid #004580;
     width: 100%;
-    padding: 0;
-    font-weight: normal;
+    padding: 10px;
+    border-radius: 40px;
+    margin-bottom: 10px;
 }
-.add-comment input:focus {
-    border-color: #03a9f4;
-    border-width: 2px;
+.ModalPost__content-input::placeholder{
+    color: #004580;
 }
-.add-comment button[type=submit] {
-    background-color: #03a9f4;
-    color: #fff;
-    margin-right: 0px;
-}
-.add-comment button {
-    background-color: #f5f5f5;
-    margin: 10px 5px;
-    font-size: 14px;
-    text-transform: uppercase;
+.ModalPost__content-button{
+    background-color: #004580;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 40px;
     float: right;
 }
+
 .commenter-name .comment-time {
     font-weight: normal;
     margin-left: 8px;
     font-size: 15px;
 }
+
 .comment-txt {
     font-size: 15px;
+    color: #004580;
 }
+
 .commenter-name {
     display: inline-block;
     position: relative;
@@ -137,25 +135,27 @@
     left: 10px;
     font-size: 16px;
     font-weight: bold;
+    color: #004580;
 }
-
-
-@media (max-width: 767px){
-.comments .commenter-name {
-    font-size: 13px;
-    top: -5px;
+.ModalPost__content-comments-no-comment{
+    color: #004580;
 }
-.comments .commenter-pic {
-    width: 40px;
-    height: 40px;
-}
-.comments .commenter-name a{
-  display: block;
-}
-.comments .commenter-name .comment-time{
-  display: block;
-  margin-left: 0px;
-}
+@media (max-width: 767px) {
+    .comments .commenter-name {
+        font-size: 13px;
+        top: -5px;
+    }
+    .comments .commenter-pic {
+        width: 40px;
+        height: 40px;
+    }
+    .comments .commenter-name a {
+        display: block;
+    }
+    .comments .commenter-name .comment-time {
+        display: block;
+        margin-left: 0px;
+    }
 }
 
 @media (max-width: 767px) {

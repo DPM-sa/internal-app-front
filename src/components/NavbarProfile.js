@@ -1,21 +1,25 @@
 import React from 'react'
 import './NavbarProfile.css'
 import { NavLink } from "react-router-dom";
-
+import { useStateValue } from '../StateProvider'
 const NavbarProfile = () => {
-
+    const [{ }, dispatch] = useStateValue()
     const showMenu = () => {
         const toggle = document.getElementById('header-toggle')
         const nav = document.getElementById('nav-menu')
         nav.classList.toggle('show')
         toggle.classList.toggle('bx-x')
     }
-
+    const handleLogout = () => {
+        dispatch({
+            type: 'LOGOUT'
+        })
+    }
     return (
         <header className="NavbarProfile__header">
             <div className="header__logo">
                 <div className="nav__img">
-                    <img src="https://laguia.online/business/veGwa/asset/fb.jpg" alt="" />
+                    <img src="./assets/logo-header.png" alt="" />
                 </div>
             </div>
 
@@ -25,7 +29,7 @@ const NavbarProfile = () => {
                 <div className="nav__content bd-grid">
                     <a href="" className="nav__perfil">
                         <div className="nav__img">
-                            <img src="https://laguia.online/business/veGwa/asset/fb.jpg" alt="" />
+                            <img src="./assets/logo-header.png" alt="" />
                         </div>
                     </a>
 
@@ -48,14 +52,14 @@ const NavbarProfile = () => {
                             </li>
 
                             <li className="nav__item dropdown">
-                                <span activeClassName="active" className="nav__link">Mi Perfil <i class='bx bx-chevron-down dropdown__icon'></i></span>
+                                <span className="nav__link">Mi Perfil <i class='bx bx-chevron-down dropdown__icon'></i></span>
 
                                 <ul class="dropdown__menu">
                                     <li class="dropdown__item">
                                         <NavLink exact to="/miperfil" class="nav__link">Mis Datos</NavLink>
                                     </li>
                                     <li class="dropdown__item">
-                                        <NavLink exact to="/login" class="nav__link">Cerrar Sesión</NavLink>
+                                        <NavLink onClick={handleLogout} exact to="/login" class="nav__link">Cerrar Sesión</NavLink>
                                     </li>
                                 </ul>
                             </li>

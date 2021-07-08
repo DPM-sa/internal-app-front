@@ -3,19 +3,55 @@ import React, { useEffect, useState } from 'react'
 import { useStateValue } from '../StateProvider'
 import { Modal } from 'react-bootstrap'
 import './ModalPost.css'
+import moment from 'moment'
+import { useHistory, useParams } from 'react-router-dom'
 
 const ModalPost = () => {
-    const [{ postSelected, comments, token, user }, dispatch] = useStateValue()
+    const [{ token, user }] = useStateValue()
 
+    const history = useHistory()
+
+    const { id } = useParams()
+
+    const [titlePost, setTitlePost] = useState('')
+    const [contentPost, setContentPost] = useState('')
+    const [likesPost, setLikesPost] = useState([])
+    const [tagsPost, setTagsPost] = useState([])
+    const [isPostLiked, setIsPostLiked] = useState(false)
+    const [comments, setComments] = useState([])
     const [form, setForm] = useState({
         comment: ''
     })
     const { comment } = form
 
-    const [isPostLiked, setIsPostLiked] = useState(false)
-    const [postLikes, setPostLikes] = useState(0)
+    useEffect(() => {
+        getComments()
+    }, [])
 
-    
+    useEffect(() => {
+        getPost()
+    }, [])
+
+    const headers = {
+        'Content-Type': 'application/json',
+        "token": `${token}`
+    }
+
+    const getPost = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
+            .then(resp => {
+                setTitlePost(resp.data.post.title)
+                setContentPost(resp.data.post.content)
+                setLikesPost(resp.data.post.likes)
+                setTagsPost(resp.data.post.tags)
+                if (resp.data.post.likes.find(like => like._id === user._id)) {
+                    setIsPostLiked(true)
+                } else {
+                    setIsPostLiked(false)
+                }
+            })
+    }
+
     const handleInputChange = (e) => {
         setForm({
             ...form,
@@ -23,109 +59,100 @@ const ModalPost = () => {
         })
     }
 
-    const headers = {
-        'Content-Type': 'application/json',
-        "token": `${token}`
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await axios.post(`https://internal-app-dpm.herokuapp.com/post/${postSelected._id}`,
+        if (comment === "") return
+        await axios.post(`https://internal-app-dpm.herokuapp.com/post/${id}`,
             {
                 "content": `${comment}`
             },
             { headers })
             .then(async () => {
-                await axios.get(`https://internal-app-dpm.herokuapp.com/post/${postSelected._id}/comments`, { headers })
-                    .then(async (resp) => {
-                        dispatch({
-                            type: "SELECT_POST",
-                            postSelected: postSelected,
-                            comments: resp.data.comments
-                        })
-                    })
+                getComments()
+                setForm({
+                    comment: ''
+                })
             })
     }
 
-    const handleClose = async (e) => {
-        dispatch({
-            type: "SELECT_POST",
-            postSelected: null,
-            comments: null
-        })
+    const getComments = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/comments`, { headers })
+            .then(async (resp) => {
+                setComments(resp.data.comments)
+            })
     }
-
-    useEffect(() => {
-        if (postSelected.likes.length > 0 && postSelected.likes.find(like => like._id === user._id)) {
-            setIsPostLiked(true)
-        } else {
-            setIsPostLiked(false)
-        }
-        setPostLikes(postSelected.likes.length)
-    }, [])
 
     const handleLike = async () => {
-        await axios.put(`https://internal-app-dpm.herokuapp.com/post/${postSelected._id}/like`, {}, { headers })
+        await axios.put(`https://internal-app-dpm.herokuapp.com/post/${id}/like`, {}, { headers })
             .then(async () => {
-                await axios.get(`https://internal-app-dpm.herokuapp.com/post/${postSelected._id}`, { headers })
+                await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
                     .then(async (resp) => {
                         setIsPostLiked(!isPostLiked)
-                        setPostLikes(resp.data.post.likes.length)
+                        setLikesPost(resp.data.post.likes)
                     })
             })
     }
 
+    const handleClose = () => {
+        history.goBack()
+    }
+    const commentDate = (date) => {
+        return moment(date).format('D MMM YYYY')
+    }
     return (
-        <Modal className="ModalPost" show={postSelected} onHide={handleClose}>
-            <Modal.Body className="ModalPost__content">
+        <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
+            <Modal.Header closeButton>
                 <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="ModalPost__img" />
-                <div className="ModalPost__center">
-                    <div className="ModalPost__center-likes">
+                <div className="ModalPost-content">
+                    <h4>{titlePost}</h4>
+                    <p>{contentPost}</p>
+                    <div className="ModalPost-actions">
                         <span>
                             {
                                 isPostLiked ? <i onClick={handleLike} className="fas fa-heart liked"></i> : <i onClick={handleLike} className="far fa-heart"></i>
                             }
-                            {postLikes}
+                            {likesPost.length}
                         </span>
-                    </div>
-                    <div className="ModalPost__center-comments">
                         <span>
                             <i className="far fa-comments"></i>
+                            {comments.length}
                         </span>
-                        {comments.length}
+                        <span>
+                            <i class="fas fa-tags"></i>
+                            {
+                                tagsPost.map(tag => (
+                                    <span className="ModalPost-tag">
+                                        {tag}
+                                    </span>
+                                ))
+                            }
+                        </span>
                     </div>
                 </div>
-                <h3>{postSelected.title}</h3>
-                <p>{postSelected.content}</p>
-                <div className="ModalPost__tags">
-                    {
-                        postSelected.tags.length > 0
-                        && postSelected.tags.map(tag => (
-                            <span className="ModalPost__tag">#{tag}</span>
-                        ))
-                    }
-                </div>
+            </Modal.Header>
+            <Modal.Body className="ModalPost__content">
+                <p className="ModalPost__content-text">{contentPost}</p>
                 <form onSubmit={handleSubmit} className="comment-box add-comment">
-                    <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" />
-                    <button type="submit" className="btn btn-default">Comentar</button>
+                    <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" className="ModalPost__content-input" />
+                    <button type="submit" className="ModalPost__content-button">Comentar</button>
                 </form>
-                Comentarios:
+                <label className="ModalPost__content-comments-label">Comentarios:</label>
                 {
                     comments.length > 0
                         ? comments.map(comment => (
                             <div className="comment-box">
                                 <span className="commenter-pic">
-                                    <img src="./assets/no-image.jpg" className="img-fluid" />
+                                    {comment.userId.image ? <img className="Directorio__list-image" src={comment.userId.image} /> : <i class="far fa-user Directorio__user-no-image"></i>}
                                 </span>
                                 <span className="commenter-name">
-                                    {comment.userId.nombre} {comment.userId.apellido}<span className="comment-time">2 hours ago</span>
+                                    {comment.userId.nombre} {comment.userId.apellido}<span className="comment-time">{commentDate(comment.date)}</span>
                                 </span>
-                                <p className="comment-txt more">
+                                <p className="comment-txt">
                                     {comment.content}
                                 </p>
                             </div>
                         ))
-                        : <p>No hay comentarios, realiza uno</p>
+                        : <p className="ModalPost__content-comments-no-comment">No hay comentarios, realiza uno</p>
 
                 }
             </Modal.Body>

@@ -15,7 +15,7 @@
 }
 
 .liked {
-    color: rgb(189, 36, 36);
+    color: white;
 }
 
 .Post__top-date {
@@ -37,6 +37,7 @@
     justify-content: flex-start;
     width: 100%;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .Post__bottom-actions i {
@@ -56,7 +57,7 @@
     bottom: 0;
     width: 100%;
 }
-button.btn.Post__see-more{
+a.btn.Post__see-more{
     background-color: white;
     border-radius: 40px;
     color: #004580;

@@ -58,7 +58,7 @@
 .PostSection__alert-no-posts {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     padding: 10px;
     border-radius: 40px;
     background-color: #004580;
@@ -68,13 +68,6 @@
 }
 .PostSection__alert-no-posts p{
     margin: 0;
-}
-.PostSection__alert-button {
-    border: none;
-    background-color: white;
-    border-radius: 40px;
-    color: #004580;
-    padding: 5px 20px;
 }
 
 button.btn.PostSection__loadmore {

@@ -2,8 +2,9 @@ export const initialState = {
     user: JSON.parse(localStorage.getItem('user')) || null,
     token: localStorage.getItem('token') || null,
     posts: [],
-    postSelected: null,
-    comments: null
+    searching: '',
+    isAuth: null,
+    cargando: true
 }
 
 const reducer = (state, action) => {
@@ -16,19 +17,26 @@ const reducer = (state, action) => {
                 user: action.user,
                 token: action.token
             }
-        case "SELECT_POST": {
-            return {
-                ...state,
-                postSelected: action.postSelected,
-                comments: action.comments
-            }
-        }
-        case "SET_POSTS":{
+        case "SET_POSTS": {
             return {
                 ...state,
                 posts: action.posts
             }
         }
+        case 'SEARCHING_POST': {
+            return {
+                ...state,
+                searching: action.searching
+            }
+        }
+        case "LOGOUT":
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            return {
+                ...state,
+                user: null,
+                token: null
+            }
         default:
             return state
     }

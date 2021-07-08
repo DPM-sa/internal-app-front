@@ -55,27 +55,29 @@ const Login = () => {
         <div className="Login">
             <div className="card login-card">
                 <div className="row no-gutters">
-                    <div className="col-md-5">
-                        <img src="https://www.bootstrapdash.com/demo/login-template-free-2/assets/images/login.jpg" alt="login" className="login-card-img" />
+                    <div className="col-md-5 Login__img-div">
+                        <img src="./assets/fondo-login.png" alt="login" className="login-card-img" />
+                        <div className="Login__img-content">
+                            <img className="Login__logo" src="./assets/logo-footer.png" />
+                            <p>Nuevo espacio de comunicación interna.</p>
+                        </div>
                     </div>
                     <div className="col-md-7">
                         <div className="card-body">
-                            <div className="brand-wrapper">
-                                <img src="https://laguia.online/business/veGwa/asset/fb.jpg" alt="logo" className="logo" />
-                            </div>
-                            <p className="login-card-description">Inicia sesión</p>
+                            <p className="login-card-description">Iniciar sesión</p>
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
-                                    <label className="sr-only">Nombre de usuario</label>
-                                    <input type="text" value={username} name="username" onChange={handleChange} className="form-control" placeholder="Nombre de usuario" />
+                                    <label className="Login__label">Nombre de usuario</label>
+                                    <input type="text" value={username} name="username" onChange={handleChange} className="form-control" />
                                 </div>
                                 <div className="form-group mb-4">
-                                    <label className="sr-only">Password</label>
-                                    <input type="password" value={password} name="password" onChange={handleChange} className="form-control" placeholder="Contraseña" />
+                                    <label className="Login__label">Password</label>
+                                    <input type="password" value={password} name="password" onChange={handleChange} className="form-control" />
                                 </div>
-                                <input name="login" className="btn btn-block login-btn mb-4" type="submit" value="Iniciar sesión" />
+                                <input name="login" className="Login__button" type="submit" value="Iniciar sesión" />
                             </form>
-                            <p className="forgot-password-link">Olvidaste tu contraseña?</p>
+                            <p className="forgot-password-link">Olvidaste tu usuario o contraseña?</p>
+                            <p className="forgot-password-link">Hace click aqui</p>
                         </div>
                     </div>
                 </div>

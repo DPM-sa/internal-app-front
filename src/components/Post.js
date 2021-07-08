@@ -1,26 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Post.css'
 import { useStateValue } from '../StateProvider'
 import moment from 'moment'
 import axios from 'axios'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-const Post = ({ title, content, post, date, commentsLength }) => {
-
+const Post = ({ title, content, post, date }) => {
     const [{ token, user }, dispatch] = useStateValue()
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
-    const handleOpenModal = async (post) => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${post._id}/comments`, { headers })
+    const [commentsLength, setCommentsLength] = useState([])
+
+    const getComments = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/comments`, { headers })
             .then(resp => {
-                dispatch({
-                    type: 'SELECT_POST',
-                    postSelected: post,
-                    comments: resp.data.comments
-                })
+                setCommentsLength(resp.data.commentsDB)
             })
     }
+
+    useEffect(() => {
+        getComments()
+    }, [])
+
     const commentsLengthNumber = commentsLength.filter(comment => post._id === comment.postId)
 
     const fecha = moment(date).format('D MMM YYYY')
@@ -69,18 +73,18 @@ const Post = ({ title, content, post, date, commentsLength }) => {
                         <span>
                             <i class="fas fa-tags"></i>
                             {
-                            post.tags.length > 0
-                            && post.tags.map(tag => (
-                                <span className="Post__bottom-tag">
-                                    {tag}
-                                </span>
-                            ))
-                        }
+                                post.tags.length > 0
+                                && post.tags.map(tag => (
+                                    <span className="Post__bottom-tag">
+                                        {tag}
+                                    </span>
+                                ))
+                            }
                         </span>
                     </div>
-                    <button onClick={() => handleOpenModal(post)} className="btn Post__see-more">
+                    <Link to={`/home/post/${post._id}`} className="btn Post__see-more">
                         + Ver más
-                    </button>
+                    </Link>
                 </div>
 
             </div>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import NavbarProfile from '../components/NavbarProfile'
 import { useStateValue } from '../StateProvider'
 import './Biblioteca.css'
+import Footer from '../components/Footer'
 const Biblioteca = () => {
     const [{ token }] = useStateValue()
     const [files, setFiles] = useState([])
@@ -22,6 +23,14 @@ const Biblioteca = () => {
     return (
         <>
             <NavbarProfile />
+            <div className="Directorio__banner">
+                <img className="Directorio__banner-img" src="./assets/banner-biblioteca.jpg" />
+                <div className="Directorio__banner-content">
+                    <h1>Biblioteca</h1>
+                    <p>Encontra aqui materiales a disposicion para todos los colaboradores de DPM</p>
+                    <button className="Directorio__banner-button">+ Ver más</button>
+                </div>
+            </div>
             <div className="Biblioteca__search">
                 <form>
                     <input name="search" type="text" className="Biblioteca__search-input" placeholder="Buscar un archivo por nombre" />
@@ -48,6 +57,7 @@ const Biblioteca = () => {
                     ))
                 }
             </div>
+            <Footer />
         </>
     )
 }
