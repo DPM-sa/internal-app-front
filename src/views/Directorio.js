@@ -1,14 +1,21 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import NavbarProfile from '../components/NavbarProfile'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 import { useStateValue } from '../StateProvider'
 import Footer from '../components/Footer'
-import './Directorio.css'
+import NavbarProfile from '../components/NavbarProfile'
 import SpinnerComponent from '../components/SpinnerComponent'
-import { Link } from 'react-router-dom'
 import WhatsappBtn from '../components/WhatsappBtn'
+import Banner from '../components/Banner'
+import './Directorio.css'
+
 const Directorio = () => {
     const [{ token }] = useStateValue()
+
+    let headers = {
+        'Content-Type': 'application/json',
+        "token": `${token}`
+    }
 
     const [users, setUsers] = useState([])
 
@@ -16,12 +23,10 @@ const Directorio = () => {
         search: ''
     })
     const { search } = form
+
     const [typeOrder, setTypeOrder] = useState('antiguos')
     const [loading, setLoading] = useState(false)
-    let headers = {
-        'Content-Type': 'application/json',
-        "token": `${token}`
-    }
+
     function sortGreatest(arr) {
         for (let i = 0; i < arr.length; i++) {
             for (let j = i; j < arr.length; j++) {
@@ -34,9 +39,11 @@ const Directorio = () => {
         };
         return arr;
     };
+
     const reversed = (arr) => {
         return arr.reverse()
     }
+
     const getEmployees = async () => {
         setLoading(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuarios`, { headers })
@@ -76,16 +83,9 @@ const Directorio = () => {
     return (
         <>
             <NavbarProfile />
-            <div className="Directorio__banner">
-                <img className="Directorio__banner-img" src="./assets/banner-directorio.jpg" />
-                <div className="Directorio__banner-content">
-                    <h1>Directorio de usuarios</h1>
-                    <p>Encontra aqui a todos los colaboradores de DPM</p>
-                    <button className="Directorio__banner-button">+ Ver más</button>
-                </div>
-            </div>
+            <Banner image={'/assets/banner-directorio.jpg'} title={'Directorio de usuarios'} content={'Encontra aqui a todos los colaboradores de DPM'} linkto={'directorio'} />
             <div className="Directorio__search">
-                <form onSubmit={handleSubmit}>
+                <form id="directorio" onSubmit={handleSubmit}>
                     <input value={search} name="search" onChange={handleInputChange} type="text" className="Directorio__search-input" placeholder="Busca un colaraborador/a por nombre" />
                     <i className="fas fa-search Directorio__search-icon"></i>
                 </form>
@@ -125,13 +125,13 @@ const Directorio = () => {
                         !loading && users.map(user => (
                             <li key={user._id} className="Directorio__list-control">
                                 <Link to={`/directorio/profile/${user._id}`} className="Directorio__list-control-section name">
-                                    {user.image ? <img className="Directorio__list-image" src={user.image} /> : <i class="far fa-user Directorio__user-no-image"></i>}
+                                    {user.image ? <img className="profile-image-small" src={user.image} /> : <i class="far fa-user no-image-profile-small"></i>}
                                     {user.nombre} {user.apellido}
                                 </Link>
-                                <div className="Directorio__list-control-section charge">
+                                <div className="Directorio__list-control-section">
                                     Cargo
                                 </div>
-                                <div className="Directorio__list-control-section sector">
+                                <div className="Directorio__list-control-section">
                                     Sector
                                 </div>
                             </li>

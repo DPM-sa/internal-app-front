@@ -34,29 +34,6 @@ const Profile = () => {
 
     const [loadingImg, setLoadingImg] = useState(false)
 
-    /* const getUser = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`, { headers })
-            .then(resp => {
-                console.log(resp.data)
-                setForm({
-                    nombre: resp.data.user.nombre,
-                    apellido: resp.data.user.apellido,
-                    email: resp.data.user.email ? resp.data.user.email : '',
-                    phone: resp.data.user.phone ? resp.data.user.phone : '',
-                    birth: resp.data.user.birth ? resp.data.user.birth : '',
-                    position: resp.data.user.position ? resp.data.user.position : '',
-                    sector: resp.data.user.sector ? resp.data.user.sector : '',
-                })
-                if (resp.data.user.image) {
-                    setImageProfile(resp.data.user.image)
-                }
-            })
-    } */
-
-    /* useEffect(() => {
-        getUser()
-    }, [loading]) */
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -140,7 +117,7 @@ const Profile = () => {
             <div className="Profile">
                 <div className="card-body">
                     <div className="d-flex flex-column align-items-center text-center">
-                        <img src={imageProfile ? imageProfile : './assets/no-image.jpg'} alt="Admin" className="rounded-circle" width="150" />
+                        {imageProfile ? <img src={imageProfile} className="profile-image-medium rounded-circle" width="150" /> : <i class="far fa-user no-image-profile-medium"></i>}
                         <div className="mt-3">
                             <h4>¡Hola {user.nombre} {user.apellido}!</h4>
                             <p className="text-secondary mb-1">{user.position}</p>

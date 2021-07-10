@@ -3,8 +3,16 @@
     width: 90%;
 }
 
+.Sugerencias h3 {
+    margin-top: 10px;
+    color: #004580;
+}
+
+.Sugerencias p {
+    color: #004580;
+}
+
 .Sugerencias form {
-    padding: 20px;
     margin-bottom: 10px;
 }
 
@@ -48,4 +56,16 @@
 
 .Sugerencias__enviadas::-webkit-scrollbar {
     display: none;
+}
+
+@media screen and (max-width: 576px) {
+    .Sugerencias__input {
+        width: 100%;
+    }
+    .Sugerencias__textarea {
+        width: 100%;
+    }
+    .Sugerencia {
+        width: 100%;
+    }
 }

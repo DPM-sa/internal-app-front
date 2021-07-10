@@ -85,21 +85,6 @@
     flex: 0 1 33%;
 }
 
-.Directorio__list-image {
-    width: 40px;
-    border-radius: 50px;
-    margin-right: 10px;
-}
-
-i.far.fa-user.Directorio__user-no-image {
-    background-color: #004580;
-    color: white;
-    padding: 10px 12px;
-    font-size: 20px;
-    border-radius: 27px;
-    margin-right: 10px;
-}
-
 .modalBody {
     display: flex;
     flex-direction: column;
@@ -125,6 +110,9 @@ i.far.fa-user.Directorio__user-no-image {
     .Directorio__search-icon {
         left: 9%;
     }
+    .Directorio__list .no-image-profile-small, .Directorio__list .profile-image-small{
+        margin-right: 10px;
+    }    
 }
 
 @media screen and (min-width:768px) {

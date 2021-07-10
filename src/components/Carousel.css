@@ -1,6 +1,5 @@
 .carousel {
-    margin: 80px auto 0px;
-    border-radius: 6px;
+    margin: 48px auto 0px;
 }
 
 .carousel-caption {
@@ -18,12 +17,13 @@ a.Carousel-btn {
     padding: 10px 30px;
 }
 
-.carousel-inner {
-    border-radius: 6px;
-}
-
 @media screen and (min-width:576px) {
     .carousel-item {
-        height: 500px;
+        height: 400px;
+    }
+}
+@media screen and (min-width:767px) {
+    .carousel {
+        margin-top: 65px;
     }
 }
