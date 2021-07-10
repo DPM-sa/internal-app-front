@@ -4,7 +4,6 @@
   --first-color-light: #C4C7F5;
   --dark-color: #0E1026;
   --white-color: #FBFBFB;
-  --body-font: 'Open Sans', sans-serif;
   --nav-name-font-size: 1.5rem;
   --normal-font-size: .938rem;
   --z-fixed: 100;
@@ -22,7 +21,6 @@
 }
 
 .NavbarProfile__header {
-  font-family: var(--body-font);
   font-size: var(--normal-font-size);
   font-weight: 600;
 }

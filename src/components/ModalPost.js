@@ -1,10 +1,10 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useStateValue } from '../StateProvider'
-import { Modal } from 'react-bootstrap'
-import './ModalPost.css'
-import moment from 'moment'
 import { useHistory, useParams } from 'react-router-dom'
+import { Modal } from 'react-bootstrap'
+import { useStateValue } from '../StateProvider'
+import axios from 'axios'
+import moment from 'moment'
+import './ModalPost.css'
 
 const ModalPost = () => {
     const [{ token, user }] = useStateValue()
@@ -102,11 +102,11 @@ const ModalPost = () => {
     return (
         <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
             <Modal.Header closeButton>
-                <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="ModalPost__img" />
-                <div className="ModalPost-content">
+                <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="ModalPost__header-img" />
+                <div className="ModalPost__header-content">
                     <h4>{titlePost}</h4>
                     <p>{contentPost}</p>
-                    <div className="ModalPost-actions">
+                    <div className="ModalPost__header-actions">
                         <span>
                             {
                                 isPostLiked ? <i onClick={handleLike} className="fas fa-heart liked"></i> : <i onClick={handleLike} className="far fa-heart"></i>
@@ -121,7 +121,7 @@ const ModalPost = () => {
                             <i class="fas fa-tags"></i>
                             {
                                 tagsPost.map(tag => (
-                                    <span className="ModalPost-tag">
+                                    <span className="ModalPost__header-actions-tag">
                                         {tag}
                                     </span>
                                 ))
@@ -142,7 +142,7 @@ const ModalPost = () => {
                         ? comments.map(comment => (
                             <div className="comment-box">
                                 <span className="commenter-pic">
-                                    {comment.userId.image ? <img className="Directorio__list-image" src={comment.userId.image} /> : <i class="far fa-user Directorio__user-no-image"></i>}
+                                    {comment.userId.image ? <img className="profile-image-small" src={comment.userId.image} /> : <i class="far fa-user no-image-profile-small"></i>}
                                 </span>
                                 <span className="commenter-name">
                                     {comment.userId.nombre} {comment.userId.apellido}<span className="comment-time">{commentDate(comment.date)}</span>

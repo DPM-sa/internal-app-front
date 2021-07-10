@@ -5,7 +5,7 @@ import Post from './Post'
 import './PostSection.css'
 import SpinnerComponent from './SpinnerComponent'
 const PostSection = () => {
-    const [{ token, posts, searching }, dispatch] = useStateValue()
+    const [{ token, posts }, dispatch] = useStateValue()
 
     const [postsPerPage, setPostsPerPage] = useState(2)
     const [loading, setLoading] = useState(false)
@@ -39,7 +39,9 @@ const PostSection = () => {
     useEffect(() => {
         getPosts()
     }, [])
+
     if (loading) return <SpinnerComponent />
+    
     return (
         <>
             <div className="PostSection">
@@ -58,7 +60,7 @@ const PostSection = () => {
             {
                 currentPosts.length < posts.length
                 &&
-                <button onClick={paginate} className="btn PostSection__loadmore">
+                <button onClick={paginate} className="PostSection__loadmore">
                     + Cargar más publicaciones
                 </button>
             }

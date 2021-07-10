@@ -30,14 +30,14 @@ const ModalSlider = () => {
     }, [])
 
     const handleClose = () => {
-        history.goBack()
+        history.push('/home')
     }
 
     return (
         <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
             <Modal.Header closeButton>
-                <img src={slider.image} className="ModalPost__img" />
-                <div className="ModalPost-content">
+                <img src={slider.image} className="ModalPost__header-img" />
+                <div className="ModalPost__header-content">
                     <h4>{slider.title}</h4>
                     <p>{slider.content}</p>
                 </div>

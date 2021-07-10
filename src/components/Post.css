@@ -7,7 +7,7 @@
     margin-right: 5px;
 }
 
-.Post__top-image {
+.Post__image {
     width: 100%;
     height: 100%;
     position: relative;
@@ -18,7 +18,7 @@
     color: white;
 }
 
-.Post__top-date {
+.Post__date {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -31,7 +31,14 @@
     color: white;
 }
 
-.Post__bottom-actions {
+.Post__content {
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.Post__content-actions {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -40,29 +47,23 @@
     flex-wrap: wrap;
 }
 
-.Post__bottom-actions i {
+.Post__content-actions i {
     margin: 0 10px;
 }
 
-
-.Post__bottom-tag {
+.Post__content-tag {
     margin: 0px 10px;
     color: white;
     font-weight: 500;
 }
 
-.Post__bottom {
-    padding: 10px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-a.btn.Post__see-more{
+a.Post__see-more {
     background-color: white;
     border-radius: 40px;
     color: #004580;
     padding: 10px 20px;
     font-weight: 500;
+    display: inline-block;
 }
 
 @media screen and (min-width:576px) {

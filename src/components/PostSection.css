@@ -6,55 +6,6 @@
     margin: 0 auto;
 }
 
-.PostSection__search {
-    border-radius: 6px;
-    padding: 20px;
-    width: 90%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.PostSection__search-form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-}
-
-.PostSection__search-form i {
-    left: 15%;
-    position: absolute;
-    color: #004580;
-}
-
-.PostSection__search-input {
-    width: 100%;
-    padding: 10px;
-    padding-left: 50px;
-    border-radius: 40px;
-    border: 2px solid #004580;
-    margin-right: 5px;
-}
-
-.PostSection__search-input::placeholder {
-    color: #004580;
-}
-
-.PostSection__tag {
-    margin-top: 10px;
-}
-
-.PostSection__filters {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    flex-direction: column;
-    margin-top: 10px;
-}
-
 .PostSection__alert-no-posts {
     width: 100%;
     display: flex;
@@ -71,61 +22,12 @@
     margin: 0;
 }
 
-.Whatsapp img {
-    width: 50px;
-    position: fixed;
-    left: 20px;
-    z-index: 1;
-    bottom: 20px;
-}
-button.btn.PostSection__loadmore {
+button.PostSection__loadmore {
     display: block;
     margin: 20px auto;
     background-color: #004580;
     color: white;
     border-radius: 40px;
-}
-
-button#dropdownMenuButton1 {
-    background-color: white;
-    color: #004580;
-    border-radius: 40px;
-    border: 2px solid;
-    padding: 12px;
-    flex: 0 1 49%;
-    width: 100%;
-}
-
-@media screen and (min-width:576px) {
-    .PostSection__search {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .PostSection__search-form {
-        flex: 0 1 49%;
-    }
-    .PostSection__search-form i {
-        left: 9%;
-    }
-    .PostSection__tag {
-        margin-right: 10px;
-        flex: 0 1 49%;
-        margin-left: 5px;
-        margin-top: 0;
-    }
-    .PostSection__filters {
-        flex: 0 1 49%;
-        margin-top: 0;
-        flex-direction: row;
-    }
-    .PostSection__date {
-        flex: 0 1 49%;
-    }
-}
-
-@media screen and (min-width:767px) {
-    .PostSection__search-form i {
-        left: 8%;
-    }
+    border: none;
+    padding: 10px 20px;
 }

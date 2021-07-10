@@ -6,41 +6,7 @@
     display: flex;
     flex-direction: column;
 }
-.Directorio__banner{
-    position: relative;
-    margin-top: 48px;
-    width: 100%;
-    height: 250px;
-}
-@media screen and (min-width:767px){
-    .Directorio__banner{
-        margin-top: 65px;
-    }
-}
-.Directorio__banner-img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.Directorio__banner-content{
-    position: absolute;
-    color: white;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding-left: 5%;
-}
-.Directorio__banner-button{
-    background-color: #004580;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 40px;
-}
+
 .Directorio__search form {
     width: 100%;
     display: flex;

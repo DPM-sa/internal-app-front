@@ -7,8 +7,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const Post = ({ title, content, post, date }) => {
-    const [{ token, user }, dispatch] = useStateValue()
-    const headers = {
+    const [{ token, user }] = useStateValue()
+    let headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
@@ -44,12 +44,12 @@ const Post = ({ title, content, post, date }) => {
     return (
         <>
             <div className="Post">
-                <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="Post__top-image" />
-                <div className="Post__top-date">
+                <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="Post__image" />
+                <div className="Post__date">
                     {day} - {month} - {year}
                 </div>
 
-                <div className="Post__bottom">
+                <div className="Post__content">
                     <h5 className="card-title">
                         {title}
                     </h5>
@@ -57,7 +57,7 @@ const Post = ({ title, content, post, date }) => {
                         {content}
                     </p>
 
-                    <div className="Post__bottom-actions">
+                    <div className="Post__content-actions">
                         <span>
                             {
                                 userHasLiked() ? <i className="fas fa-heart liked"></i> : <i className="far fa-heart"></i>
@@ -75,14 +75,14 @@ const Post = ({ title, content, post, date }) => {
                             {
                                 post.tags.length > 0
                                 && post.tags.map(tag => (
-                                    <span className="Post__bottom-tag">
+                                    <span className="Post__content-tag">
                                         {tag}
                                     </span>
                                 ))
                             }
                         </span>
                     </div>
-                    <Link to={`/home/post/${post._id}`} className="btn Post__see-more">
+                    <Link to={`/home/post/${post._id}`} className="Post__see-more">
                         + Ver más
                     </Link>
                 </div>

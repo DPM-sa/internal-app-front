@@ -1,0 +1,39 @@
+.Banner {
+    position: relative;
+    margin-top: 48px;
+    width: 100%;
+    height: 250px;
+}
+
+@media screen and (min-width:767px) {
+    .Banner {
+        margin-top: 65px;
+    }
+}
+
+.Banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.Banner-content {
+    position: absolute;
+    color: white;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 5%;
+}
+
+.Banner-button {
+    background-color: #004580;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 40px;
+}

@@ -1,6 +1,7 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useStateValue } from '../StateProvider'
+import axios from 'axios'
+import './SearchBar.css'
 
 const SearchBar = () => {
     const [{ token, posts }, dispatch] = useStateValue()
@@ -109,13 +110,13 @@ const SearchBar = () => {
         }
     }
     return (
-        <div className="PostSection__search">
-            <form onSubmit={handleSubmit} className="PostSection__search-form">
-                <input value={search} name="search" onChange={handleInputChange} className="PostSection__search-input" placeholder="Busca un post por título" type="text" />
+        <div className="SearchBar">
+            <form onSubmit={handleSubmit} className="SearchBar__form">
+                <input value={search} name="search" onChange={handleInputChange} className="SearchBar__form-input" placeholder="Busca un post por título" type="text" />
                 <i className="fas fa-search"></i>
             </form>
-            <div className="PostSection__filters">
-                <div className="dropdown PostSection__date">
+            <div className="SearchBar__filters">
+                <div className="dropdown SearchBar__filters-date">
                     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Ordenar por más nuevos
                     </button>
@@ -124,7 +125,7 @@ const SearchBar = () => {
                         <li onClick={reversePosts} className="dropdown-item">Más antiguos</li>
                     </ul>
                 </div>
-                <div className="dropdown PostSection__tag">
+                <div className="dropdown SearchBar__filters-tag">
                     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Filtrar por categorias
                     </button>

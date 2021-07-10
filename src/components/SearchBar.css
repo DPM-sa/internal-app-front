@@ -1,0 +1,83 @@
+.SearchBar {
+    padding: 20px;
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.SearchBar__form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 48;
+}
+
+.SearchBar__form i {
+    left: 8%;
+    position: absolute;
+    color: #004580;
+}
+
+.SearchBar__form-input {
+    width: 100%;
+    padding: 10px;
+    padding-left: 50px;
+    border-radius: 40px;
+    border: 2px solid #004580;
+    margin-right: 5px;
+}
+
+.SearchBar__form-input::placeholder {
+    color: #004580;
+}
+
+.SearchBar__filters {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex: 48;
+}
+
+button#dropdownMenuButton1 {
+    background-color: white;
+    color: #004580;
+    border-radius: 40px;
+    border: 2px solid;
+    padding: 10px;
+    width: 100%;
+}
+
+.dropdown.SearchBar__filters-date {
+    flex: 0 1 calc(49% - 1rem);
+}
+
+.dropdown.SearchBar__filters-tag {
+    flex: 0 1 calc(49% - 1rem);
+}
+@media screen and (max-width:767px) {
+    .SearchBar{
+        flex-direction: column;
+    }
+    .SearchBar__form {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .SearchBar__form i {
+        left: 12%;
+    }
+    .SearchBar__filters {
+        flex-direction: column;
+        width: 100%;
+    }
+    .dropdown.SearchBar__filters-date {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .dropdown.SearchBar__filters-tag {
+        width: 100%;
+    }
+}

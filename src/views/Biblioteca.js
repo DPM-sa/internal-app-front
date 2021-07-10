@@ -6,6 +6,7 @@ import './Biblioteca.css'
 import Footer from '../components/Footer'
 import SpinnerComponent from '../components/SpinnerComponent'
 import WhatsappBtn from '../components/WhatsappBtn'
+import Banner from '../components/Banner'
 const Biblioteca = () => {
     const [{ token }] = useStateValue()
     const [files, setFiles] = useState([])
@@ -55,16 +56,9 @@ const Biblioteca = () => {
     return (
         <>
             <NavbarProfile />
-            <div className="Directorio__banner">
-                <img className="Directorio__banner-img" src="./assets/banner-biblioteca.jpg" />
-                <div className="Directorio__banner-content">
-                    <h1>Biblioteca</h1>
-                    <p>Encontra aqui materiales a disposicion para todos los colaboradores de DPM</p>
-                    <button className="Directorio__banner-button">+ Ver más</button>
-                </div>
-            </div>
+            <Banner image={'./assets/banner-biblioteca.jpg'} title={'Biblioteca'} content={'Encontra aqui materiales a disposicion para todos los colaboradores de DPM'} linkto={'biblioteca'} />
             <div className="Biblioteca__search">
-                <form>
+                <form id="biblioteca">
                     <input name="search" type="text" className="Biblioteca__search-input" placeholder="Buscar un archivo por nombre" />
                     <i className="fas fa-search Biblioteca__search-icon"></i>
                 </form>

@@ -1,0 +1,22 @@
+.fade.ModalProfile.modal.show {
+    padding-left: 0;
+}
+
+.ModalProfile .modal-content {
+    border-radius: 20px;
+}
+
+.ModalProfile button.close {
+    color: white;
+    background: #004580;
+    margin: 10px;
+    padding: 0px 7px 5px;
+    border-radius: 40px;
+    opacity: 1;
+    position: absolute;
+    right: 2%;
+    z-index: 1;
+}
+.ModalProfile .modal-header {
+    border-bottom: none;
+}

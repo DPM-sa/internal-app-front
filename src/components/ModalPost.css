@@ -1,11 +1,12 @@
 .fade.ModalPost.modal.show {
     padding-left: 0;
 }
-.ModalPost .modal-content{
+
+.ModalPost .modal-content {
     border-radius: 20px;
 }
 
-.ModalPost__img {
+.ModalPost__header-img {
     width: 100%;
     position: relative;
     border-top-left-radius: 20px;
@@ -19,7 +20,7 @@
     overflow: hidden;
 }
 
-.ModalPost-content {
+.ModalPost__header-content {
     position: absolute;
     color: white;
     padding-left: 20px;
@@ -37,16 +38,16 @@
     opacity: 1;
 }
 
-.ModalPost-actions {
+.ModalPost__header-actions {
     display: flex;
     flex-wrap: wrap;
 }
 
-.ModalPost-actions i {
+.ModalPost__header-actions i {
     margin: 0 10px;
 }
 
-.ModalPost-tag {
+.ModalPost__header-actions-tag {
     margin: 0 5px;
 }
 
@@ -59,12 +60,13 @@
     border-bottom-right-radius: 20px;
     overflow-x: hidden;
 }
-.ModalPost__content-text{
+
+.ModalPost__content-text {
     color: #004580;
     font-weight: 500;
 }
 
-.ModalPost__content-comments-label{
+.ModalPost__content-comments-label {
     color: #004580;
     font-weight: 500;
 }
@@ -98,17 +100,19 @@
     background-color: #fff;
 }
 
-.ModalPost__content-input{
+.ModalPost__content-input {
     border: 3px solid #004580;
     width: 100%;
     padding: 10px;
     border-radius: 40px;
     margin-bottom: 10px;
 }
-.ModalPost__content-input::placeholder{
+
+.ModalPost__content-input::placeholder {
     color: #004580;
 }
-.ModalPost__content-button{
+
+.ModalPost__content-button {
     background-color: #004580;
     color: white;
     border: none;
@@ -137,9 +141,11 @@
     font-weight: bold;
     color: #004580;
 }
-.ModalPost__content-comments-no-comment{
+
+.ModalPost__content-comments-no-comment {
     color: #004580;
 }
+
 @media (max-width: 767px) {
     .comments .commenter-name {
         font-size: 13px;

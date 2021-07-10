@@ -1,8 +1,9 @@
 import React from 'react'
-import './NavbarProfile.css'
 import { NavLink } from "react-router-dom";
 import { useStateValue } from '../StateProvider'
+import './NavbarProfile.css'
 const NavbarProfile = () => {
+
     const [{ }, dispatch] = useStateValue()
     const showMenu = () => {
         const toggle = document.getElementById('header-toggle')
@@ -15,6 +16,7 @@ const NavbarProfile = () => {
             type: 'LOGOUT'
         })
     }
+
     return (
         <header className="NavbarProfile__header">
             <div className="header__logo">
@@ -52,13 +54,13 @@ const NavbarProfile = () => {
                             </li>
 
                             <li className="nav__item dropdown">
-                                <span className="nav__link">Mi Perfil <i class='bx bx-chevron-down dropdown__icon'></i></span>
+                                <span id="dropdownNav" data-bs-toggle="dropdown" className="nav__link dropdown-toggle">Mi Perfil</span>
 
-                                <ul class="dropdown__menu">
-                                    <li class="dropdown__item">
+                                <ul aria-labelledby="dropdownNav" class="dropdown-menu">
+                                    <li class="dropdown-item">
                                         <NavLink exact to="/miperfil" class="nav__link">Mis Datos</NavLink>
                                     </li>
-                                    <li class="dropdown__item">
+                                    <li class="dropdown-item">
                                         <NavLink onClick={handleLogout} exact to="/login" class="nav__link">Cerrar Sesión</NavLink>
                                     </li>
                                 </ul>
