@@ -40,6 +40,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    max-height: 500px;
 }
 
 .Biblioteca__file {

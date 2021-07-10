@@ -66,10 +66,18 @@
     align-items: center;
     margin-bottom: 20px;
 }
-.PostSection__alert-no-posts p{
+
+.PostSection__alert-no-posts p {
     margin: 0;
 }
 
+.Whatsapp img {
+    width: 50px;
+    position: fixed;
+    left: 20px;
+    z-index: 1;
+    bottom: 20px;
+}
 button.btn.PostSection__loadmore {
     display: block;
     margin: 20px auto;

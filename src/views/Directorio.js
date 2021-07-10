@@ -1,11 +1,12 @@
 import axios from 'axios'
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavbarProfile from '../components/NavbarProfile'
 import { useStateValue } from '../StateProvider'
-import { Modal } from 'react-bootstrap'
 import Footer from '../components/Footer'
 import './Directorio.css'
 import SpinnerComponent from '../components/SpinnerComponent'
+import { Link } from 'react-router-dom'
+import WhatsappBtn from '../components/WhatsappBtn'
 const Directorio = () => {
     const [{ token }] = useStateValue()
 
@@ -15,9 +16,7 @@ const Directorio = () => {
         search: ''
     })
     const { search } = form
-
-    const [user, setUser] = useState(null)
-    const [typeOrder, setTypeOrder] = useState('alfabetico')
+    const [typeOrder, setTypeOrder] = useState('antiguos')
     const [loading, setLoading] = useState(false)
     let headers = {
         'Content-Type': 'application/json',
@@ -73,14 +72,6 @@ const Directorio = () => {
             })
     }
 
-    const handleClick = (user) => {
-        setUser(user)
-    }
-
-    const handleClose = () => {
-        setUser(null)
-    }
-
 
     return (
         <>
@@ -132,11 +123,11 @@ const Directorio = () => {
                     }
                     {
                         !loading && users.map(user => (
-                            <li key={user._id} className="Directorio__list-control" onClick={() => handleClick(user)}>
-                                <div className="Directorio__list-control-section name">
+                            <li key={user._id} className="Directorio__list-control">
+                                <Link to={`/directorio/profile/${user._id}`} className="Directorio__list-control-section name">
                                     {user.image ? <img className="Directorio__list-image" src={user.image} /> : <i class="far fa-user Directorio__user-no-image"></i>}
                                     {user.nombre} {user.apellido}
-                                </div>
+                                </Link>
                                 <div className="Directorio__list-control-section charge">
                                     Cargo
                                 </div>
@@ -148,18 +139,7 @@ const Directorio = () => {
                     }
                 </ul>
             </ul>
-
-            <Modal show={user} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Usuario</Modal.Title>
-                </Modal.Header>
-                {user &&
-                    <Modal.Body className="modalBody">
-                        <img src="./assets/no-image.jpg" className="modalBody__img" />
-                        <h5>{user.nombre} {user.apellido}</h5>
-                    </Modal.Body>
-                }
-            </Modal>
+            <WhatsappBtn />
             <Footer />
         </>
     )

@@ -2,6 +2,7 @@ import React from 'react'
 import NavbarProfile from '../components/NavbarProfile'
 import './Sugerencias.css'
 import Footer from '../components/Footer'
+import WhatsappBtn from '../components/WhatsappBtn'
 const Sugerencias = () => {
     return (
         <>
@@ -43,6 +44,7 @@ const Sugerencias = () => {
                     </div>
                 </div>
             </div>
+            <WhatsappBtn />
             <Footer />
         </>
 

@@ -5,35 +5,10 @@ import PostSection from '../components/PostSection'
 import Options from '../components/Options'
 import SearchBar from '../components/SearchBar'
 import Footer from '../components/Footer'
-import { useStateValue } from '../StateProvider'
-import axios from 'axios'
+import WhatsappBtn from '../components/WhatsappBtn'
 
 const Home = () => {
-    const [{ user }, dispatch] = useStateValue()
 
-    let headers = {
-        'Content-Type': 'application/json'
-    }
-    const getToken = () => {
-        axios.post('https://internal-app-dpm.herokuapp.com/renew',
-            {
-                "user": `${user.user}`
-            },
-            { headers }
-        ).then(resp => {
-            dispatch({
-                type: 'LOGIN',
-                token: resp.data.token,
-                user: resp.data.usuario
-            })
-        })
-    }
-
-    useEffect(() => {
-        if (user) {
-            getToken()
-        }
-    }, [])
     return (
         <>
             <NavbarProfile />
@@ -41,6 +16,7 @@ const Home = () => {
             <SearchBar />
             <PostSection />
             <Options />
+            <WhatsappBtn />
             <Footer />
         </>
     )

@@ -8,25 +8,33 @@ import Footer from '../components/Footer'
 import moment from 'moment'
 const Profile = () => {
     const [{ user, token }, dispatch] = useStateValue()
+
     let headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+
     const [edit, setEdit] = useState(false)
+
     const [form, setForm] = useState({
-        nombre: '',
-        apellido: '',
-        email: '',
-        phone: '',
-        birth: '',
-        position: '',
-        sector: ''
+        nombre: user.nombre,
+        apellido: user.apellido,
+        email: user.email ? user.email : '',
+        phone: user.phone ? user.phone : '',
+        birth: user.birth ? user.birth : '',
+        position: user.position,
+        sector: user.sector
     })
+
     const { nombre, apellido, email, phone, birth, position, sector } = form
-    const [imageProfile, setImageProfile] = useState('')
+
+    const [imageProfile, setImageProfile] = useState(user.image ? user.image : '')
+
     const [loading, setLoading] = useState(false)
+
     const [loadingImg, setLoadingImg] = useState(false)
-    const getUser = async () => {
+
+    /* const getUser = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`, { headers })
             .then(resp => {
                 console.log(resp.data)
@@ -43,11 +51,11 @@ const Profile = () => {
                     setImageProfile(resp.data.user.image)
                 }
             })
-    }
+    } */
 
-    useEffect(() => {
+    /* useEffect(() => {
         getUser()
-    }, [loading])
+    }, [loading]) */
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -64,9 +72,13 @@ const Profile = () => {
                 "image": `${imageProfile}`
             },
             { headers })
-            .then(() => {
+            .then((resp) => {
+                dispatch({
+                    type: 'LOGIN',
+                    user: resp.data.usuario,
+                    token: token
+                })
                 setLoading(false)
-                setEdit(!edit)
             })
     }
 
@@ -87,13 +99,13 @@ const Profile = () => {
         const storageRef = storage.ref().child('profileImages').child(`${user.user}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
-        setImageProfile(url)
         await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
             {
                 "image": `${url}`
             },
             { headers })
             .then(() => {
+                setImageProfile(url)
                 setLoadingImg(false)
             })
     }
@@ -106,13 +118,13 @@ const Profile = () => {
         setLoadingImg(true)
         const storageRef = storage.ref().child('profileImages').child(`${user.user}`)
         storageRef.delete().then(async () => {
-            setImageProfile('')
             await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
                 {
                     "image": ""
                 },
                 { headers })
                 .then(() => {
+                    setImageProfile('')
                     setLoadingImg(false)
                 })
         })
@@ -130,9 +142,9 @@ const Profile = () => {
                     <div className="d-flex flex-column align-items-center text-center">
                         <img src={imageProfile ? imageProfile : './assets/no-image.jpg'} alt="Admin" className="rounded-circle" width="150" />
                         <div className="mt-3">
-                            <h4>¡Hola {nombre} {apellido}!</h4>
-                            <p className="text-secondary mb-1">{user.position && user.position}</p>
-                            <p className="text-muted font-size-sm">{user.sector && user.sector}</p>
+                            <h4>¡Hola {user.nombre} {user.apellido}!</h4>
+                            <p className="text-secondary mb-1">{user.position}</p>
+                            <p className="text-muted font-size-sm">{user.sector}</p>
                             <input
                                 id="fileSelector"
                                 type="file"
@@ -225,8 +237,12 @@ const Profile = () => {
                                 </div>
                             </div>
                             <div className="Profile__data-row-button">
-                                <button onClick={handleEdit} >Cancelar</button>
-                                <button type="submit">{loading ? 'Espere...' : 'Guardar cambios'}</button>
+                                <div>
+                                    <button onClick={handleEdit} >Cancelar</button>
+                                </div>
+                                <div>
+                                    <button type="submit">{loading ? 'Espere...' : 'Guardar cambios'}</button>
+                                </div>
                             </div>
                         </form>
 
@@ -245,24 +261,24 @@ const Profile = () => {
                                     <h6>Email</h6>
                                 </div>
                                 <div>
-                                    <p>{email && email}</p>
+                                    <p>{user.email && user.email}</p>
                                 </div>
                             </div>
                             <div className="Profile__data-row">
                                 <div><h6>Telefono</h6></div>
-                                <div><p>{phone && phone}</p></div>
+                                <div><p>{user.phone && user.phone}</p></div>
                             </div>
                             <div className="Profile__data-row">
                                 <div><h6>Fecha de nacimiento</h6></div>
-                                <div><p>{birth && formatDateProfile(birth)}</p></div>
+                                <div><p>{user.birth && user.birth}</p></div>
                             </div>
                             <div className="Profile__data-row">
                                 <div><h6>Cargo</h6></div>
-                                <div><p>{position && position}</p></div>
+                                <div><p>{user.position && user.position}</p></div>
                             </div>
                             <div className="Profile__data-row">
                                 <div><h6>Sector</h6></div>
-                                <div><p>{sector && sector}</p></div>
+                                <div><p>{user.sector && user.sector}</p></div>
                             </div>
                             <div className="Profile__data-row-button">
                                 <button onClick={handleEdit} className="Profile__data-button">Editar</button>
