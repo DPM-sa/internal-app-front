@@ -34,10 +34,34 @@ code {
   border: 5px solid #004580;
 }
 
-.Whatsapp img {
-  width: 50px;
+.Whatsapp {
   position: fixed;
   left: 20px;
   z-index: 1;
   bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.Whatsapp img {
+  width: 50px;
+  z-index: 1;
+}
+
+.Whatsapp__text {
+  color: white;
+  background-color: #42E35F;
+  padding: 2px;
+  width: 0px;
+  transition: width .2s;
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+  left: -8px;
+  border-radius: 20px;
+}
+
+.Whatsapp:hover .Whatsapp__text {
+  width: 180px;
+  padding-left: 10px;
 }

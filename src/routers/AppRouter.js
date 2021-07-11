@@ -9,45 +9,18 @@ import Profile from '../views/Profile'
 import Sugerencias from '../views/Sugerencias'
 import ModalPost from '../components/ModalPost'
 import ModalSlider from '../components/ModalSlider'
-import { useStateValue } from '../StateProvider'
-import axios from 'axios'
 import ModalProfile from '../components/ModalProfile'
+
 const AppRouter = () => {
-    const [{ user }, dispatch] = useStateValue()
-
-    let headers = {
-        'Content-Type': 'application/json'
-    }
-    const getToken = async () => {
-        await axios.post('https://internal-app-dpm.herokuapp.com/renew',
-            {
-                "user": `${user.user}`
-            },
-            { headers }
-        ).then(resp => {
-            console.log(resp)
-            dispatch({
-                type: 'LOGIN',
-                token: resp.data.token,
-                user: resp.data.usuario
-            })
-        })
-    }
-
-    useEffect(() => {
-        if (user) {
-            getToken()
-        }
-    }, [])
     return (
         <>
             <Switch>
-                <Route exact path="/login" component={Login} />
+                <Route path="/login" component={Login} />
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/directorio" component={Directorio} />
-                <PrivateRoute exact path="/biblioteca" component={Biblioteca} />
-                <PrivateRoute exact path="/miperfil" component={Profile} />
-                <PrivateRoute exact path="/sugerencias" component={Sugerencias} />
+                <PrivateRoute path="/biblioteca" component={Biblioteca} />
+                <PrivateRoute path="/miperfil" component={Profile} />
+                <PrivateRoute path="/sugerencias" component={Sugerencias} />
                 <Redirect to="/home" />
             </Switch>
             <Switch>

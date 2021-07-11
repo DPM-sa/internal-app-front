@@ -1,7 +1,15 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
+import { useStateValue } from '../StateProvider'
 import './Footer.css'
 
 const Footer = () => {
+    const [{ }, dispatch] = useStateValue()
+    const handleLogout = () => {
+        dispatch({
+            type: 'LOGOUT'
+        })
+    }
     return (
         <footer className="Footer">
 
@@ -19,12 +27,12 @@ const Footer = () => {
 
                     <div className="Footer__content-top-section">
                         <ul>
-                            <li>Inicio</li>
-                            <li>Directorio</li>
-                            <li>Buzón de sugerencias</li>
-                            <li>Biblioteca</li>
-                            <li>Modificá tu perfil</li>
-                            <li>Cerrar sesión</li>
+                            <li><NavLink exact to="/home">Inicio</NavLink></li>
+                            <li><NavLink exact to="/directorio">Directorio</NavLink></li>
+                            <li><NavLink exact to="/sugerencias">Buzón de sugerencias</NavLink></li>
+                            <li><NavLink exact to="/biblioteca">Biblioteca</NavLink></li>
+                            <li><NavLink exact to="/miperfil">Modificá tu perfil</NavLink></li>
+                            <li><NavLink onClick={handleLogout} exact to="/login">Cerrar sesión</NavLink></li>
                         </ul>
                     </div>
 

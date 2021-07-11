@@ -49,11 +49,13 @@
     align-items: center;
     justify-content: space-around;
 }
+
 @media screen and (max-width:400px) {
-    .Login__logo{
+    .Login__logo {
         width: 90%;
     }
 }
+
 @media screen and (max-width:767px) {
     .login-card-img {
         position: relative;
@@ -103,6 +105,11 @@
     margin-bottom: 10px;
 }
 
+.Login__button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
 .login-card .forgot-password-link {
     font-size: 14px;
     color: #004580;
@@ -124,4 +131,56 @@
 .login-card-footer-nav a {
     font-size: 14px;
     color: #919aa3;
+}
+
+.fade.Login__modal.modal.show {
+    padding-left: 0;
+}
+
+.Login__modal .modal-content {
+    border-radius: 20px;
+}
+
+.Login__modal .modal-header {
+    justify-content: flex-end;
+    padding: 10px;
+    align-items: center;
+}
+
+.Login__modal-button-close {
+    color: white;
+    background: #004580;
+    padding: 3px 8px;
+    border-radius: 40px;
+    opacity: 1;
+    z-index: 1;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.Login__modal-input {
+    width: 100%;
+    border: 2px solid #004580;
+    border-radius: 40px;
+    padding: 10px;
+    color: #004580;
+}
+
+.Login__modal-input::placeholder {
+    color: #004580;
+}
+
+.Login__modal-button {
+    background-color: #004580;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    border: none;
+}
+
+.Login__modal label {
+    color: #004580;
+    font-weight: 600;
 }

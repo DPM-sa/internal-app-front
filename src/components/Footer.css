@@ -30,6 +30,10 @@
     list-style: none;
     padding-left: 0;
 }
+.Footer__content-top-section a{
+    color: white;
+    text-decoration: none;
+}
 .Footer__content-top-section-cropped-img {
     height: 80px;
     width: 160px;
