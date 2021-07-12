@@ -62,6 +62,6 @@ code {
 }
 
 .Whatsapp:hover .Whatsapp__text {
-  width: 180px;
-  padding-left: 10px;
+  width: 170px;
+  left: 0px;
 }
