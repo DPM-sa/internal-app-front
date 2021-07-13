@@ -34,7 +34,7 @@
     font-size: 13px;
 }
 
-.PostsAdmin-content-actions-item:first-of-type {
+a.PostsAdmin-content-actions-item{
     background-color: #004580;
     color: white;
     border-radius: 20px;

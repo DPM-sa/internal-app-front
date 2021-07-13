@@ -11,6 +11,7 @@ import ModalPost from '../components/ModalPost'
 import ModalSlider from '../components/ModalSlider'
 import ModalProfile from '../components/ModalProfile'
 import PostsAdmin from '../views/PostsAdmin'
+import NewPost from '../views/NewPost'
 
 const AppRouter = () => {
     return (
@@ -18,6 +19,7 @@ const AppRouter = () => {
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/admin" component={PostsAdmin} />
+                <Route path="/nuevopost" component={NewPost} />
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/directorio" component={Directorio} />
                 <PrivateRoute path="/biblioteca" component={Biblioteca} />

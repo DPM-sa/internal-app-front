@@ -4,10 +4,13 @@ import './PostsAdmin.css'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useStateValue } from '../StateProvider'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const PostsAdmin = () => {
     const [{ token }] = useStateValue()
     const [posts, setPosts] = useState([])
+    const [postsQuantity, setPostsQuantity] = useState(0)
+    const [likesQuantity, setLikesQuantity] = useState(0)
     const getPosts = async () => {
         let headers = {
             'Content-Type': 'application/json',
@@ -15,6 +18,9 @@ const PostsAdmin = () => {
         }
         await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
             .then(resp => {
+                let likes = resp.data.posts.map(item => item.likes)
+                setLikesQuantity(likes.flat(1).length)
+                setPostsQuantity(resp.data.cuantos)
                 setPosts(resp.data.posts)
             })
     }
@@ -51,16 +57,16 @@ const PostsAdmin = () => {
                     <h1>Gestionar publicaciones</h1>
                     <div className="PostsAdmin-content">
                         <div className="PostsAdmin-content-actions">
-                            <div className="PostsAdmin-content-actions-item">
+                            <Link to="/nuevopost" className="PostsAdmin-content-actions-item">
                                 <span>+</span>
                                 <p>Crear una nueva publicacion</p>
-                            </div>
+                            </Link>
                             <div className="PostsAdmin-content-actions-item">
-                                <span>226</span>
+                                <span>{postsQuantity}</span>
                                 <p>Publicaciones realizadas</p>
                             </div>
                             <div className="PostsAdmin-content-actions-item">
-                                <span>1236</span>
+                                <span>{likesQuantity}</span>
                                 <p>Likes recibidos</p>
                             </div>
                             <div className="PostsAdmin-content-actions-item">
@@ -80,7 +86,7 @@ const PostsAdmin = () => {
                                         posts.map(post => (
                                             <li className="PostsAdmin-posts-list-control">
                                                 <span>{post.title}</span>
-                                                <span>Fecha</span>
+                                                <span>{post.date}</span>
                                                 <span className="posts-lists-control-actions">
                                                     <OverlayTrigger
                                                         placement="top"

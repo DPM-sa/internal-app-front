@@ -1,7 +1,11 @@
 .NewPost {
-    margin-left: 300px
+    margin-left: 300px;
 }
-
+.NewPost__container{
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 10px;
+}
 trix-toolbar .trix-button-row {
     justify-content: flex-start;
 }
@@ -26,6 +30,7 @@ trix-editor {
     border: none;
     border-top: 2px solid #004580;
     border-radius: 0px;
+    height: 250px;
 }
 
 .editor {
@@ -38,4 +43,33 @@ trix-editor {
     .NewPost {
         margin-left: 25px
     }
+}
+
+.NewPost__actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.NewPost__actions button {
+    flex: 0 1 calc(48% - 1rem);
+    background-color: #004580;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 20px;
+    color: white;
+}
+
+.NewPost__actions input {
+    flex: 0 1 calc(48% - 1rem);
+    border: 2px solid #004580;
+    padding: 10px;
+    border-radius: 20px;
+    color: #004580;
+}
+
+.NewPost__actions input::placeholder{
+    color: #004580;
 }
