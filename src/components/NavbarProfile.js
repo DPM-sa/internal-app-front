@@ -18,7 +18,7 @@ const NavbarProfile = () => {
     }
 
     return (
-        <header className="NavbarProfile__header">
+        <header className="NavbarProfile">
             <div className="header__logo">
                 <div className="nav__img">
                     <img src="./assets/logo-header.png" alt="" />

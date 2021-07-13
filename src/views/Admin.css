@@ -1,9 +1,0 @@
-.Admin {
-    margin-left: 300px
-}
-
-@media screen and (max-width:767px) {
-    .Admin {
-        margin-left: 25px
-    }
-}

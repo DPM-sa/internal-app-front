@@ -26,7 +26,9 @@ const Directorio = () => {
 
     const [typeOrder, setTypeOrder] = useState('antiguos')
     const [loading, setLoading] = useState(false)
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     function sortGreatest(arr) {
         for (let i = 0; i < arr.length; i++) {
             for (let j = i; j < arr.length; j++) {
@@ -106,9 +108,9 @@ const Directorio = () => {
             <ul className="Directorio__list">
 
                 <li className="Directorio__list-header">
-                    <span className="Directorio__list-header-section">Nombre y apellido</span>
-                    <span className="Directorio__list-header-section">Cargo</span>
-                    <span className="Directorio__list-header-section">Sector</span>
+                    <span>Nombre y apellido</span>
+                    <span>Cargo</span>
+                    <span>Sector</span>
                 </li>
                 <ul className="Directorio__list-body">
                     {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useStateValue } from '../StateProvider'
 import './Footer.css'
 
@@ -27,12 +27,12 @@ const Footer = () => {
 
                     <div className="Footer__content-top-section">
                         <ul>
-                            <li><NavLink exact to="/home">Inicio</NavLink></li>
-                            <li><NavLink exact to="/directorio">Directorio</NavLink></li>
-                            <li><NavLink exact to="/sugerencias">Buzón de sugerencias</NavLink></li>
-                            <li><NavLink exact to="/biblioteca">Biblioteca</NavLink></li>
-                            <li><NavLink exact to="/miperfil">Modificá tu perfil</NavLink></li>
-                            <li><NavLink onClick={handleLogout} exact to="/login">Cerrar sesión</NavLink></li>
+                            <li><Link exact to="/home">Inicio</Link></li>
+                            <li><Link exact to="/directorio">Directorio</Link></li>
+                            <li><Link exact to="/sugerencias">Buzón de sugerencias</Link></li>
+                            <li><Link exact to="/biblioteca">Biblioteca</Link></li>
+                            <li><Link exact to="/miperfil">Modificá tu perfil</Link></li>
+                            <li><Link onClick={handleLogout} exact to="/login">Cerrar sesión</Link></li>
                         </ul>
                     </div>
 

@@ -1,20 +1,21 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './Options.css'
 const Options = () => {
     return (
         <div className="Options">
-            <div className="Option">
-                <i class="far fa-envelope"></i>Buzon de sugerencias
-            </div>
-            <div className="Option">
+            <Link to="/sugerencias" className="Option">
+                <i class="far fa-envelope"></i>Buzón de sugerencias
+            </Link>
+            <Link to="/biblioteca" className="Option">
                 <i class="far fa-file-alt"></i> Biblioteca de archivos
-            </div>
-            <div className="Option">
-                <i class="far fa-user"></i> Modifica tu perfil
-            </div>
-            <div className="Option">
+            </Link>
+            <Link to="/miperfil" className="Option">
+                <i class="far fa-user"></i> Modificá tu perfil
+            </Link>
+            <Link to="/directorio" className="Option">
                 <i class="far fa-address-book"></i>Directorio de usuarios
-            </div>
+            </Link>
         </div>
     )
 }

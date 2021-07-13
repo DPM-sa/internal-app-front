@@ -14,7 +14,9 @@ const Sugerencias = () => {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     const [form, setForm] = useState({
         title: '',
         content: ''
@@ -67,7 +69,10 @@ const Sugerencias = () => {
                     <div className="form-group">
                         <textarea name="content" value={content} onChange={handleInputChange} className="Sugerencias__textarea" rows="3" placeholder="Desarrolla aqui tu sugerencia, cuanta más informacion brindes mejor"></textarea>
                     </div>
-                    <button type="submit" className="Sugerencias__button">Enviar</button>
+                    <button type="submit" className="Sugerencias__button">
+                        <i class="far fa-paper-plane"></i>
+                        Enviar
+                    </button>
                 </form>
                 <h3>Mis sugerencias enviadas</h3>
                 <div className="Sugerencias__enviadas">
@@ -78,10 +83,8 @@ const Sugerencias = () => {
                     {
                         sugerencias.map(sugerencia => (
                             <div className="Sugerencia">
-                                <h5 className="card-title">{sugerencia.title}</h5>
-                                <div className="card-body">
-                                    <p className="card-text">{sugerencia.content}</p>
-                                </div>
+                                <h5>{sugerencia.title}</h5>
+                                <p>{sugerencia.content}</p>
                             </div>
                         ))
                     }

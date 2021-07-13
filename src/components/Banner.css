@@ -29,7 +29,11 @@
     justify-content: center;
     padding-left: 5%;
 }
-
+.Banner-content h1{
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
 .Banner-button {
     background-color: #004580;
     color: white;

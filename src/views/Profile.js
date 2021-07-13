@@ -13,7 +13,9 @@ const Profile = () => {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     const [edit, setEdit] = useState(false)
 
     const [form, setForm] = useState({
@@ -118,10 +120,28 @@ const Profile = () => {
                 <div className="card-body">
                     <div className="d-flex flex-column align-items-center text-center">
                         {imageProfile ? <img src={imageProfile} className="profile-image-medium rounded-circle" width="150" /> : <i class="far fa-user no-image-profile-medium"></i>}
+                        {edit && !loadingImg
+                            &&
+                            <>
+                                <p className="editImage" onClick={handlePictureClick}>
+                                    <i class="fas fa-plus"></i>
+                                    Cambiar foto de perfil
+                                </p>
+                                <p className="editImage" onClick={handleDeleteImage}>
+                                    <i class="fas fa-trash-alt"></i>
+                                    Eliminar foto de perfil
+                                </p>
+                            </>
+                        }
+                        {
+                            edit && loadingImg
+                            &&
+                            <p className="text-secondary">Cargando...</p>
+                        }
                         <div className="mt-3">
-                            <h4>¡Hola {user.nombre} {user.apellido}!</h4>
-                            <p className="text-secondary mb-1">{user.position}</p>
-                            <p className="text-muted font-size-sm">{user.sector}</p>
+                            <h4 className="Profile__name">¡Hola {user.nombre} {user.apellido}!</h4>
+                            <p className="Profile__info">{user.position}</p>
+                            <p className="Profile__info">{user.sector}</p>
                             <input
                                 id="fileSelector"
                                 type="file"
@@ -129,18 +149,6 @@ const Profile = () => {
                                 style={{ display: "none" }}
                                 onChange={handleFileChange}
                             />
-                            {edit && !loadingImg
-                                &&
-                                <>
-                                    <p onClick={handlePictureClick} className="text-primary">Cambiar foto de perfil</p>
-                                    <p onClick={handleDeleteImage} className="text-primary">Eliminar foto de perfil</p>
-                                </>
-                            }
-                            {
-                                edit && loadingImg
-                                &&
-                                <p className="text-secondary">Cargando...</p>
-                            }
                         </div>
                     </div>
                 </div>
@@ -151,10 +159,10 @@ const Profile = () => {
                         <form onSubmit={handleSubmit} >
                             <div className="Profile__data-row">
                                 <div>
-                                    <h6>Nombre de usuario</h6>
+                                    <h6>Usuario</h6>
                                 </div>
                                 <div>
-                                    {user.user}
+                                    <p>{user.user}</p>
                                 </div>
                             </div>
                             <div className="Profile__data-row">
@@ -202,7 +210,7 @@ const Profile = () => {
                                     <h6>Cargo</h6>
                                 </div>
                                 <div>
-                                    {position}
+                                    <p>{position}</p>
                                 </div>
                             </div>
                             <div className="Profile__data-row">
@@ -210,15 +218,27 @@ const Profile = () => {
                                     <h6>Sector</h6>
                                 </div>
                                 <div>
-                                    {sector}
+                                    <p>{sector}</p>
                                 </div>
                             </div>
                             <div className="Profile__data-row-button">
                                 <div>
-                                    <button onClick={handleEdit} >Cancelar</button>
+                                    <button onClick={handleEdit}>
+                                        <i class="fas fa-chevron-left"></i>
+                                        Cancelar
+                                    </button>
                                 </div>
                                 <div>
-                                    <button type="submit">{loading ? 'Espere...' : 'Guardar cambios'}</button>
+                                    {
+                                        loading
+                                            ?
+                                            <button type="submit">Espere...</button>
+                                            :
+                                            <button type="submit">
+                                                <i class="far fa-save"></i>
+                                                Guardar
+                                            </button>
+                                    }
                                 </div>
                             </div>
                         </form>
@@ -226,7 +246,7 @@ const Profile = () => {
                         :
                         <div className="Profile__data">
                             <div className="Profile__data-row">
-                                <div><h6>User</h6></div>
+                                <div><h6>Usuario</h6></div>
                                 <div><p>{user.user}</p></div>
                             </div>
                             <div className="Profile__data-row">
@@ -258,7 +278,10 @@ const Profile = () => {
                                 <div><p>{user.sector && user.sector}</p></div>
                             </div>
                             <div className="Profile__data-row-button">
-                                <button onClick={handleEdit} className="Profile__data-button">Editar</button>
+                                <button onClick={handleEdit} className="Profile__data-button">
+                                    <i class="fas fa-pen"></i>
+                                    Editar
+                                </button>
                             </div>
                         </div>
                 }

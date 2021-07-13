@@ -4,8 +4,10 @@
 }
 
 .Sugerencias h3 {
-    margin-top: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
     color: #004580;
+    font-weight: bold;
 }
 
 .Sugerencias p {
@@ -21,6 +23,14 @@
     padding: 10px;
     border-radius: 40px;
     width: 50%;
+}
+
+.Sugerencias__input::placeholder {
+    color: #004580;
+}
+
+.Sugerencias__textarea::placeholder {
+    color: #004580;
 }
 
 .Sugerencias__textarea {
@@ -40,9 +50,13 @@
     color: white;
 }
 
+.Sugerencias__button i {
+    margin-right: 5px;
+}
+
 .Sugerencia {
     border: 2px solid #004580;
-    padding: 10px;
+    padding: 20px;
     border-radius: 20px;
     margin-bottom: 10px;
     color: #004580;
@@ -50,12 +64,7 @@
 }
 
 .Sugerencias__enviadas {
-    max-height: 500px;
-    overflow-y: scroll;
-}
-
-.Sugerencias__enviadas::-webkit-scrollbar {
-    display: none;
+    margin-bottom: 20px;
 }
 
 @media screen and (max-width: 576px) {

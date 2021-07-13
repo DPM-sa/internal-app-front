@@ -1,5 +1,4 @@
 .SearchBar {
-    padding: 20px;
     width: 90%;
     margin: 20px auto;
     display: flex;
@@ -16,7 +15,7 @@
 }
 
 .SearchBar__form i {
-    left: 8%;
+    left: 7%;
     position: absolute;
     color: #004580;
 }
@@ -64,9 +63,6 @@ button#dropdownMenuButton1 {
     .SearchBar__form {
         width: 100%;
         margin-bottom: 10px;
-    }
-    .SearchBar__form i {
-        left: 12%;
     }
     .SearchBar__filters {
         flex-direction: column;

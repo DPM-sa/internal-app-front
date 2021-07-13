@@ -18,7 +18,7 @@ const ModalProfile = () => {
         "token": `${token}`
     }
 
-    const getSlider = async () => {
+    const getUser = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${id}`, { headers })
             .then(resp => {
                 setUser(resp.data.user)
@@ -26,11 +26,11 @@ const ModalProfile = () => {
     }
 
     useEffect(() => {
-        getSlider()
+        getUser()
     }, [])
 
     const handleClose = () => {
-        history.goBack()
+        history.push('/directorio')
     }
 
     return (
@@ -42,12 +42,12 @@ const ModalProfile = () => {
                 <div className="d-flex flex-column align-items-center text-center">
                     {user.image ? <img src={user.image} className="profile-image-medium rounded-circle" width="150" /> : <i class="far fa-user no-image-profile-medium"></i>}
                     <div className="mt-3">
-                        <h4>{user.nombre} {user.apellido}</h4>
-                        <p className="text-secondary mb-1">{user.position && user.position}</p>
-                        <p className="text-muted font-size-sm">{user.sector && user.sector}</p>
+                        <h4 className="Profile__name">{user.nombre} {user.apellido}</h4>
+                        <p className="Profile__info">{user.position && user.position}</p>
+                        <p className="Profile__info">{user.sector && user.sector}</p>
                     </div>
                 </div>
-                <div className="Profile__data">
+                <div className="Profile__data mt-3">
                     <div className="Profile__data-row">
                         <div><h6>User</h6></div>
                         <div><p>{user.user}</p></div>
@@ -80,6 +80,9 @@ const ModalProfile = () => {
                         <div><h6>Sector</h6></div>
                         <div><p>{user.sector && user.sector}</p></div>
                     </div>
+                    <button className="ModalPost__back-button" onClick={handleClose}>
+                        <i class="fas fa-chevron-left"></i> Volver
+                    </button>
                 </div>
             </Modal.Body>
         </Modal>

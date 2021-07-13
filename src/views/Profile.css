@@ -14,12 +14,34 @@
     color: #004580;
 }
 
+.Profile__name {
+    font-weight: bold;
+    font-size: 30px;
+    color: #004580;
+}
+
+.Profile__info {
+    margin-bottom: 0;
+    color: #004580;
+}
+
+.editImage {
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.editImage i {
+    margin-right: 5px;
+}
+
 .Profile__data-row {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .Profile__data-row div {
@@ -43,7 +65,7 @@
 
 .Profile__data-row p {
     text-align: left;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .Profile__data-row-button {
@@ -72,6 +94,10 @@
     border-radius: 40px;
 }
 
+.Profile__data-row-button button i {
+    margin-right: 5px;
+}
+
 .Profile__data-button {
     background-color: #004580;
     color: white;
@@ -80,13 +106,17 @@
     border-radius: 40px;
 }
 
+.Profile__data-button i {
+    margin-right: 5px;
+}
+
 .Profile__data-input {
     border: 2px solid #004580;
     padding: 5px;
     border-radius: 20px;
     width: 70%;
     color: #004580;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 767px) {

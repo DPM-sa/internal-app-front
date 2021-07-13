@@ -5,6 +5,7 @@ import { useStateValue } from '../StateProvider'
 import axios from 'axios'
 import moment from 'moment'
 import './ModalPost.css'
+import Comment from './Comment'
 
 const ModalPost = () => {
     const [{ token, user }] = useStateValue()
@@ -94,7 +95,7 @@ const ModalPost = () => {
     }
 
     const handleClose = () => {
-        history.goBack()
+        history.push('/home')
     }
     const commentDate = (date) => {
         return moment(date).format('D MMM YYYY')
@@ -104,8 +105,10 @@ const ModalPost = () => {
             <Modal.Header closeButton>
                 <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="ModalPost__header-img" />
                 <div className="ModalPost__header-content">
-                    <h4>{titlePost}</h4>
-                    <p>{contentPost}</p>
+                    <div className="ModalPost-header-top">
+                        <h4>{titlePost}</h4>
+                        <p>{contentPost}</p>
+                    </div>
                     <div className="ModalPost__header-actions">
                         <span>
                             {
@@ -134,27 +137,18 @@ const ModalPost = () => {
                 <p className="ModalPost__content-text">{contentPost}</p>
                 <form onSubmit={handleSubmit} className="comment-box add-comment">
                     <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" className="ModalPost__content-input" />
-                    <button type="submit" className="ModalPost__content-button">Comentar</button>
+                    <button disabled={comment === ""} type="submit" className="ModalPost__content-button">Comentar</button>
                 </form>
                 <label className="ModalPost__content-comments-label">Comentarios:</label>
                 {
                     comments.length > 0
                         ? comments.map(comment => (
-                            <div className="comment-box">
-                                <span className="commenter-pic">
-                                    {comment.userId.image ? <img className="profile-image-small" src={comment.userId.image} /> : <i class="far fa-user no-image-profile-small"></i>}
-                                </span>
-                                <span className="commenter-name">
-                                    {comment.userId.nombre} {comment.userId.apellido}<span className="comment-time">{commentDate(comment.date)}</span>
-                                </span>
-                                <p className="comment-txt">
-                                    {comment.content}
-                                </p>
-                            </div>
+                            <Comment comment={comment} />
                         ))
                         : <p className="ModalPost__content-comments-no-comment">No hay comentarios, realiza uno</p>
 
                 }
+                <button className="ModalPost__back-button" onClick={handleClose}><i class="fas fa-chevron-left"></i> Volver</button>
             </Modal.Body>
         </Modal>
     )

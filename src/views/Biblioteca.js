@@ -16,7 +16,9 @@ const Biblioteca = () => {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     function sortGreatest(arr) {
         for (let i = 0; i < arr.length; i++) {
             for (let j = i; j < arr.length; j++) {
@@ -91,7 +93,7 @@ const Biblioteca = () => {
                         <div key={file._id} className="Biblioteca__file" >
                             <i class="far fa-file-alt Biblioteca__file-icon"></i>
                             <h5 className="card-title text-center">{file.title}</h5>
-                            <a href="#" className="Biblioteca__file-download">Descargar<i class="fas fa-download"></i></a>
+                            <a href="#" className="Biblioteca__file-download"><i class="fas fa-download"></i>Descargar</a>
                         </div>
                     ))
                 }

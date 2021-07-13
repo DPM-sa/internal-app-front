@@ -10,14 +10,14 @@ import Sugerencias from '../views/Sugerencias'
 import ModalPost from '../components/ModalPost'
 import ModalSlider from '../components/ModalSlider'
 import ModalProfile from '../components/ModalProfile'
-import Admin from '../views/Admin'
+import PostsAdmin from '../views/PostsAdmin'
 
 const AppRouter = () => {
     return (
         <>
             <Switch>
                 <Route path="/login" component={Login} />
-                <Route path="/admin" component={Admin} />
+                <Route path="/admin" component={PostsAdmin} />
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/directorio" component={Directorio} />
                 <PrivateRoute path="/biblioteca" component={Biblioteca} />

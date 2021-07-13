@@ -9,7 +9,10 @@
     height: 100%;
     align-items: flex-start;
 }
-
+.carousel-caption h3{
+    font-size: 40px;
+    font-weight: 800;
+}
 a.Carousel-btn {
     background-color: #004580;
     color: white;
