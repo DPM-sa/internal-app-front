@@ -11,24 +11,23 @@ import './Directorio.css'
 
 const Directorio = () => {
     const [{ token }] = useStateValue()
-
     let headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
 
-    const [users, setUsers] = useState([])
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
+    const [users, setUsers] = useState([])
     const [form, setForm] = useState({
         search: ''
     })
     const { search } = form
-
     const [typeOrder, setTypeOrder] = useState('antiguos')
     const [loading, setLoading] = useState(false)
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+
     function sortGreatest(arr) {
         for (let i = 0; i < arr.length; i++) {
             for (let j = i; j < arr.length; j++) {
@@ -42,10 +41,20 @@ const Directorio = () => {
         return arr;
     };
 
-    const reversed = (arr) => {
-        return arr.reverse()
+    const reverseUsers = (arr) => {
+        return arr.sort((a, b) => {
+            return new Date(b.date).getTime()
+                - new Date(a.date).getTime()
+        })
     }
 
+    const orderUsers = (arr) => {
+        return arr.sort((a, b) => {
+            return new Date(a.date).getTime()
+                - new Date(b.date).getTime()
+        })
+    }
+    
     const getEmployees = async () => {
         setLoading(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuarios`, { headers })
@@ -53,10 +62,10 @@ const Directorio = () => {
                 if (typeOrder === 'alfabetico') {
                     console.log(resp.data.usuarios)
                     setUsers(sortGreatest(resp.data.usuarios))
-                } else if (typeOrder === 'antiguos') {
-                    setUsers(resp.data.usuarios)
+                } else if ((typeOrder === 'antiguos')) {
+                    setUsers(orderUsers(resp.data.usuarios))
                 } else if (typeOrder === 'recientes') {
-                    setUsers(reversed(resp.data.usuarios))
+                    setUsers(reverseUsers(resp.data.usuarios))
                 }
                 setLoading(false)
             })

@@ -35,9 +35,11 @@ const Carousel = () => {
                             src={item.image}
                         />
                         <CarouselBt.Caption>
-                            <h3>{item.title}</h3>
-                            <p>{item.content}</p>
-                            <Link to={`/home/slider/${item._id}`} className="Carousel-btn">+ Ver más</Link>
+                            <div className="Carousel-content">
+                                <h3>{item.title}</h3>
+                                <p>{item.content.substring(0, 100)}</p>
+                                <a href="http://localhost:3000/home/post/60eeeec25adf8d001554f14d" target="_blank" className="Carousel-btn">+ Ver más</a>
+                            </div>
                         </CarouselBt.Caption>
                     </CarouselBt.Item>
                 ))

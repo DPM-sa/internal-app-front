@@ -5,7 +5,7 @@
     border-radius: 20px;
     height: 400px;
     margin-bottom: 3%;
-    flex: 0 1 calc(100% - 1rem); 
+    flex: 0 1 calc(100% - 1rem);
 }
 
 .Post__image {
@@ -50,12 +50,21 @@
     font-weight: bold;
 }
 
+.Post__content-content {
+    overflow-wrap: break-word;
+}
+
 .Post__content-actions {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     width: 100%;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.Post__content-actions span {
+    display: flex;
     flex-wrap: wrap;
 }
 

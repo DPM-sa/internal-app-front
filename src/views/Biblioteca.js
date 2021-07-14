@@ -32,25 +32,52 @@ const Biblioteca = () => {
         return arr;
     };
 
-    const reversed = (arr) => {
-        return arr.reverse()
+    const reverseFiles = (arr) => {
+        return arr.sort((a, b) => {
+            return new Date(b.date).getTime()
+                - new Date(a.date).getTime()
+        })
+    }
+
+    const orderFiles = (arr) => {
+        return arr.sort((a, b) => {
+            return new Date(a.date).getTime()
+                - new Date(b.date).getTime()
+        })
     }
 
     const getFiles = async () => {
         setLoading(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
             .then(resp => {
+                console.log(resp.data.filesDB)
                 if (typeOrder === 'alfabetico') {
                     setFiles(sortGreatest(resp.data.filesDB))
                 } else if (typeOrder === 'antiguos') {
-                    setFiles(resp.data.filesDB)
+                    setFiles(orderFiles(resp.data.filesDB))
                 } else if (typeOrder === 'recientes') {
-                    setFiles(reversed(resp.data.filesDB))
+                    setFiles(reverseFiles(resp.data.filesDB))
                 }
                 setLoading(false)
             })
     }
-
+    const [form, setForm] = useState({
+        search: ''
+    })
+    const { search } = form
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        await axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
+            .then(resp => {
+                setFiles(resp.data.filesDB.filter(file => file.title.toLowerCase().includes(search.toLowerCase())))
+            })
+    }
+    const handleInputChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
     useEffect(() => {
         getFiles()
     }, [typeOrder])
@@ -60,8 +87,8 @@ const Biblioteca = () => {
             <NavbarProfile />
             <Banner image={'./assets/banner-biblioteca.jpg'} title={'Biblioteca'} content={'Encontra aqui materiales a disposicion para todos los colaboradores de DPM'} linkto={'biblioteca'} />
             <div className="Biblioteca__search">
-                <form id="biblioteca">
-                    <input name="search" type="text" className="Biblioteca__search-input" placeholder="Buscar un archivo por nombre" />
+                <form onSubmit={handleSubmit} id="biblioteca">
+                    <input name="search" value={search} onChange={handleInputChange} type="text" className="Biblioteca__search-input" placeholder="Buscar un archivo por nombre" />
                     <i className="fas fa-search Biblioteca__search-icon"></i>
                 </form>
                 <div className="dropdown">

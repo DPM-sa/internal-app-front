@@ -5,6 +5,7 @@ import { useStateValue } from '../StateProvider'
 import axios from 'axios'
 import moment from 'moment'
 import './ModalPost.css'
+import parse from 'html-react-parser'
 import Comment from './Comment'
 
 const ModalPost = () => {
@@ -97,9 +98,11 @@ const ModalPost = () => {
     const handleClose = () => {
         history.push('/home')
     }
-    const commentDate = (date) => {
-        return moment(date).format('D MMM YYYY')
+
+    const truncateContent = (content) => {
+        return content.substring(0, 80) + "..."
     }
+
     return (
         <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -107,7 +110,7 @@ const ModalPost = () => {
                 <div className="ModalPost__header-content">
                     <div className="ModalPost-header-top">
                         <h4>{titlePost}</h4>
-                        <p>{contentPost}</p>
+                        <p>{parse(truncateContent(contentPost))}</p>
                     </div>
                     <div className="ModalPost__header-actions">
                         <span>
@@ -134,7 +137,7 @@ const ModalPost = () => {
                 </div>
             </Modal.Header>
             <Modal.Body className="ModalPost__content">
-                <p className="ModalPost__content-text">{contentPost}</p>
+                <p className="ModalPost__content-text">{parse(contentPost)}</p>
                 <form onSubmit={handleSubmit} className="comment-box add-comment">
                     <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" className="ModalPost__content-input" />
                     <button disabled={comment === ""} type="submit" className="ModalPost__content-button">Comentar</button>

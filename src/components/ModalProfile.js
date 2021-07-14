@@ -61,7 +61,7 @@ const ModalProfile = () => {
                             <h6>Email</h6>
                         </div>
                         <div>
-                            <p>{user.email && user.email}</p>
+                            <p>{user.correo && user.correo}</p>
                         </div>
                     </div>
                     <div className="Profile__data-row">

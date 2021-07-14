@@ -1,11 +1,13 @@
 .NewPost {
     margin-left: 300px;
 }
-.NewPost__container{
+
+.NewPost__container {
     width: 90%;
     margin: 0 auto;
     padding-top: 10px;
 }
+
 trix-toolbar .trix-button-row {
     justify-content: flex-start;
 }
@@ -31,6 +33,7 @@ trix-editor {
     border-top: 2px solid #004580;
     border-radius: 0px;
     height: 250px;
+    overflow-y: scroll;
 }
 
 .editor {
@@ -53,15 +56,26 @@ trix-editor {
     margin-bottom: 20px;
 }
 
-.NewPost__actions button {
+.NewPost__actions div {
     flex: 0 1 calc(48% - 1rem);
+}
+
+.NewPost__actions div span {
+    font-size: 8px;
+}
+
+.NewPost__actions div button {
+    width: 100%;
     background-color: #004580;
     border: none;
     padding: 10px 10px;
     border-radius: 20px;
     color: white;
 }
-
+.NewPost__actions div button:disabled{
+    opacity: .5;
+    cursor: not-allowed;
+}
 .NewPost__actions input {
     flex: 0 1 calc(48% - 1rem);
     border: 2px solid #004580;
@@ -70,6 +84,30 @@ trix-editor {
     color: #004580;
 }
 
-.NewPost__actions input::placeholder{
+.NewPost__actions input::placeholder {
     color: #004580;
+}
+
+.NewPost__tags {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.NewPost__tags div {
+    background-color: #004580;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 20px;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.NewPost__tags div i {
+    margin-left: 5px;
 }

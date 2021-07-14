@@ -21,14 +21,14 @@ const Profile = () => {
     const [form, setForm] = useState({
         nombre: user.nombre,
         apellido: user.apellido,
-        email: user.email ? user.email : '',
+        correo: user.correo ? user.correo : '',
         phone: user.phone ? user.phone : '',
         birth: user.birth ? user.birth : '',
         position: user.position,
         sector: user.sector
     })
 
-    const { nombre, apellido, email, phone, birth, position, sector } = form
+    const { nombre, apellido, correo, phone, birth, position, sector } = form
 
     const [imageProfile, setImageProfile] = useState(user.image ? user.image : '')
 
@@ -43,7 +43,7 @@ const Profile = () => {
             {
                 "nombre": `${nombre}`,
                 "apellido": `${apellido}`,
-                "email": `${email}`,
+                "correo": `${correo}`,
                 "phone": `${phone}`,
                 "birth": `${birth}`,
                 "position": `${position}`,
@@ -90,7 +90,7 @@ const Profile = () => {
     }
 
     const formatDateProfile = (date) => {
-        return moment(date).format('D MMM YYYY')
+        return date.substring(0, 10)
     }
 
     const handleDeleteImage = () => {
@@ -119,7 +119,7 @@ const Profile = () => {
             <div className="Profile">
                 <div className="card-body">
                     <div className="d-flex flex-column align-items-center text-center">
-                        {imageProfile ? <img src={imageProfile} className="profile-image-medium rounded-circle" width="150" /> : <i class="far fa-user no-image-profile-medium"></i>}
+                        {imageProfile ? <img src={imageProfile} className="profile-image-medium rounded-circle mb-2" width="150" /> : <i class="far fa-user no-image-profile-medium mb-2"></i>}
                         {edit && !loadingImg
                             &&
                             <>
@@ -186,7 +186,7 @@ const Profile = () => {
                                     <h6>Email</h6>
                                 </div>
                                 <div>
-                                    <input type="text" className="Profile__data-input" name="email" value={email} onChange={handleInputChange} />
+                                    <input type="text" className="Profile__data-input" name="correo" value={correo} onChange={handleInputChange} />
                                 </div>
                             </div>
                             <div className="Profile__data-row">
@@ -202,7 +202,7 @@ const Profile = () => {
                                     <h6>Fecha de nacimiento</h6>
                                 </div>
                                 <div>
-                                    <input type="date" className="Profile__data-input" name="birth" value={birth} onChange={handleInputChange} />
+                                    <input type="date" className="Profile__data-input" name="birth" value={formatDateProfile(birth)} onChange={handleInputChange} />
                                 </div>
                             </div>
                             <div className="Profile__data-row">
@@ -225,14 +225,14 @@ const Profile = () => {
                                 <div>
                                     <button onClick={handleEdit}>
                                         <i class="fas fa-chevron-left"></i>
-                                        Cancelar
+                                        Volver
                                     </button>
                                 </div>
                                 <div>
                                     {
                                         loading
                                             ?
-                                            <button type="submit">Espere...</button>
+                                            <button disabled type="submit">Espere...</button>
                                             :
                                             <button type="submit">
                                                 <i class="far fa-save"></i>
@@ -258,7 +258,7 @@ const Profile = () => {
                                     <h6>Email</h6>
                                 </div>
                                 <div>
-                                    <p>{user.email && user.email}</p>
+                                    <p>{user.correo && user.correo}</p>
                                 </div>
                             </div>
                             <div className="Profile__data-row">
@@ -267,7 +267,7 @@ const Profile = () => {
                             </div>
                             <div className="Profile__data-row">
                                 <div><h6>Fecha de nacimiento</h6></div>
-                                <div><p>{user.birth && user.birth}</p></div>
+                                <div><p>{user.birth && formatDateProfile(user.birth)}</p></div>
                             </div>
                             <div className="Profile__data-row">
                                 <div><h6>Cargo</h6></div>

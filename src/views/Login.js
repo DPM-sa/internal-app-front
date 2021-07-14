@@ -43,6 +43,7 @@ const Login = () => {
             },
             { headers }
         ).then(resp => {
+            console.log(resp.data.usuario)
             dispatch({
                 type: 'LOGIN',
                 token: resp.data.token,

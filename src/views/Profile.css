@@ -94,6 +94,11 @@
     border-radius: 40px;
 }
 
+.Profile__data-row-button button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
 .Profile__data-row-button button i {
     margin-right: 5px;
 }

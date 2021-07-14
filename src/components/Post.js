@@ -5,6 +5,7 @@ import moment from 'moment'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import parse from 'html-react-parser'
 
 const Post = ({ title, content, post, date }) => {
     const [{ token, user }] = useStateValue()
@@ -41,6 +42,9 @@ const Post = ({ title, content, post, date }) => {
             return false
         }
     }
+    const truncateContent = (content) => {
+        return content.substring(0, 120) + "..."
+    }
     return (
         <>
             <div className="Post">
@@ -54,9 +58,9 @@ const Post = ({ title, content, post, date }) => {
                         <h5>
                             {title}
                         </h5>
-                        <p>
-                            {content}
-                        </p>
+                        <div className="Post__content-content">
+                            {parse(truncateContent(content))}
+                        </div>
 
                         <div className="Post__content-actions">
                             <span>
