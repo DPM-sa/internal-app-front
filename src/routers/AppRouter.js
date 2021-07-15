@@ -13,6 +13,7 @@ import ModalProfile from '../components/ModalProfile'
 import PostsAdmin from '../views/PostsAdmin'
 import NewPost from '../views/NewPost'
 import EditPost from '../views/EditPost'
+import PostComments from '../views/PostComments'
 
 const AppRouter = () => {
     return (
@@ -42,6 +43,11 @@ const AppRouter = () => {
             <Switch>
                 <Route path="/directorio/profile/:id">
                     <ModalProfile />
+                </Route>
+            </Switch>
+            <Switch>
+                <Route path="/editpost/:id/comments">
+                    <PostComments />
                 </Route>
             </Switch>
         </>

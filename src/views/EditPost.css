@@ -1,0 +1,27 @@
+.EditPost__actions-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.EditPost__actions-bottom .css-2b097c-container {
+    flex: 0 1 calc(50% - 1rem);
+}
+.EditPost__actions-bottom button[type="submit"] {
+    flex: 0 1 calc(16% - 1rem);
+    background-color: #004580;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 40px;
+}
+
+.EditPost__actions-bottom button[type="button"] {
+    flex: 0 1 calc(16% - 1rem);
+    background-color: white;
+    color: #004580;
+    border: 2px solid #004580;
+    padding: 6px 20px;
+    border-radius: 40px;
+}

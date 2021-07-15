@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import SidebarAdmin from './SidebarAdmin'
-import Trix from "trix";
 import { v4 as uuidv4 } from 'uuid';
-import { ReactTrixRTEInput, ReactTrixRTEToolbar } from "react-trix-rte";
-import './NewPost.css'
+import "trix/dist/trix";
+import { TrixEditor } from "react-trix";
+import './EditPost.css'
 import { storage } from '../config/firebase';
 import { useStateValue } from '../StateProvider';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import CreatableSelect from 'react-select/creatable';
-import { useParams } from 'react-router-dom'
-import parse from 'html-react-parser'
+import { useHistory, useParams } from 'react-router-dom'
+
 const EditPost = () => {
+    const history = useHistory()
     const { id } = useParams()
     const [{ token }] = useStateValue()
     let headers = {
@@ -30,7 +31,7 @@ const EditPost = () => {
         setTitle(event.target.value)
     }
     const handleContentChange = (event) => {
-        setContent(event.target.value)
+        setContent(event)
     }
 
     const handleSubmit = async (e) => {
@@ -100,19 +101,31 @@ const EditPost = () => {
         { value: 'Aniversarios', label: 'Aniversarios' },
         { value: 'Beneficios', label: 'Beneficios' },
     ]
+
     const getPost = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
             .then(resp => {
                 setTitle(resp.data.post.title)
                 setContent(resp.data.post.content)
                 setTags(resp.data.post.tags)
+                setImgUrl(resp.data.post.image)
+                setFilename(resp.data.post.image)
             })
     }
+
     useEffect(() => {
         getPost()
     }, [])
-    const contentEditor = (data) => {
-        return parse(data)
+
+    const handleEditorReady = async () => {
+        const trixEditor = document.querySelector('.trix-editor-class')
+        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
+            .then(resp => {
+                trixEditor.value = resp.data.post.content
+            })
+    }
+    const handleWatchComments = () => {
+        history.push(`/editpost/${id}/comments`)
     }
     return (
         <>
@@ -130,33 +143,30 @@ const EditPost = () => {
                         />
                         <form onSubmit={handleSubmit}>
                             <div className="NewPost__actions">
-                                <button disabled={loadingImg || loading} type="button" onClick={handlePictureClick}>
-                                    {
-                                        loadingImg
-                                            ? <>
-                                                Espere...
-                                            </>
-                                            : <>
-                                                <i class="fas fa-plus"></i>
-                                                Cambiar imagen de publicacion
-                                            </>
-                                    }
-
-                                </button>
+                                {
+                                    loadingImg
+                                        ?
+                                        <button disabled type="button">
+                                            Espere...
+                                        </button>
+                                        :
+                                        <button disabled={loadingImg || loading} type="button" onClick={handlePictureClick}>
+                                            <i class="fas fa-plus"></i>
+                                            Cambiar imagen de publicacion
+                                        </button>
+                                }
                                 <input disabled={loading} value={title} onChange={handleTitleChange} placeholder="Insertar titulo de la publicación" />
                             </div>
                             {filename && <span>{filename}</span>}
                             <div className="editor">
-                                <ReactTrixRTEToolbar toolbarId="react-trix-rte-editor" />
-
-                                <ReactTrixRTEInput
-                                    toolbarId="react-trix-rte-editor"
+                                <TrixEditor
+                                    className="trix-editor-class"
                                     onChange={handleContentChange}
                                     value={content}
-                                    defaultValue={contentEditor(content)}
+                                    onEditorReady={handleEditorReady}
                                 />
                             </div>
-                            <div className="NewPost__actions-bottom">
+                            <div className="EditPost__actions-bottom">
                                 <CreatableSelect
                                     isMulti
                                     onChange={handleTags}
@@ -166,21 +176,23 @@ const EditPost = () => {
                                     classNamePrefix="react-select"
                                     noOptionsMessage={NoOptionsMessage}
                                     isDisabled={loading}
+                                    value={optionsTags.filter(val => tags.includes(val.value))}
                                 />
-                                <button disabled={loading} type="submit">
-                                    {
-                                        loading
-                                            ?
-                                            <>
-                                                Espere...
-                                            </>
-                                            :
-                                            <>
-                                                <i class="fas fa-plus"></i>
-                                                Publicar
-                                            </>
-                                    }
-
+                                {
+                                    loading
+                                        ?
+                                        <button disabled type="submit">
+                                            Espere..
+                                        </button>
+                                        :
+                                        <button disabled={loading} type="submit">
+                                            <i class="fas fa-plus"></i>
+                                            Guardar
+                                        </button>
+                                }
+                                <button disabled={loading} onClick={handleWatchComments} type="button">
+                                    <i class="far fa-eye"></i>
+                                    Ver comentarios
                                 </button>
                                 <button disabled={loading} type="button">
                                     <i class="fas fa-chevron-left"></i>

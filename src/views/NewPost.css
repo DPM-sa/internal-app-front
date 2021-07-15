@@ -121,35 +121,6 @@ trix-editor {
     border-radius: 40px;
 }
 
-.NewPost__tags {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.tags-label {
-    margin-bottom: 0;
-}
-
-.NewPost__tags div {
-    background-color: #004580;
-    color: white;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-}
-
-.NewPost__tags div i {
-    margin-left: 5px;
-}
-
 .NewPost button i {
     margin-right: 5px;
 }

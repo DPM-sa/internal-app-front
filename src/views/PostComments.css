@@ -1,0 +1,97 @@
+.PostComments {
+    margin-left: 300px;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+.PostComments__container {
+    width: 90%;
+    margin: 0px auto;
+    padding-top: 10px;
+    color: white;
+}
+
+.PostsComments-posts {
+    width: 80%;
+}
+
+.PostsComments-posts-list {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 0 20px;
+    border: 2px solid white;
+    color: white;
+}
+
+.PostsComments-posts-list-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid white;
+}
+
+.PostsComments-posts-list-body {
+    padding-left: 0;
+    overflow-y: scroll;
+    max-height: 500px;
+}
+
+.PostsComments-posts-list-body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.PostsComments-posts-list-body::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+.PostsComments-posts-list-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: white;
+}
+
+.PostsComments-posts-list-control {
+    padding: 10px;
+    display: block;
+}
+
+.PostsComments-posts-list-control div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    height: 20px;
+}
+
+.PostsComments-posts-list-control.item-active div {
+    height: auto;
+}
+
+.PostsComments-posts-list-control div span {
+    flex: 0 1 24%;
+}
+
+.PostsComments-posts-list-header div span {
+    flex: 0 1 24%;
+}
+
+.comments-lists-control-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.comments-lists-control-actions i {
+    margin-right: 10px;
+}
