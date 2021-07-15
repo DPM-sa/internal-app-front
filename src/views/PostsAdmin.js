@@ -4,9 +4,11 @@ import './PostsAdmin.css'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useStateValue } from '../StateProvider'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import moment from 'moment'
 
 const PostsAdmin = () => {
+    const history = useHistory()
     const [{ token }] = useStateValue()
     const [posts, setPosts] = useState([])
     const [postsQuantity, setPostsQuantity] = useState(0)
@@ -49,6 +51,13 @@ const PostsAdmin = () => {
             Eliminar publicacion
         </Tooltip>
     );
+
+    const getPostDate = (date) => {
+        return moment(date).format('D MMM YYYY')
+    }
+    const editPost = (id) => {
+        history.push(`/editpost/${id}`)
+    }
     return (
         <>
             <SidebarAdmin />
@@ -86,7 +95,7 @@ const PostsAdmin = () => {
                                         posts.map(post => (
                                             <li className="PostsAdmin-posts-list-control">
                                                 <span>{post.title}</span>
-                                                <span>{post.date}</span>
+                                                <span>{getPostDate(post.date)}</span>
                                                 <span className="posts-lists-control-actions">
                                                     <OverlayTrigger
                                                         placement="top"
@@ -100,7 +109,7 @@ const PostsAdmin = () => {
                                                         delay={{ show: 100, hide: 100 }}
                                                         overlay={renderTooltipEdit}
                                                     >
-                                                        <i class="fas fa-pen"></i>
+                                                        <i onClick={() => editPost(post._id)} class="fas fa-pen"></i>
                                                     </OverlayTrigger>
                                                     <OverlayTrigger
                                                         placement="top"

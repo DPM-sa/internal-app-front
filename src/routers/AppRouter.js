@@ -12,6 +12,7 @@ import ModalSlider from '../components/ModalSlider'
 import ModalProfile from '../components/ModalProfile'
 import PostsAdmin from '../views/PostsAdmin'
 import NewPost from '../views/NewPost'
+import EditPost from '../views/EditPost'
 
 const AppRouter = () => {
     return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
                 <PrivateRoute path="/biblioteca" component={Biblioteca} />
                 <PrivateRoute path="/miperfil" component={Profile} />
                 <PrivateRoute path="/sugerencias" component={Sugerencias} />
+                <PrivateRoute path="/editpost/:id" component={EditPost} />
                 <Redirect to="/home" />
             </Switch>
             <Switch>

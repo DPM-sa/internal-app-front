@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SidebarAdmin from './SidebarAdmin'
 import Trix from "trix";
 import { v4 as uuidv4 } from 'uuid';
@@ -9,8 +9,10 @@ import { useStateValue } from '../StateProvider';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import CreatableSelect from 'react-select/creatable';
-
-const NewPost = () => {
+import { useParams } from 'react-router-dom'
+import parse from 'html-react-parser'
+const EditPost = () => {
+    const { id } = useParams()
     const [{ token }] = useStateValue()
     let headers = {
         'Content-Type': 'application/json',
@@ -98,12 +100,26 @@ const NewPost = () => {
         { value: 'Aniversarios', label: 'Aniversarios' },
         { value: 'Beneficios', label: 'Beneficios' },
     ]
+    const getPost = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
+            .then(resp => {
+                setTitle(resp.data.post.title)
+                setContent(resp.data.post.content)
+                setTags(resp.data.post.tags)
+            })
+    }
+    useEffect(() => {
+        getPost()
+    }, [])
+    const contentEditor = (data) => {
+        return parse(data)
+    }
     return (
         <>
             <SidebarAdmin />
             <div className="NewPost">
                 <div className="NewPost__container">
-                    <h1>Crear una nueva publicación</h1>
+                    <h1>Editar una publicacion</h1>
                     <div className="NewPost__content">
                         <input
                             id="fileSelector"
@@ -122,7 +138,7 @@ const NewPost = () => {
                                             </>
                                             : <>
                                                 <i class="fas fa-plus"></i>
-                                                Cargar imagen para publicacion
+                                                Cambiar imagen de publicacion
                                             </>
                                     }
 
@@ -135,9 +151,9 @@ const NewPost = () => {
 
                                 <ReactTrixRTEInput
                                     toolbarId="react-trix-rte-editor"
-                                    value={content}
                                     onChange={handleContentChange}
-                                    placeholder="Insertar aquí texto de la publicación"
+                                    value={content}
+                                    defaultValue={contentEditor(content)}
                                 />
                             </div>
                             <div className="NewPost__actions-bottom">
@@ -179,4 +195,4 @@ const NewPost = () => {
     )
 }
 
-export default NewPost
+export default EditPost

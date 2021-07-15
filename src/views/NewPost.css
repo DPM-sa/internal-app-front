@@ -4,8 +4,15 @@
 
 .NewPost__container {
     width: 90%;
-    margin: 0 auto;
+    margin: 0px auto;
     padding-top: 10px;
+}
+.NewPost__container h1{
+    font-weight: bold;
+    color: #004580;
+}
+.NewPost__content {
+    width: 80%;
 }
 
 trix-toolbar .trix-button-row {
@@ -40,6 +47,7 @@ trix-editor {
     border: 2px solid #004580;
     border-radius: 20px;
     padding: 20px;
+    margin-bottom: 10px;
 }
 
 @media screen and (max-width:767px) {
@@ -52,40 +60,65 @@ trix-editor {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.NewPost__actions div {
-    flex: 0 1 calc(48% - 1rem);
-}
-
-.NewPost__actions div span {
-    font-size: 8px;
-}
-
-.NewPost__actions div button {
-    width: 100%;
+.NewPost__actions button {
+    flex: 0 1 calc(50% - 1rem);
     background-color: #004580;
     border: none;
-    padding: 10px 10px;
+    padding: 15px 10px;
     border-radius: 20px;
     color: white;
 }
-.NewPost__actions div button:disabled{
+
+.NewPost__actions button:disabled, .NewPost__actions-bottom button[type="submit"]:disabled, .NewPost__actions-bottom button[type="button"]:disabled, .NewPost__actions-bottom select:disabled, .NewPost__actions input:disabled {
     opacity: .5;
     cursor: not-allowed;
 }
+
 .NewPost__actions input {
-    flex: 0 1 calc(48% - 1rem);
+    flex: 0 1 calc(50% - 1rem);
     border: 2px solid #004580;
-    padding: 10px;
+    padding: 15px;
     border-radius: 20px;
     color: #004580;
 }
 
 .NewPost__actions input::placeholder {
     color: #004580;
+}
+
+.NewPost__actions-bottom {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.NewPost__actions-bottom .css-2b097c-container {
+    flex: 0 1 calc(50% - 1rem);
+}
+
+.NewPost__actions-bottom button[type="submit"] {
+    flex: 0 1 calc(25% - 1rem);
+    background-color: #004580;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 40px;
+}
+
+.NewPost__actions-bottom button[type="button"] {
+    flex: 0 1 calc(25% - 1rem);
+    background-color: white;
+    color: #004580;
+    border: 2px solid #004580;
+    padding: 6px 20px;
+    border-radius: 40px;
 }
 
 .NewPost__tags {
@@ -98,16 +131,79 @@ trix-editor {
     margin-bottom: 10px;
 }
 
+.tags-label {
+    margin-bottom: 0;
+}
+
 .NewPost__tags div {
     background-color: #004580;
     color: white;
-    padding: 2px 4px;
+    padding: 2px 8px;
     border-radius: 20px;
-    margin-right: 8px;
+    margin-right: 5px;
+    margin-bottom: 5px;
     display: flex;
     align-items: center;
 }
 
 .NewPost__tags div i {
     margin-left: 5px;
+}
+
+.NewPost button i {
+    margin-right: 5px;
+}
+
+.react-select__control.react-select__control {
+    border: 2px solid #004580;
+    border-radius: 20px;
+}
+
+.react-select--is-disabled.css-14jk2my-container {
+    opacity: .5;
+    cursor: not-allowed;
+    flex: 0 1 calc(50% - 1rem);
+}
+
+.react-select__placeholder.react-select__placeholder {
+    color: #004580;
+}
+
+.react-select__menu.react-select__menu {
+    border: 2px solid #004580;
+    border-radius: 20px;
+    color: #004580;
+    overflow: hidden;
+    padding-right: 10px;
+}
+
+.react-select__multi-value.react-select__multi-value {
+    background-color: #004580;
+    color: white;
+    border-radius: 20px;
+}
+
+.react-select__multi-value__label.react-select__multi-value__label {
+    color: white;
+}
+
+.react-select__menu-list.react-select__menu-list {
+    border-radius: 20px;
+}
+
+.react-select__menu-list.react-select__menu-list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.react-select__menu-list.react-select__menu-list::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+.react-select__menu-list.react-select__menu-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #004580;
 }
