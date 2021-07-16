@@ -127,6 +127,9 @@ const EditPost = () => {
     const handleWatchComments = () => {
         history.push(`/editpost/${id}/comments`)
     }
+    const handleReturn = () => {
+        history.push('/admin')
+    }
     return (
         <>
             <SidebarAdmin />
@@ -194,7 +197,7 @@ const EditPost = () => {
                                     <i class="far fa-eye"></i>
                                     Ver comentarios
                                 </button>
-                                <button disabled={loading} type="button">
+                                <button onClick={handleReturn} disabled={loading} type="button">
                                     <i class="fas fa-chevron-left"></i>
                                     Volver atrás
                                 </button>

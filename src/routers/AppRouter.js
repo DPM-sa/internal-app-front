@@ -8,7 +8,6 @@ import Biblioteca from '../views/Biblioteca'
 import Profile from '../views/Profile'
 import Sugerencias from '../views/Sugerencias'
 import ModalPost from '../components/ModalPost'
-import ModalSlider from '../components/ModalSlider'
 import ModalProfile from '../components/ModalProfile'
 import PostsAdmin from '../views/PostsAdmin'
 import NewPost from '../views/NewPost'
@@ -33,11 +32,6 @@ const AppRouter = () => {
             <Switch>
                 <Route path="/home/post/:id">
                     <ModalPost />
-                </Route>
-            </Switch>
-            <Switch>
-                <Route path="/home/slider/:id">
-                    <ModalSlider />
                 </Route>
             </Switch>
             <Switch>

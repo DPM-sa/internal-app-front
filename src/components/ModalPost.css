@@ -88,6 +88,7 @@
 
 .ModalPost__content.modal-body {
     padding: 10px 30px;
+    position: relative;
 }
 
 .ModalPost__content-text {
@@ -171,6 +172,14 @@
     font-size: 16px;
     font-weight: bold;
     color: #004580;
+}
+
+.icon-delete-comment {
+    position: absolute;
+    margin: 10px;
+    right: 9%;
+    color: #004580;
+    cursor: pointer;
 }
 
 .ModalPost__content-comments-no-comment {

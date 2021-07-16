@@ -2,6 +2,7 @@ export const initialState = {
     user: JSON.parse(localStorage.getItem('user')) || null,
     token: localStorage.getItem('token') || null,
     posts: [],
+    commentsPost: [],
     searching: '',
     isAuth: null,
     cargando: true
@@ -21,6 +22,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 posts: action.posts
+            }
+        }
+        case "SET_COMMENTS_POST": {
+            return {
+                ...state,
+                commentsPost: action.commentsPost
             }
         }
         case 'SEARCHING_POST': {

@@ -9,9 +9,11 @@ import { useStateValue } from '../StateProvider';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import CreatableSelect from 'react-select/creatable';
+import { useHistory } from 'react-router-dom';
 
 const NewPost = () => {
     const [{ token }] = useStateValue()
+    const history = useHistory()
     let headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
@@ -98,6 +100,9 @@ const NewPost = () => {
         { value: 'Aniversarios', label: 'Aniversarios' },
         { value: 'Beneficios', label: 'Beneficios' },
     ]
+    const handleReturn = () => {
+        history.push('/admin')
+    }
     return (
         <>
             <SidebarAdmin />
@@ -166,7 +171,7 @@ const NewPost = () => {
                                     }
 
                                 </button>
-                                <button disabled={loading} type="button">
+                                <button onClick={handleReturn} disabled={loading} type="button">
                                     <i class="fas fa-chevron-left"></i>
                                     Volver atrás
                                 </button>

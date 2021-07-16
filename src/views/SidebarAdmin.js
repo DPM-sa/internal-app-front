@@ -15,7 +15,7 @@ const SidebarAdmin = () => {
         <div className="sidebar">
             <div class="sidebar__content">
                 <div className="sidebar__content-img">
-                    <img src="./assets/logo-footer.png" className="sidebar__logo" />
+                    <img src={window.location.origin + "/assets/logo-footer.png"} className="sidebar__logo" />
                 </div>
                 <p className="sidebar__text">Panel administrador del espacio de comunicación interna.</p>
                 <ul className="sidebar__options">

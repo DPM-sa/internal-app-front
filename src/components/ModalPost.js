@@ -8,7 +8,7 @@ import parse from 'html-react-parser'
 import Comment from './Comment'
 
 const ModalPost = () => {
-    const [{ token, user }] = useStateValue()
+    const [{ token, user, commentsPost }, dispatch] = useStateValue()
 
     const history = useHistory()
 
@@ -19,7 +19,6 @@ const ModalPost = () => {
     const [likesPost, setLikesPost] = useState([])
     const [tagsPost, setTagsPost] = useState([])
     const [isPostLiked, setIsPostLiked] = useState(false)
-    const [comments, setComments] = useState([])
     const [imgUrl, setImgUrl] = useState('')
     const [form, setForm] = useState({
         comment: ''
@@ -81,7 +80,10 @@ const ModalPost = () => {
     const getComments = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/comments`, { headers })
             .then(async (resp) => {
-                setComments(resp.data.comments)
+                dispatch({
+                    type: 'SET_COMMENTS_POST',
+                    commentsPost: resp.data.comments
+                })
             })
     }
 
@@ -122,7 +124,7 @@ const ModalPost = () => {
                         </span>
                         <span>
                             <i className="far fa-comments"></i>
-                            {comments.length}
+                            {commentsPost.length}
                         </span>
                         <span>
                             <i class="fas fa-tags"></i>
@@ -145,8 +147,8 @@ const ModalPost = () => {
                 </form>
                 <label className="ModalPost__content-comments-label">Comentarios:</label>
                 {
-                    comments.length > 0
-                        ? comments.map(comment => (
+                    commentsPost.length > 0
+                        ? commentsPost.map(comment => (
                             <Comment comment={comment} />
                         ))
                         : <p className="ModalPost__content-comments-no-comment">No hay comentarios, realiza uno</p>
