@@ -5,7 +5,7 @@ import { useStateValue } from '../StateProvider'
 import { storage } from '../config/firebase'
 import './Profile.css'
 import Footer from '../components/Footer'
-import moment from 'moment'
+
 const Profile = () => {
     const [{ user, token }, dispatch] = useStateValue()
 

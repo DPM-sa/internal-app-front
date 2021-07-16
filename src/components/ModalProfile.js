@@ -25,6 +25,10 @@ const ModalProfile = () => {
             })
     }
 
+    const formatDateProfile = (date) => {
+        return date.substring(0, 10)
+    }
+
     useEffect(() => {
         getUser()
     }, [])
@@ -70,7 +74,7 @@ const ModalProfile = () => {
                     </div>
                     <div className="Profile__data-row">
                         <div><h6>Fecha de nacimiento</h6></div>
-                        <div><p>{user.birth && user.birth}</p></div>
+                        <div><p>{user.birth && formatDateProfile(user.birth)}</p></div>
                     </div>
                     <div className="Profile__data-row">
                         <div><h6>Cargo</h6></div>

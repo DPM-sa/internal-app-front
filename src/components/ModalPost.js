@@ -20,6 +20,7 @@ const ModalPost = () => {
     const [tagsPost, setTagsPost] = useState([])
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [comments, setComments] = useState([])
+    const [imgUrl, setImgUrl] = useState('')
     const [form, setForm] = useState({
         comment: ''
     })
@@ -45,6 +46,7 @@ const ModalPost = () => {
                 setContentPost(resp.data.post.content)
                 setLikesPost(resp.data.post.likes)
                 setTagsPost(resp.data.post.tags)
+                setImgUrl(resp.data.post.image)
                 if (resp.data.post.likes.find(like => like._id === user._id)) {
                     setIsPostLiked(true)
                 } else {
@@ -105,7 +107,7 @@ const ModalPost = () => {
     return (
         <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
             <Modal.Header closeButton>
-                <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="ModalPost__header-img" />
+                <img src={imgUrl} className="ModalPost__header-img" />
                 <div className="ModalPost__header-content">
                     <div className="ModalPost-header-top">
                         <h4>{titlePost}</h4>

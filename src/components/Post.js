@@ -48,7 +48,7 @@ const Post = ({ title, content, post, date }) => {
     return (
         <>
             <div className="Post">
-                <img src="https://cdn.pixabay.com/photo/2016/07/03/17/48/lost-places-1495150_960_720.jpg" className="Post__image" />
+                <img src={post.image} className="Post__image" />
 
                 <div className="Post__content">
                     <div className="Post__date">

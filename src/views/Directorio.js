@@ -54,7 +54,7 @@ const Directorio = () => {
                 - new Date(b.date).getTime()
         })
     }
-    
+
     const getEmployees = async () => {
         setLoading(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuarios`, { headers })
@@ -140,10 +140,10 @@ const Directorio = () => {
                                     {user.nombre} {user.apellido}
                                 </Link>
                                 <div className="Directorio__list-control-section">
-                                    Cargo
+                                    {user.position}
                                 </div>
                                 <div className="Directorio__list-control-section">
-                                    Sector
+                                    {user.sector}
                                 </div>
                             </li>
                         ))
