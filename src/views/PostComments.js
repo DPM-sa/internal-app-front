@@ -8,8 +8,8 @@ import './PostComments.css'
 
 const PostComments = () => {
     const { id } = useParams()
-    const [{ token }] = useStateValue()
-    const [comments, setComments] = useState([])
+    const [{ token, commentsPost }, dispatch] = useStateValue()
+    
     const history = useHistory()
 
     let headers = {
@@ -17,9 +17,12 @@ const PostComments = () => {
         "token": `${token}`
     }
     const getComments = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/comments`, { headers })
+        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/allcomments`, { headers })
             .then(async (resp) => {
-                setComments(resp.data.comments)
+                dispatch({
+                    type: 'SET_COMMENTS_POST',
+                    commentsPost: resp.data.comments
+                })
             })
     }
 
@@ -42,8 +45,8 @@ const PostComments = () => {
                         </li>
                         <ul className="PostsComments-posts-list-body">
                             {
-                                comments.length > 0 &&
-                                comments.map(comment => (
+                                commentsPost.length > 0 &&
+                                commentsPost.map(comment => (
                                     <CommentItem comment={comment} />
                                 ))
                             }

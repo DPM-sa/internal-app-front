@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import SidebarAdmin from './SidebarAdmin'
 import Trix from "trix";
-import { v4 as uuidv4 } from 'uuid';
 import { ReactTrixRTEInput, ReactTrixRTEToolbar } from "react-trix-rte";
 import './NewPost.css'
 import { storage } from '../config/firebase';
@@ -66,8 +65,7 @@ const NewPost = () => {
     const handleFileChange = async (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
-        let imageId = uuidv4();
-        const storageRef = storage.ref().child('postImages').child(`${file.name}-${imageId}`)
+        const storageRef = storage.ref().child('postImages').child(`${file.name}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         setImgUrl(url)

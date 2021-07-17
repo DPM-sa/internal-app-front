@@ -2,17 +2,28 @@ import axios from 'axios';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { useStateValue } from '../StateProvider';
 
 const CommentItem = ({ comment }) => {
     const [active, setActive] = useState('')
     const [userComment, setUserComment] = useState({})
-    const [{ token }] = useStateValue()
-
+    const [{ token }, dispatch] = useStateValue()
+    const { id } = useParams()
 
     let headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
+    }
+    const getComments = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/allcomments`, { headers })
+            .then(async (resp) => {
+                dispatch({
+                    type: 'SET_COMMENTS_POST',
+                    commentsPost: resp.data.comments
+                })
+            })
     }
     const getUser = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${comment.userId}`, { headers })
@@ -32,25 +43,30 @@ const CommentItem = ({ comment }) => {
             setActive(id)
         }
     }
+
     const renderTooltipSee = (props) => (
         <Tooltip id="button-tooltip" {...props}>
             Ver Comentario
         </Tooltip>
     );
+
     const renderTooltipHide = (props) => (
         <Tooltip id="button-tooltip" {...props}>
             Ocultar Comentario
         </Tooltip>
     );
+
     const renderTooltipDelete = (props) => (
         <Tooltip id="button-tooltip" {...props}>
             Eliminar Comentario
         </Tooltip>
     );
+
     const getPostDate = (date) => {
         return moment(date).format('D MMM YYYY')
     }
-    const handleEditPost = async (comment, action) => {
+
+    const handleEditComment = async (comment, action) => {
         let headers = {
             'Content-Type': 'application/json',
             "token": `${token}`
@@ -73,20 +89,14 @@ const CommentItem = ({ comment }) => {
                         {
                             "estado": !comment.estado
                         }, { headers })
-                        .then(async () => {
-                            await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
-                                .then(resp => {
-                                    let likes = resp.data.posts.map(item => item.likes)
-                                    setLikesQuantity(likes.flat(1).length)
-                                    setPostsQuantity(resp.data.cuantos)
-                                    setPosts(resp.data.posts)
-                                })
+                        .then((resp) => {
+                            getComments()
                         })
                 }
             })
         } else if (action === 'ocultar') {
             Swal.fire({
-                title: 'Deseas inactivar este post?',
+                title: 'Deseas inactivar este comentario?',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: false,
@@ -96,30 +106,48 @@ const CommentItem = ({ comment }) => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/comment/${post._id}`,
+                    await axios.put(`https://internal-app-dpm.herokuapp.com/comment/${comment._id}`,
                         {
-                            "estado": !post.estado
+                            "estado": !comment.estado
                         }, { headers })
-                        .then(async () => {
-                            await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
-                                .then(resp => {
-                                    let likes = resp.data.posts.map(item => item.likes)
-                                    setLikesQuantity(likes.flat(1).length)
-                                    setPostsQuantity(resp.data.cuantos)
-                                    setPosts(resp.data.posts)
-                                })
+                        .then((resp) => {
+                            getComments()
                         })
                 }
             })
         }
     }
+
+    const handleDeleteComment = async (commentId) => {
+        let headers = {
+            'Content-Type': 'application/json',
+            "token": `${token}`
+        }
+        Swal.fire({
+            title: 'Deseas eliminar este comentario?',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText:
+                'Eliminar',
+            cancelButtonText:
+                'Cancelar'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.delete(`https://internal-app-dpm.herokuapp.com/comment/${commentId}`, { headers })
+                    .then(() => {
+                        getComments()
+                    })
+            }
+        })
+    }
+
     return (
         <li
-            onClick={() => handleExpandCollaps(comment._id)}
             className={active === comment._id ? 'PostsComments-posts-list-control item-active'
                 : 'PostsComments-posts-list-control'}>
             <div>
-                <span>{comment.content}</span>
+                <span onClick={() => handleExpandCollaps(comment._id)}>{comment.content}</span>
                 <span>{getPostDate(comment.date)}</span>
                 <span>{userComment.nombre} {userComment.apellido}</span>
                 <span className="comments-lists-control-actions">
@@ -129,7 +157,7 @@ const CommentItem = ({ comment }) => {
                         overlay={renderTooltipSee}
                     >
                         <i
-                            onClick={() => handleEditPost(comment, 'ver')}
+                            onClick={() => handleEditComment(comment, 'ver')}
                             className={comment.estado ? 'button-watch-post disabled far fa-eye' : 'button-watch-post far fa-eye'}
                         ></i>
                     </OverlayTrigger>
@@ -138,14 +166,18 @@ const CommentItem = ({ comment }) => {
                         delay={{ show: 100, hide: 100 }}
                         overlay={renderTooltipHide}
                     >
-                        <i class="fas fa-eye-slash"></i>
+                        <i onClick={() => handleEditComment(comment, 'ocultar')}
+                            className={comment.estado
+                                ? 'button-watch-hidden fas fa-eye-slash'
+                                : 'button-watch-hidden disabled fas fa-eye-slash'
+                            }></i>
                     </OverlayTrigger>
                     <OverlayTrigger
                         placement="top"
                         delay={{ show: 100, hide: 100 }}
                         overlay={renderTooltipDelete}
                     >
-                        <i class="fas fa-trash-alt"></i>
+                        <i onClick={() => handleDeleteComment(comment._id)} class="fas fa-trash-alt"></i>
                     </OverlayTrigger>
                 </span>
             </div>
