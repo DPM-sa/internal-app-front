@@ -44,7 +44,7 @@ const ModalProfile = () => {
             </Modal.Header>
             <Modal.Body>
                 <div className="d-flex flex-column align-items-center text-center">
-                    {user.image ? <img src={user.image} className="profile-image-medium rounded-circle" width="150" /> : <i class="far fa-user no-image-profile-medium"></i>}
+                    {user.image ? <img src={user.image} className="profile-image-medium rounded-circle" /> : <i class="far fa-user no-image-profile-medium"></i>}
                     <div className="mt-3">
                         <h4 className="Profile__name">{user.nombre} {user.apellido}</h4>
                         <p className="Profile__info">{user.position && user.position}</p>

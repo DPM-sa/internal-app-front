@@ -9,41 +9,61 @@ import Profile from '../views/Profile'
 import Sugerencias from '../views/Sugerencias'
 import ModalPost from '../components/ModalPost'
 import ModalProfile from '../components/ModalProfile'
-import PostsAdmin from '../views/PostsAdmin'
-import NewPost from '../views/NewPost'
-import EditPost from '../views/EditPost'
-import PostComments from '../views/PostComments'
+import PostsAdmin from '../views/Admin/PostsAdmin'
+import NewPost from '../views/Admin/NewPost'
+import EditPost from '../views/Admin/EditPost'
+import PostComments from '../views/Admin/PostComments'
+import DirectorioAdmin from '../views/Admin/DirectorioAdmin'
+import NewUser from '../views/Admin/NewUser'
+import EditUser from '../views/Admin/EditUser'
 
 const AppRouter = () => {
     return (
         <>
             <Switch>
                 <Route path="/login" component={Login} />
-                <Route path="/admin" component={PostsAdmin} />
-                <Route path="/nuevopost" component={NewPost} />
+
+                <PrivateRoute path="/admin" component={PostsAdmin} />
+                <PrivateRoute path="/nuevopost" component={NewPost} />
+                <PrivateRoute path="/editpost/:id" component={EditPost} />
+                <PrivateRoute path="/directorioadmin" component={DirectorioAdmin} />
+
+
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/directorio" component={Directorio} />
                 <PrivateRoute path="/biblioteca" component={Biblioteca} />
                 <PrivateRoute path="/miperfil" component={Profile} />
                 <PrivateRoute path="/sugerencias" component={Sugerencias} />
-                <PrivateRoute path="/editpost/:id" component={EditPost} />
                 <Redirect to="/home" />
             </Switch>
             <Switch>
-                <Route path="/home/post/:id">
+                <PrivateRoute path="/home/post/:id">
                     <ModalPost />
-                </Route>
+                </PrivateRoute>
             </Switch>
             <Switch>
-                <Route path="/directorio/profile/:id">
+                <PrivateRoute path="/directorio/profile/:id">
                     <ModalProfile />
-                </Route>
+                </PrivateRoute>
+            </Switch>
+
+            <Switch>
+                <PrivateRoute path="/editpost/:id/comments">
+                    <PostComments />
+                </PrivateRoute>
+            </Switch>
+
+            <Switch>
+                <PrivateRoute path="/directorioadmin/nuevousuario">
+                    <NewUser />
+                </PrivateRoute>
             </Switch>
             <Switch>
-                <Route path="/editpost/:id/comments">
-                    <PostComments />
-                </Route>
+                <PrivateRoute path="/directorioadmin/edituser/:id">
+                    <EditUser />
+                </PrivateRoute>
             </Switch>
+
         </>
     )
 }

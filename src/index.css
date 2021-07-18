@@ -11,7 +11,9 @@ code {
 
 .profile-image-small {
   width: 40px;
+  height: 40px;
   border-radius: 50px;
+  object-fit: cover;
 }
 
 .no-image-profile-small {
@@ -32,6 +34,9 @@ code {
 
 .profile-image-medium {
   border: 5px solid #004580;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 
 a.Whatsapp {

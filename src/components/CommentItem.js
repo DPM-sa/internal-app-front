@@ -12,10 +12,11 @@ const CommentItem = ({ comment }) => {
     const [{ token }, dispatch] = useStateValue()
     const { id } = useParams()
 
-    let headers = {
+    const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+
     const getComments = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/allcomments`, { headers })
             .then(async (resp) => {
@@ -25,6 +26,7 @@ const CommentItem = ({ comment }) => {
                 })
             })
     }
+
     const getUser = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${comment.userId}`, { headers })
             .then(resp => {
@@ -67,10 +69,6 @@ const CommentItem = ({ comment }) => {
     }
 
     const handleEditComment = async (comment, action) => {
-        let headers = {
-            'Content-Type': 'application/json',
-            "token": `${token}`
-        }
         if (comment.estado && action === "ver") return
         if (!comment.estado && action === "ocultar") return
         if (action === 'ver') {
@@ -119,10 +117,6 @@ const CommentItem = ({ comment }) => {
     }
 
     const handleDeleteComment = async (commentId) => {
-        let headers = {
-            'Content-Type': 'application/json',
-            "token": `${token}`
-        }
         Swal.fire({
             title: 'Deseas eliminar este comentario?',
             showCloseButton: true,

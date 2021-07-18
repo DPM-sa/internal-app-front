@@ -1,87 +1,68 @@
-import React, { useState, useEffect } from 'react'
-import SidebarAdmin from './SidebarAdmin'
-import './PostsAdmin.css'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { useStateValue } from '../StateProvider'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
-import moment from 'moment'
+import React, { useEffect, useState } from 'react'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import SidebarAdmin from '../../components/SidebarAdmin'
+import { useStateValue } from '../../StateProvider'
 
-const PostsAdmin = () => {
+const DirectorioAdmin = () => {
     const history = useHistory()
+
     const [{ token }] = useStateValue()
-    const [posts, setPosts] = useState([])
-    const [postsQuantity, setPostsQuantity] = useState(0)
-    const [likesQuantity, setLikesQuantity] = useState(0)
-    const [commentsQuantity, setCommentsQuantity] = useState(0)
-    const getPosts = async () => {
-        let headers = {
-            'Content-Type': 'application/json',
-            "token": `${token}`
-        }
-        await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
-            .then(resp => {
-                let likes = resp.data.posts.map(item => item.likes)
-                setLikesQuantity(likes.flat(1).length)
-                setPostsQuantity(resp.data.cuantos)
-                setPosts(resp.data.posts)
-            })
+    const headers = {
+        'Content-Type': 'application/json',
+        "token": `${token}`
     }
-    const getComments = async () => {
-        let headers = {
-            'Content-Type': 'application/json',
-            "token": `${token}`
-        }
-        await axios.get(`https://internal-app-dpm.herokuapp.com/allcomments`, { headers })
+    const [users, setUsers] = useState([])
+    const [usersQuantity, setUsersQuantity] = useState(0)
+    const [usersActive, setUsersActive] = useState(0)
+    const [usersInactive, setUsersInactive] = useState(0)
+
+    const getUsers = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/allusuarios`, { headers })
             .then(resp => {
-                setCommentsQuantity(resp.data.commentsDB.length)
+                console.log(resp)
+                let usersActiveArr = resp.data.usuarios.filter(user => user.estado)
+                let usersInactiveArr = resp.data.usuarios.filter(user => !user.estado)
+                setUsersQuantity(resp.data.cuantos)
+                setUsersActive(usersActiveArr.length)
+                setUsersInactive(usersInactiveArr.length)
+                setUsers(resp.data.usuarios)
             })
     }
 
     useEffect(() => {
-        getPosts()
+        getUsers()
     }, [])
-    useEffect(() => {
-        getComments()
-    }, [])
+
     const renderTooltipSee = (props) => (
         <Tooltip id="button-tooltip" {...props}>
-            Ver publicacion
+            Ver usuario
         </Tooltip>
     );
     const renderTooltipEdit = (props) => (
         <Tooltip id="button-tooltip" {...props}>
-            Editar publicacion
+            Editar usuario
         </Tooltip>
     );
     const renderTooltipHide = (props) => (
         <Tooltip id="button-tooltip" {...props}>
-            Ocultar publicacion
+            Ocultar usuario
         </Tooltip>
     );
     const renderTooltipDelete = (props) => (
         <Tooltip id="button-tooltip" {...props}>
-            Eliminar publicacion
+            Eliminar usuario
         </Tooltip>
     );
-
-    const getPostDate = (date) => {
-        return moment(date).format('D MMM YYYY')
-    }
-    const editPost = (id) => {
-        history.push(`/editpost/${id}`)
-    }
-    const handleEditPost = async (post, action) => {
-        let headers = {
-            'Content-Type': 'application/json',
-            "token": `${token}`
-        }
-        if (post.estado && action === "ver") return
-        if (!post.estado && action === "ocultar") return
+    const handleEditUser = async (user, action) => {
+        if (user.estado && action === "ver") return
+        if (!user.estado && action === "ocultar") return
         if (action === 'ver') {
             Swal.fire({
-                title: 'Deseas activar este post?',
+                title: 'Deseas activar este usuario?',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: false,
@@ -91,24 +72,18 @@ const PostsAdmin = () => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/post/${post._id}`,
+                    await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
                         {
-                            "estado": !post.estado
+                            "estado": !user.estado
                         }, { headers })
-                        .then(async () => {
-                            await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
-                                .then(resp => {
-                                    let likes = resp.data.posts.map(item => item.likes)
-                                    setLikesQuantity(likes.flat(1).length)
-                                    setPostsQuantity(resp.data.cuantos)
-                                    setPosts(resp.data.posts)
-                                })
+                        .then(() => {
+                            getUsers()
                         })
                 }
             })
         } else if (action === 'ocultar') {
             Swal.fire({
-                title: 'Deseas inactivar este post?',
+                title: 'Deseas inactivar este usuario?',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: false,
@@ -118,30 +93,21 @@ const PostsAdmin = () => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/post/${post._id}`,
+                    await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
                         {
-                            "estado": !post.estado
+                            "estado": !user.estado
                         }, { headers })
-                        .then(async () => {
-                            await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
-                                .then(resp => {
-                                    let likes = resp.data.posts.map(item => item.likes)
-                                    setLikesQuantity(likes.flat(1).length)
-                                    setPostsQuantity(resp.data.cuantos)
-                                    setPosts(resp.data.posts)
-                                })
+                        .then(() => {
+                            getUsers()
                         })
                 }
             })
         }
     }
-    const handleDeletePost = async (id) => {
-        let headers = {
-            'Content-Type': 'application/json',
-            "token": `${token}`
-        }
+
+    const handleDeleteUser = async (id) => {
         Swal.fire({
-            title: 'Deseas eliminar este post?',
+            title: 'Deseas eliminar este usuario?',
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: false,
@@ -151,58 +117,54 @@ const PostsAdmin = () => {
                 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.delete(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
-                    .then(async () => {
-                        await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
-                            .then(resp => {
-                                let likes = resp.data.posts.map(item => item.likes)
-                                setLikesQuantity(likes.flat(1).length)
-                                setPostsQuantity(resp.data.cuantos)
-                                setPosts(resp.data.posts)
-                            })
+                await axios.delete(`https://internal-app-dpm.herokuapp.com/usuario/${id}`, { headers })
+                    .then(() => {
+                        getUsers()
                     })
             }
         })
     }
-
+    const editUser = (id) => {
+        history.push(`directorioadmin/edituser/${id}`)
+    }
     return (
         <>
             <SidebarAdmin />
             <div className="PostsAdmin">
                 <div className="PostsAdmin-container">
-                    <h1>Gestionar publicaciones</h1>
+                    <h1>Directorio de usuarios</h1>
                     <div className="PostsAdmin-content">
                         <div className="PostsAdmin-content-actions">
-                            <Link to="/nuevopost" className="PostsAdmin-content-actions-item">
+                            <Link to="/directorioadmin/nuevousuario" className="PostsAdmin-content-actions-item">
                                 <span>+</span>
-                                <p>Crear una nueva publicacion</p>
+                                <p>Crear un nuevo usuario</p>
                             </Link>
                             <div className="PostsAdmin-content-actions-item">
-                                <span>{postsQuantity}</span>
-                                <p>Publicaciones realizadas</p>
+                                <span>{usersQuantity}</span>
+                                <p>Usuarios creados</p>
                             </div>
                             <div className="PostsAdmin-content-actions-item">
-                                <span>{likesQuantity}</span>
-                                <p>Likes recibidos</p>
+                                <span>{usersActive}</span>
+                                <p>Usuarios activos</p>
                             </div>
                             <div className="PostsAdmin-content-actions-item">
-                                <span>{commentsQuantity}</span>
-                                <p>Comentarios recibidos</p>
+                                <span>{usersInactive}</span>
+                                <p>Usuarios inactivos</p>
                             </div>
                         </div>
                         <div className="PostsAdmin-posts">
                             <ul className="PostsAdmin-posts-list">
                                 <li className="PostsAdmin-posts-list-header">
-                                    <span>Publicacion</span>
-                                    <span>Fecha</span>
+                                    <span>Usuario</span>
+                                    <span>Nombre y apellido</span>
                                     <span>Acciones</span>
                                 </li>
                                 <ul className="PostsAdmin-posts-list-body">
                                     {
-                                        posts.map(post => (
+                                        users.map(user => (
                                             <li className="PostsAdmin-posts-list-control">
-                                                <span>{post.title}</span>
-                                                <span>{getPostDate(post.date)}</span>
+                                                <span>{user.user}</span>
+                                                <span>{user.nombre} {user.apellido}</span>
                                                 <span className="posts-lists-control-actions">
                                                     <OverlayTrigger
                                                         placement="top"
@@ -210,8 +172,8 @@ const PostsAdmin = () => {
                                                         overlay={renderTooltipSee}
                                                     >
                                                         <i
-                                                            onClick={() => handleEditPost(post, 'ver')}
-                                                            className={post.estado ? 'button-watch-post disabled far fa-eye' : 'button-watch-post far fa-eye'}
+                                                            onClick={() => handleEditUser(user, 'ver')}
+                                                            className={user.estado ? 'button-watch-post disabled far fa-eye' : 'button-watch-post far fa-eye'}
                                                         ></i>
                                                     </OverlayTrigger>
                                                     <OverlayTrigger
@@ -219,7 +181,7 @@ const PostsAdmin = () => {
                                                         delay={{ show: 100, hide: 100 }}
                                                         overlay={renderTooltipEdit}
                                                     >
-                                                        <i onClick={() => editPost(post._id)} class="fas fa-pen"></i>
+                                                        <i onClick={() => editUser(user._id)} class="fas fa-pen"></i>
                                                     </OverlayTrigger>
                                                     <OverlayTrigger
                                                         placement="top"
@@ -227,8 +189,8 @@ const PostsAdmin = () => {
                                                         overlay={renderTooltipHide}
                                                     >
                                                         <i
-                                                            onClick={() => handleEditPost(post, 'ocultar')}
-                                                            className={post.estado
+                                                            onClick={() => handleEditUser(user, 'ocultar')}
+                                                            className={user.estado
                                                                 ? 'button-watch-hidden fas fa-eye-slash'
                                                                 : 'button-watch-hidden disabled fas fa-eye-slash'
                                                             }
@@ -240,7 +202,7 @@ const PostsAdmin = () => {
                                                         overlay={renderTooltipDelete}
                                                     >
                                                         <i
-                                                            onClick={() => handleDeletePost(post._id)}
+                                                            onClick={() => handleDeleteUser(user._id)}
                                                             class="fas fa-trash-alt"
                                                         ></i>
                                                     </OverlayTrigger>
@@ -258,4 +220,4 @@ const PostsAdmin = () => {
     )
 }
 
-export default PostsAdmin
+export default DirectorioAdmin

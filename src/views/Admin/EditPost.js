@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import SidebarAdmin from './SidebarAdmin'
+import SidebarAdmin from '../../components/SidebarAdmin'
 import { v4 as uuidv4 } from 'uuid';
 import "trix/dist/trix";
 import { TrixEditor } from "react-trix";
 import './EditPost.css'
-import { storage } from '../config/firebase';
-import { useStateValue } from '../StateProvider';
+import { storage } from '../../config/firebase';
+import { useStateValue } from '../../StateProvider';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import CreatableSelect from 'react-select/creatable';
@@ -15,7 +15,7 @@ const EditPost = () => {
     const history = useHistory()
     const { id } = useParams()
     const [{ token }] = useStateValue()
-    let headers = {
+    const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }

@@ -4,7 +4,7 @@ export const initialState = {
     posts: [],
     commentsPost: [],
     searching: '',
-    isAuth: null,
+    users: [],
     cargando: true
 }
 

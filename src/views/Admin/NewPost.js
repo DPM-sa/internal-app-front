@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import SidebarAdmin from './SidebarAdmin'
+import SidebarAdmin from '../../components/SidebarAdmin'
 import Trix from "trix";
 import { ReactTrixRTEInput, ReactTrixRTEToolbar } from "react-trix-rte";
 import './NewPost.css'
-import { storage } from '../config/firebase';
-import { useStateValue } from '../StateProvider';
+import { storage } from '../../config/firebase';
+import { useStateValue } from '../../StateProvider';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import CreatableSelect from 'react-select/creatable';
@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 const NewPost = () => {
     const [{ token }] = useStateValue()
     const history = useHistory()
-    let headers = {
+    const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }

@@ -1,21 +1,22 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useHistory } from 'react-router-dom'
-import { useStateValue } from '../StateProvider'
-import CommentItem from './CommentItem'
+import { useStateValue } from '../../StateProvider'
+import CommentItem from '../../components/CommentItem'
 import './PostComments.css'
 
 const PostComments = () => {
     const { id } = useParams()
     const [{ token, commentsPost }, dispatch] = useStateValue()
-    
+
     const history = useHistory()
 
-    let headers = {
+    const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+
     const getComments = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/allcomments`, { headers })
             .then(async (resp) => {
@@ -29,9 +30,11 @@ const PostComments = () => {
     useEffect(() => {
         getComments()
     }, [])
+
     const handleReturn = () => {
         history.goBack()
     }
+    
     return (
         <div className="PostComments">
             <div className="PostComments__container">
