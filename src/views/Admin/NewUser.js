@@ -46,8 +46,8 @@ const NewUser = () => {
         })
     }
     const handleSubmit = async (e) => {
-        if (user === "" || password === "" || nombre === "" || apellido === "" || position === "" || sector === "") return
         e.preventDefault()
+        if (user === "" || password === "" || nombre === "" || apellido === "" || position === "" || sector === "") return
         await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
             {
                 "nombre": `${nombre}`,

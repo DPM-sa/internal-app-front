@@ -81,6 +81,9 @@
 
 .NewUser__pic {
     flex: 0 1 calc(25% - 1rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .Upload-pic {
