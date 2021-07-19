@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Login from '../views/Login'
 import PrivateRoute from './PrivateRoute'
@@ -16,6 +16,10 @@ import PostComments from '../views/Admin/PostComments'
 import DirectorioAdmin from '../views/Admin/DirectorioAdmin'
 import NewUser from '../views/Admin/NewUser'
 import EditUser from '../views/Admin/EditUser'
+import BibliotecaAdmin from '../views/Admin/BibliotecaAdmin'
+import NewFile from '../views/Admin/NewFile'
+import EditFile from '../views/Admin/EditFile'
+import SliderAdmin from '../views/Admin/SliderAdmin'
 
 const AppRouter = () => {
     return (
@@ -27,7 +31,8 @@ const AppRouter = () => {
                 <PrivateRoute path="/nuevopost" component={NewPost} />
                 <PrivateRoute path="/editpost/:id" component={EditPost} />
                 <PrivateRoute path="/directorioadmin" component={DirectorioAdmin} />
-
+                <PrivateRoute path="/bibliotecaadmin" component={BibliotecaAdmin} />
+                <PrivateRoute path="/slideradmin" component={SliderAdmin} />
 
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/directorio" component={Directorio} />
@@ -63,7 +68,16 @@ const AppRouter = () => {
                     <EditUser />
                 </PrivateRoute>
             </Switch>
-
+            <Switch>
+                <PrivateRoute path="/bibliotecaadmin/newfile">
+                    <NewFile />
+                </PrivateRoute>
+            </Switch>
+            <Switch>
+                <PrivateRoute path="/bibliotecaadmin/editfile/:id">
+                    <EditFile />
+                </PrivateRoute>
+            </Switch>
         </>
     )
 }

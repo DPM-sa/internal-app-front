@@ -38,7 +38,7 @@ const EditUser = () => {
                     email: resp.data.user.correo ? resp.data.user.correo : '',
                     phone: resp.data.user.phone ? resp.data.user.phone : '',
                     birth: resp.data.user.birth ? resp.data.user.birth : '',
-                    position: resp.data.user.positon,
+                    position: resp.data.user.position,
                     sector: resp.data.user.sector
                 })
                 setRole(resp.data.user.role)
