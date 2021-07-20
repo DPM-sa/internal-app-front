@@ -3,3 +3,74 @@
     display: flex;
     flex-direction: column;
 }
+
+.SliderAdmin {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.SliderAdmin-img {
+    flex: 0 1 calc(24% - 1rem);
+    position: relative;
+}
+
+.SliderAdmin img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 40px;
+    position: relative;
+}
+
+.SliderAdmin-img-content {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    padding-bottom: 20px;
+    color: white;
+}
+
+.SliderAdmin-no-img {
+    flex: 0 1 calc(24% - 1rem);
+    padding: 20px;
+    background-color: #004580;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    border-radius: 40px;
+}
+
+.SliderAdmin form {
+    flex: 0 1 calc(74% - 1rem);
+    display: flex;
+    flex-direction: column;
+}
+
+.SliderAdmin button {
+    background-color: #004580;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    border: none;
+    align-self: flex-end;
+}
+
+.SliderAdmin__input {
+    border: 2px solid #004580;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 40px;
+    color: #004580;
+    width: 100%;
+}

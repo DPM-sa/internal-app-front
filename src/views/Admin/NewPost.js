@@ -65,7 +65,6 @@ const NewPost = () => {
     const handleFileChange = async (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
-        console.log(file)
         const storageRef = storage.ref().child('postImages').child(`${file.name}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()

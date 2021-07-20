@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import SidebarAdmin from '../../components/SidebarAdmin'
-import { v4 as uuidv4 } from 'uuid';
 import "trix/dist/trix";
 import { TrixEditor } from "react-trix";
 import './EditPost.css'
@@ -67,8 +66,7 @@ const EditPost = () => {
     const handleFileChange = async (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
-        let imageId = uuidv4();
-        const storageRef = storage.ref().child('postImages').child(`${file.name}-${imageId}`)
+        const storageRef = storage.ref().child('postImages').child(`${file.name}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         setImgUrl(url)

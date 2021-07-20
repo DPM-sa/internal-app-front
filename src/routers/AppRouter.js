@@ -20,6 +20,7 @@ import BibliotecaAdmin from '../views/Admin/BibliotecaAdmin'
 import NewFile from '../views/Admin/NewFile'
 import EditFile from '../views/Admin/EditFile'
 import SliderAdmin from '../views/Admin/SliderAdmin'
+import SugerenciasAdmin from '../views/Admin/SugerenciasAdmin'
 
 const AppRouter = () => {
     return (
@@ -33,6 +34,7 @@ const AppRouter = () => {
                 <PrivateRoute path="/directorioadmin" component={DirectorioAdmin} />
                 <PrivateRoute path="/bibliotecaadmin" component={BibliotecaAdmin} />
                 <PrivateRoute path="/slideradmin" component={SliderAdmin} />
+                <PrivateRoute path="/sugerenciasadmin" component={SugerenciasAdmin} />
 
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/directorio" component={Directorio} />

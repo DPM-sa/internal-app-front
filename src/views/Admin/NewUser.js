@@ -23,20 +23,25 @@ const NewUser = () => {
     })
     const [role, setRole] = useState('')
     const { user, password, nombre, apellido, email, phone, birth, position, sector } = form
-    const [img, setImg] = useState('')
+    const [img, setImg] = useState({})
+    const [imgTemp, setImgTemp] = useState('')
     const [loadingImg, setLoadingImg] = useState(false)
     const history = useHistory()
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
     }
 
-    const handleFileChange = async (e) => {
+    const handleFileChange = (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
-        const storageRef = storage.ref().child('profileImages').child(`${file.name}`)
-        const res = await storageRef.put(file)
-        const url = await storageRef.getDownloadURL()
-        setImg(url)
+        if (file) {
+            setImg(file)
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setImgTemp(event.target.result)
+            };
+            reader.readAsDataURL(e.target.files[0])
+        }
         setLoadingImg(false)
     }
     const handleInputChange = (e) => {
@@ -48,6 +53,10 @@ const NewUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (user === "" || password === "" || nombre === "" || apellido === "" || position === "" || sector === "") return
+        const storageRef = storage.ref().child('profileImages').child(`${user}`)
+        const res = await storageRef.put(img)
+        const url = await storageRef.getDownloadURL()
+
         await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
             {
                 "nombre": `${nombre}`,
@@ -60,7 +69,8 @@ const NewUser = () => {
                 "position": `${position}`,
                 "sector": `${sector}`,
                 "phone": `${phone}`,
-                "birth": `${birth}`
+                "birth": `${birth}`,
+                "image": `${url}`
             },
             { headers })
             .then(resp => console.log(resp))
@@ -142,8 +152,8 @@ const NewUser = () => {
                             onChange={handleFileChange}
                         />
                         {
-                            img
-                                ? <img src={img} className="Profile-pic" />
+                            imgTemp
+                                ? <img src={imgTemp} className="Profile-pic" />
                                 : <button disabled={loadingImg} onClick={handlePictureClick} className="Upload-pic">
                                     {loadingImg
                                         ?
