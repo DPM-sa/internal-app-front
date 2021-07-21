@@ -4,8 +4,8 @@ export const initialState = {
     posts: [],
     commentsPost: [],
     searching: '',
-    users: [],
-    cargando: true
+    sugerenciaSelected: null,
+    userMessage: null
 }
 
 const reducer = (state, action) => {
@@ -34,6 +34,13 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 searching: action.searching
+            }
+        }
+        case "SET_SUGERENCIA": {
+            return {
+                ...state,
+                sugerenciaSelected: action.sugerenciaSelected,
+                userMessage: action.userMessage
             }
         }
         case "LOGOUT":

@@ -1,0 +1,68 @@
+.border-sugerencias {
+    width: 100%;
+    height: 2px;
+    background-color: #004580;
+    margin-bottom: 10px;
+}
+
+.messageSelected {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #004580;
+}
+
+.messageSelected-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.messageSelected-title label {
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+
+.messageSelected-title p {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.messageSelected-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.messageSelected-user span {
+    display: flex;
+    align-items: center;
+}
+
+.messageSelected-user span label {
+    margin-bottom: 0;
+    margin-right: 10px;
+}
+
+.messageSelected-user span p {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.messageSelected-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.messageSelected-content div {
+    margin-left: 10px;
+    align-self: flex-start;
+    border: 2px solid #004580;
+    padding: 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    width: 100%;
+}
