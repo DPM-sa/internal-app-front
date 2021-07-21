@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useStateValue } from '../StateProvider'
 import './NavbarProfile.css'
 const NavbarProfile = () => {
@@ -29,11 +29,11 @@ const NavbarProfile = () => {
 
             <nav className="NavbarProfile__nav" id="nav-menu">
                 <div className="nav__content bd-grid">
-                    <a href="" className="nav__perfil">
+                    <Link exact to="/home" className="nav__perfil">
                         <div className="nav__img">
                             <img src="./assets/logo-header.png" alt="" />
                         </div>
-                    </a>
+                    </Link>
 
                     <div className="nav__menu">
                         <ul className="nav__list">

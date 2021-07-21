@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
+import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import './NewUser.css'
@@ -26,6 +27,7 @@ const NewUser = () => {
     const [img, setImg] = useState({})
     const [imgTemp, setImgTemp] = useState('')
     const [loadingImg, setLoadingImg] = useState(false)
+    const [loading, setLoading] = useState(false)
     const history = useHistory()
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
@@ -50,31 +52,64 @@ const NewUser = () => {
             [e.target.name]: e.target.value
         })
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (user === "" || password === "" || nombre === "" || apellido === "" || position === "" || sector === "") return
-        const storageRef = storage.ref().child('profileImages').child(`${user}`)
-        const res = await storageRef.put(img)
-        const url = await storageRef.getDownloadURL()
-
-        await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
-            {
-                "nombre": `${nombre}`,
-                "apellido": `${apellido}`,
-                "user": `${user}`,
-                "correo": `${email}`,
-                "password": `${password}`,
-                "role": `${role}`,
-                "image": `${img}`,
-                "position": `${position}`,
-                "sector": `${sector}`,
-                "phone": `${phone}`,
-                "birth": `${birth}`,
-                "image": `${url}`
-            },
-            { headers })
-            .then(resp => console.log(resp))
-
+        setLoading(true)
+        if (imgTemp === "") {
+            console.log('no hay imagen')
+            await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
+                {
+                    "nombre": `${nombre}`,
+                    "apellido": `${apellido}`,
+                    "user": `${user}`,
+                    "correo": `${email}`,
+                    "password": `${password}`,
+                    "role": `${role}`,
+                    "position": `${position}`,
+                    "sector": `${sector}`,
+                    "phone": `${phone}`,
+                    "birth": `${birth}`,
+                },
+                { headers })
+                .then(() => {
+                    setLoading(false)
+                    Swal.fire(
+                        'Éxito',
+                        'El usuario se ha creado con éxito',
+                        'success'
+                    )
+                })
+        } else if (imgTemp !== "") {
+            console.log('hay imagen')
+            const storageRef = storage.ref().child('profileImages').child(`${user}`)
+            const res = await storageRef.put(img)
+            const url = await storageRef.getDownloadURL()
+            await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
+                {
+                    "nombre": `${nombre}`,
+                    "apellido": `${apellido}`,
+                    "user": `${user}`,
+                    "correo": `${email}`,
+                    "password": `${password}`,
+                    "role": `${role}`,
+                    "position": `${position}`,
+                    "sector": `${sector}`,
+                    "phone": `${phone}`,
+                    "birth": `${birth}`,
+                    "image": `${url}`
+                },
+                { headers })
+                .then(() => {
+                    setLoading(false)
+                    Swal.fire(
+                        'Éxito',
+                        'El usuario se ha creado con éxito',
+                        'success'
+                    )
+                })
+        }
     }
     const handleRole = (e) => {
         setRole(e.target.value)
@@ -90,54 +125,54 @@ const NewUser = () => {
                     <form onSubmit={handleSubmit} className="NewUser__data">
                         <div className="NewUser__data-row">
                             <label>Nombre de usuario</label>
-                            <input onChange={handleInputChange} type="text" name="user" value={user} />
+                            <input disabled={loading} onChange={handleInputChange} type="text" name="user" value={user} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Contraseña</label>
-                            <input onChange={handleInputChange} type="password" name="password" value={password} />
+                            <input disabled={loading} onChange={handleInputChange} type="password" name="password" value={password} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Nombre</label>
-                            <input onChange={handleInputChange} type="text" name="nombre" value={nombre} />
+                            <input disabled={loading} onChange={handleInputChange} type="text" name="nombre" value={nombre} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Apellido</label>
-                            <input onChange={handleInputChange} type="text" name="apellido" value={apellido} />
+                            <input disabled={loading} onChange={handleInputChange} type="text" name="apellido" value={apellido} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Email (Opcional)</label>
-                            <input onChange={handleInputChange} type="email" name="email" value={email} />
+                            <input disabled={loading} onChange={handleInputChange} type="email" name="email" value={email} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Teléfono (Opcional)</label>
-                            <input onChange={handleInputChange} type="tel" name="phone" value={phone} />
+                            <input disabled={loading} onChange={handleInputChange} type="tel" name="phone" value={phone} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Fecha de nacimiento</label>
-                            <input onChange={handleInputChange} type="date" name="birth" value={birth} />
+                            <input disabled={loading} onChange={handleInputChange} type="date" name="birth" value={birth} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Cargo</label>
-                            <input onChange={handleInputChange} type="text" name="position" value={position} />
+                            <input disabled={loading} onChange={handleInputChange} type="text" name="position" value={position} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Sector</label>
-                            <input onChange={handleInputChange} type="text" name="sector" value={sector} />
+                            <input disabled={loading} onChange={handleInputChange} type="text" name="sector" value={sector} />
                         </div>
                         <div className="NewUser__data-row">
                             <label>Rol</label>
-                            <select onChange={handleRole} value={role}>
+                            <select disabled={loading} onChange={handleRole} value={role}>
                                 <option value="">-- Seleccione --</option>
                                 <option value="USER_ROLE">Usuario</option>
                                 <option value="ADMIN_ROLE">Administrador</option>
                             </select>
                         </div>
                         <div className="NewUser__data-buttons">
-                            <button type="submit">
+                            <button disabled={loading} type="submit">
                                 <i class="far fa-save"></i>
                                 Guardar
                             </button>
-                            <button onClick={handleReturn} type="button">
+                            <button disabled={loading} onClick={handleReturn} type="button">
                                 <i class="fas fa-chevron-left"></i>
                                 Cancelar
                             </button>
@@ -154,7 +189,7 @@ const NewUser = () => {
                         {
                             imgTemp
                                 ? <img src={imgTemp} className="Profile-pic" />
-                                : <button disabled={loadingImg} onClick={handlePictureClick} className="Upload-pic">
+                                : <button disabled={loadingImg || loading} onClick={handlePictureClick} className="Upload-pic">
                                     {loadingImg
                                         ?
                                         <>

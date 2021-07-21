@@ -7,10 +7,12 @@
     margin: 0px auto;
     padding-top: 10px;
 }
-.NewPost__container h1{
+
+.NewPost__container h1 {
     font-weight: bold;
     color: #004580;
 }
+
 .NewPost__content {
     width: 80%;
 }
@@ -177,4 +179,13 @@ trix-editor {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #004580;
+}
+
+@media screen and (max-width:767px) {
+    .NewPost__content {
+        width: 100%;
+    }
+    .NewPost__actions-bottom {
+        width: 100%;
+    }
 }

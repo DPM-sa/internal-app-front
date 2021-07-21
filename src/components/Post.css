@@ -48,6 +48,7 @@
 .Post__content-bottom h5 {
     font-size: 28px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .Post__content-content {
@@ -84,6 +85,11 @@ a.Post__see-more {
     color: #004580;
     padding: 5px 16px;
     display: inline-block;
+}
+
+a.Post__see-more:hover {
+    background-color: #004580;
+    color: white;
 }
 
 @media screen and (min-width:767px) {

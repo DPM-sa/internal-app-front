@@ -11,6 +11,8 @@
 
 .PostsAdmin-content {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     height: 100%;
     width: 100%;
 }
@@ -30,6 +32,7 @@
     justify-content: center;
     color: #004580;
     max-width: 150px;
+    text-align: center;
 }
 
 .PostsAdmin-content-actions-item span {
@@ -50,6 +53,7 @@ a.PostsAdmin-content-actions-item {
 
 .PostsAdmin-container h1 {
     color: #004580;
+    font-weight: bold;
 }
 
 .PostsAdmin-posts {
@@ -145,5 +149,15 @@ a.PostsAdmin-content-actions-item {
 @media screen and (max-width:767px) {
     .PostsAdmin {
         margin-left: 25px
+    }
+    .PostsAdmin-content {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .PostsAdmin-content-actions {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 10px;
     }
 }

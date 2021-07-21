@@ -56,7 +56,7 @@ const Sugerencias = () => {
     return (
         <>
             <NavbarProfile />
-            <Banner image={"./assets/banner-buzon.jpg"} title={'Buzon de sugerencias'} content={'Encontra aqui a todos los colaboradores de DPM'} linkto={'sugerencias'} />
+            <Banner image={"./assets/banner-buzon.jpg"} title={'Buzon de sugerencias'} content={'Aquí podés enviarnos tus sugerencias y evaluarlas para que juntos podamos mejorar'} linkto={'sugerencias'} />
 
             <div className="Sugerencias">
                 <h3>

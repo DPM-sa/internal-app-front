@@ -94,7 +94,7 @@ const Directorio = () => {
     return (
         <>
             <NavbarProfile />
-            <Banner image={'/assets/banner-directorio.jpg'} title={'Directorio de usuarios'} content={'Encontra aqui a todos los colaboradores de DPM'} linkto={'directorio'} />
+            <Banner image={'/assets/banner-directorio.jpg'} title={'Directorio de usuarios'} content={'Encontrá aquí a todos los colaboradores de DPM'} linkto={'directorio'} />
             <div className="Directorio__search">
                 <form id="directorio" onSubmit={handleSubmit}>
                     <input value={search} name="search" onChange={handleInputChange} type="text" className="Directorio__search-input" placeholder="Busca un colaraborador/a por nombre" />

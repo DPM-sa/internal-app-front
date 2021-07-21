@@ -50,3 +50,7 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.BibliotecaAdmin-file-actions a {
+    color: #004580;
+}

@@ -28,16 +28,20 @@
     align-items: flex-start;
     justify-content: center;
     padding-left: 5%;
+    background: linear-gradient( 180deg, rgba(255, 255, 255, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
 }
-.Banner-content h1{
+
+.Banner-content h1 {
     font-size: 50px;
     font-weight: bold;
     margin-bottom: 0;
 }
+
 .Banner-button {
     background-color: #004580;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 40px;
+    cursor: pointer;
 }

@@ -85,7 +85,7 @@ const Biblioteca = () => {
     return (
         <>
             <NavbarProfile />
-            <Banner image={'./assets/banner-biblioteca.jpg'} title={'Biblioteca'} content={'Encontra aqui materiales a disposicion para todos los colaboradores de DPM'} linkto={'biblioteca'} />
+            <Banner image={'./assets/banner-biblioteca.jpg'} title={'Biblioteca'} content={'Encontrá aquí materiales a disposición para todos los colaboradores de DPM'} linkto={'biblioteca'} />
             <div className="Biblioteca__search">
                 <form onSubmit={handleSubmit} id="biblioteca">
                     <input name="search" value={search} onChange={handleInputChange} type="text" className="Biblioteca__search-input" placeholder="Buscar un archivo por nombre" />

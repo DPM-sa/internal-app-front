@@ -5,7 +5,8 @@ export const initialState = {
     commentsPost: [],
     searching: '',
     sugerenciaSelected: null,
-    userMessage: null
+    userMessage: null,
+    openPost: false
 }
 
 const reducer = (state, action) => {
@@ -41,6 +42,12 @@ const reducer = (state, action) => {
                 ...state,
                 sugerenciaSelected: action.sugerenciaSelected,
                 userMessage: action.userMessage
+            }
+        }
+        case "SET_OPEN_POST": {
+            return {
+                ...state,
+                openPost: action.openPost
             }
         }
         case "LOGOUT":

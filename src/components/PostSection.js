@@ -8,7 +8,9 @@ const PostSection = () => {
     const [{ token, posts }, dispatch] = useStateValue()
 
     const [postsPerPage, setPostsPerPage] = useState(2)
+    
     const [loading, setLoading] = useState(false)
+
     const currentPosts = posts.slice(0, postsPerPage)
 
     const paginate = () => {

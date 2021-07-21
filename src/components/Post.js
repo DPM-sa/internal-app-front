@@ -4,11 +4,12 @@ import { useStateValue } from '../StateProvider'
 import moment from 'moment'
 import axios from 'axios'
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import parse from 'html-react-parser'
 
 const Post = ({ title, content, post, date }) => {
-    const [{ token, user }] = useStateValue()
+    const [{ token, user, openPost }] = useStateValue()
+    const history = useHistory()
     let headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
@@ -24,7 +25,7 @@ const Post = ({ title, content, post, date }) => {
 
     useEffect(() => {
         getComments()
-    }, [])
+    }, [openPost])
 
     const commentsLengthNumber = commentsLength.filter(comment => post._id === comment.postId)
 
@@ -35,6 +36,7 @@ const Post = ({ title, content, post, date }) => {
     fechaObj.month = fechaArr[1]
     fechaObj.year = fechaArr[2]
     const { day, month, year } = fechaObj
+
     const userHasLiked = () => {
         if (post.likes.length > 0 && post.likes.find(like => like._id === user._id)) {
             return true
@@ -44,6 +46,9 @@ const Post = ({ title, content, post, date }) => {
     }
     const truncateContent = (content) => {
         return content.substring(0, 120) + "..."
+    }
+    const handleOpenPost = () => {
+        history.push(`/home/post/${post._id}`)
     }
     return (
         <>
@@ -55,7 +60,7 @@ const Post = ({ title, content, post, date }) => {
                         {day} - {month} - {year}
                     </div>
                     <div className="Post__content-bottom">
-                        <h5>
+                        <h5 onClick={handleOpenPost}>
                             {title}
                         </h5>
                         <div className="Post__content-content">

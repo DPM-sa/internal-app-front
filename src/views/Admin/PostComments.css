@@ -81,6 +81,9 @@
 
 .PostsComments-posts-list-control div span {
     flex: 0 1 24%;
+    flex: 0 1 24%;
+    overflow: hidden;
+    overflow-wrap: break-word;
 }
 
 .PostsComments-posts-list-header div span {
@@ -104,4 +107,13 @@
     padding: 10px 20px;
     margin: 0 auto;
     display: block;
+}
+
+@media screen and (max-width:767px) {
+    .PostComments {
+        margin-left: 25px;
+        position: fixed;
+        height: 100%;
+        width: calc(100% - 25px);
+    }
 }

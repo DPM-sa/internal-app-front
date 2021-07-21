@@ -13,7 +13,7 @@ const ModalPost = () => {
     const history = useHistory()
 
     const { id } = useParams()
-
+    const [postObj, setPostObj] = useState({})
     const [titlePost, setTitlePost] = useState('')
     const [contentPost, setContentPost] = useState('')
     const [likesPost, setLikesPost] = useState([])
@@ -36,6 +36,17 @@ const ModalPost = () => {
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
+    }
+
+    const getPosts = async () => {
+        await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
+            .then(resp => {
+                console.log(resp.data.posts)
+                dispatch({
+                    type: "SET_POSTS",
+                    posts: resp.data.posts
+                })
+            })
     }
 
     const getPost = async () => {
@@ -71,6 +82,7 @@ const ModalPost = () => {
             { headers })
             .then(async () => {
                 getComments()
+                getPosts()
                 setForm({
                     comment: ''
                 })
@@ -91,15 +103,30 @@ const ModalPost = () => {
         await axios.put(`https://internal-app-dpm.herokuapp.com/post/${id}/like`, {}, { headers })
             .then(async () => {
                 await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
-                    .then(async (resp) => {
-                        setIsPostLiked(!isPostLiked)
-                        setLikesPost(resp.data.post.likes)
+                    .then(() => {
+                        getPost()
+                        getPosts()
                     })
             })
     }
 
+    useEffect(() => {
+        dispatch({
+            type: 'SET_OPEN_POST',
+            openPost: true
+        })
+    }, [])
+
     const handleClose = () => {
         history.push('/home')
+        dispatch({
+            type: 'SET_COMMENTS_POST',
+            commentsPost: []
+        })
+        dispatch({
+            type: 'SET_OPEN_POST',
+            openPost: false
+        })
     }
 
     const truncateContent = (content) => {

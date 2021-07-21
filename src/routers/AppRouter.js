@@ -21,20 +21,22 @@ import NewFile from '../views/Admin/NewFile'
 import EditFile from '../views/Admin/EditFile'
 import SliderAdmin from '../views/Admin/SliderAdmin'
 import SugerenciasAdmin from '../views/Admin/SugerenciasAdmin'
+import PublicRoute from './PublicRoute'
+import AdminRoute from './AdminRoute'
 
 const AppRouter = () => {
     return (
         <>
             <Switch>
-                <Route path="/login" component={Login} />
+                <PublicRoute path="/login" component={Login} />
 
-                <PrivateRoute path="/admin" component={PostsAdmin} />
-                <PrivateRoute path="/nuevopost" component={NewPost} />
-                <PrivateRoute path="/editpost/:id" component={EditPost} />
-                <PrivateRoute path="/directorioadmin" component={DirectorioAdmin} />
-                <PrivateRoute path="/bibliotecaadmin" component={BibliotecaAdmin} />
-                <PrivateRoute path="/slideradmin" component={SliderAdmin} />
-                <PrivateRoute path="/sugerenciasadmin" component={SugerenciasAdmin} />
+                <AdminRoute path="/admin" component={PostsAdmin} />
+                <AdminRoute path="/nuevopost" component={NewPost} />
+                <AdminRoute path="/editpost/:id" component={EditPost} />
+                <AdminRoute path="/directorioadmin" component={DirectorioAdmin} />
+                <AdminRoute path="/bibliotecaadmin" component={BibliotecaAdmin} />
+                <AdminRoute path="/slideradmin" component={SliderAdmin} />
+                <AdminRoute path="/sugerenciasadmin" component={SugerenciasAdmin} />
 
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/directorio" component={Directorio} />
@@ -61,24 +63,24 @@ const AppRouter = () => {
             </Switch>
 
             <Switch>
-                <PrivateRoute path="/directorioadmin/nuevousuario">
+                <AdminRoute path="/directorioadmin/nuevousuario">
                     <NewUser />
-                </PrivateRoute>
+                </AdminRoute>
             </Switch>
             <Switch>
-                <PrivateRoute path="/directorioadmin/edituser/:id">
+                <AdminRoute path="/directorioadmin/edituser/:id">
                     <EditUser />
-                </PrivateRoute>
+                </AdminRoute>
             </Switch>
             <Switch>
-                <PrivateRoute path="/bibliotecaadmin/newfile">
+                <AdminRoute path="/bibliotecaadmin/newfile">
                     <NewFile />
-                </PrivateRoute>
+                </AdminRoute>
             </Switch>
             <Switch>
-                <PrivateRoute path="/bibliotecaadmin/editfile/:id">
+                <AdminRoute path="/bibliotecaadmin/editfile/:id">
                     <EditFile />
-                </PrivateRoute>
+                </AdminRoute>
             </Switch>
         </>
     )

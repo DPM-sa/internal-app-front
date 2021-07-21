@@ -96,7 +96,6 @@ const SliderAdmin = () => {
     const getSlider = async () => {
         await axios.get('https://internal-app-dpm.herokuapp.com/sliders', { headers })
             .then(resp => {
-                console.log(resp.data.slidersDB)
                 setForm1({
                     title1: resp.data.slidersDB[0].title,
                     content1: resp.data.slidersDB[0].content,
@@ -104,18 +103,23 @@ const SliderAdmin = () => {
                 })
                 setImg1(resp.data.slidersDB[0].image)
                 setId1(resp.data.slidersDB[0]._id)
+
                 setForm2({
                     title2: resp.data.slidersDB[1].title,
                     content2: resp.data.slidersDB[1].content,
                     url2: resp.data.slidersDB[1].url
                 })
                 setImg2(resp.data.slidersDB[1].image)
+                setId2(resp.data.slidersDB[1]._id)
+
                 setForm3({
                     title3: resp.data.slidersDB[2].title,
                     content3: resp.data.slidersDB[2].content,
                     url3: resp.data.slidersDB[2].url
                 })
                 setImg3(resp.data.slidersDB[2].image)
+                setId3(resp.data.slidersDB[2]._id)
+
             })
     }
 

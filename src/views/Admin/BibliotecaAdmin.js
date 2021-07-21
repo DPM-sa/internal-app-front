@@ -9,19 +9,24 @@ import './BibliotecaAdmin.css'
 
 const BibliotecaAdmin = () => {
     const [{ token }] = useStateValue()
+
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
     const history = useHistory()
+
     const [files, setFiles] = useState([])
+
     const getFiles = async () => {
         await axios.get("https://internal-app-dpm.herokuapp.com/allfiles", { headers })
             .then(resp => setFiles(resp.data.filesDB))
     }
+
     useEffect(() => {
         getFiles()
     }, [])
+
     const renderTooltipDownload = (props) => (
         <Tooltip id="button-tooltip" {...props}>
             Descargar archivo
@@ -144,7 +149,9 @@ const BibliotecaAdmin = () => {
                                                 delay={{ show: 100, hide: 100 }}
                                                 overlay={renderTooltipDownload}
                                             >
-                                                <i class="fas fa-download"></i>
+                                                <a href={file.url} target="_blank" download>
+                                                    <i class="fas fa-download"></i>
+                                                </a>
                                             </OverlayTrigger>
                                             <OverlayTrigger
                                                 placement="top"

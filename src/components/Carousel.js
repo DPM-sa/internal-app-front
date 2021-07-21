@@ -31,7 +31,7 @@ const Carousel = () => {
                 slider.map(item => (
                     <CarouselBt.Item key={item._id}>
                         <img
-                            className="d-block w-100"
+                            className="d-block w-100 carousel-img"
                             src={item.image}
                         />
                         <CarouselBt.Caption>

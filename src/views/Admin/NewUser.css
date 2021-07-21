@@ -34,6 +34,11 @@
     color: white;
 }
 
+.NewUser__data-row input:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
 .NewUser__data-row select {
     flex: 0 1 calc(69% - 1rem);
     background-color: transparent;
@@ -42,6 +47,11 @@
     padding: 5px;
     outline: none;
     color: white;
+}
+
+.NewUser__data-row select:disabled {
+    opacity: .5;
+    cursor: not-allowed;
 }
 
 .NewUser__data-row select option {
@@ -53,6 +63,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
 .NewUser__data-buttons button {
@@ -79,6 +90,11 @@
     border-radius: 40px;
 }
 
+.NewUser__data-buttons button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
 .NewUser__pic {
     flex: 0 1 calc(25% - 1rem);
     display: flex;
@@ -99,6 +115,11 @@
     justify-content: center;
 }
 
+.Upload-pic:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
 .Upload-pic i {
     font-size: 20px;
     margin-bottom: 5px;
@@ -116,4 +137,18 @@
     border-radius: 50px;
     border: 2px solid white;
     object-fit: cover;
+}
+
+.editImage.disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+@media screen and (max-width:767px) {
+    .NewUser__content {
+        flex-direction: column;
+    }
+    .NewUser__pic {
+        order: -1;
+    }
 }
