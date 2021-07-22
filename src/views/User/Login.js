@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { useStateValue } from '../StateProvider';
+import { useStateValue } from '../../StateProvider';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import './Login.css'

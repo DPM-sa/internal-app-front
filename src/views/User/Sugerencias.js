@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import NavbarProfile from '../components/NavbarProfile'
-import Footer from '../components/Footer'
-import WhatsappBtn from '../components/WhatsappBtn'
-import Banner from '../components/Banner'
+import NavbarProfile from '../../components/User/NavbarProfile'
+import Footer from '../../components/User/Footer'
+import WhatsappBtn from '../../components/User/WhatsappBtn'
+import Banner from '../../components/User/Banner'
 import './Sugerencias.css'
 import axios from 'axios'
-import { useStateValue } from '../StateProvider'
+import { useStateValue } from '../../StateProvider'
 const Sugerencias = () => {
 
     const [{ token }] = useStateValue()

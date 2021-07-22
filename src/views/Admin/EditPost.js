@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import SidebarAdmin from '../../components/SidebarAdmin'
+import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import "trix/dist/trix";
 import { TrixEditor } from "react-trix";
 import './EditPost.css'

@@ -1,10 +1,10 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import NavbarProfile from '../components/NavbarProfile'
-import { useStateValue } from '../StateProvider'
-import { storage } from '../config/firebase'
+import NavbarProfile from '../../components/User/NavbarProfile'
+import { useStateValue } from '../../StateProvider'
+import { storage } from '../../config/firebase'
 import './Profile.css'
-import Footer from '../components/Footer'
+import Footer from '../../components/User/Footer'
 
 const Profile = () => {
     const [{ user, token }, dispatch] = useStateValue()

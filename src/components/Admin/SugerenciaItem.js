@@ -2,7 +2,7 @@ import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
-import { useStateValue } from '../StateProvider'
+import { useStateValue } from '../../StateProvider'
 
 const SugerenciaItem = ({ sugerencia }) => {
     const [{ token }, dispatch] = useStateValue()

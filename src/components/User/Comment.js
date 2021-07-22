@@ -1,7 +1,7 @@
 import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { useStateValue } from '../StateProvider'
+import { useStateValue } from '../../StateProvider'
 import { Modal } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import SidebarAdmin from '../../components/SidebarAdmin'
+import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import './SliderAdmin.css'

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { useStateValue } from '../StateProvider'
-import Footer from '../components/Footer'
-import NavbarProfile from '../components/NavbarProfile'
-import SpinnerComponent from '../components/SpinnerComponent'
-import WhatsappBtn from '../components/WhatsappBtn'
-import Banner from '../components/Banner'
+import { useStateValue } from '../../StateProvider'
+import Footer from '../../components/User/Footer'
+import NavbarProfile from '../../components/User/NavbarProfile'
+import SpinnerComponent from '../../components/User/SpinnerComponent'
+import WhatsappBtn from '../../components/User/WhatsappBtn'
+import Banner from '../../components/User/Banner'
 import './Directorio.css'
 
 const Directorio = () => {

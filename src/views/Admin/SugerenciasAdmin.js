@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import SidebarAdmin from '../../components/SidebarAdmin'
-import SugerenciaItem from '../../components/SugerenciaItem'
+import SidebarAdmin from '../../components/Admin/SidebarAdmin'
+import SugerenciaItem from '../../components/Admin/SugerenciaItem'
 import { useStateValue } from '../../StateProvider'
 import './SugerenciasAdmin.css'
 const SugerenciasAdmin = () => {

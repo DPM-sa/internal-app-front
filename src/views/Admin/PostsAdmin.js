@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import SidebarAdmin from '../../components/SidebarAdmin'
+import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import './PostsAdmin.css'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useStateValue } from '../../StateProvider'
@@ -38,7 +38,7 @@ const PostsAdmin = () => {
                 setCommentsQuantity(resp.data.commentsDB.length)
             })
     }
-    
+
     useEffect(() => {
         getPosts()
     }, [])

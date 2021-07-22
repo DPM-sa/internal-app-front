@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { useStateValue } from '../StateProvider';
+import { useStateValue } from '../../StateProvider';
 
 const CommentItem = ({ comment }) => {
     const [active, setActive] = useState('')

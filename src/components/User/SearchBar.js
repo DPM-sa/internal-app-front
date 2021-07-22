@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useStateValue } from '../StateProvider'
+import { useStateValue } from '../../StateProvider'
 import axios from 'axios'
 import './SearchBar.css'
 

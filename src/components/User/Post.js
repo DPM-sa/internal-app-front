@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './Post.css'
-import { useStateValue } from '../StateProvider'
+import { useStateValue } from '../../StateProvider'
 import moment from 'moment'
 import axios from 'axios'
 import { useEffect } from 'react'

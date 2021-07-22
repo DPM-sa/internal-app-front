@@ -4,7 +4,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import SidebarAdmin from '../../components/SidebarAdmin'
+import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import { useStateValue } from '../../StateProvider'
 
 const DirectorioAdmin = () => {

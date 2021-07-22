@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { useStateValue } from '../../StateProvider'
-import CommentItem from '../../components/CommentItem'
+import CommentItem from '../../components/Admin/CommentItem'
 import './PostComments.css'
 
 const PostComments = () => {
@@ -34,7 +34,7 @@ const PostComments = () => {
     const handleReturn = () => {
         history.goBack()
     }
-    
+
     return (
         <div className="PostComments">
             <div className="PostComments__container">

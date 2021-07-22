@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
-import { useStateValue } from '../StateProvider'
+import { useStateValue } from '../../StateProvider'
 import axios from 'axios'
 import './ModalProfile.css'
 

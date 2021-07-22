@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useStateValue } from '../StateProvider'
+import { useStateValue } from '../../StateProvider'
 import Post from './Post'
 import './PostSection.css'
 import SpinnerComponent from './SpinnerComponent'

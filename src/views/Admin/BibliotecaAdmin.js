@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import SidebarAdmin from '../../components/SidebarAdmin'
+import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import { useStateValue } from '../../StateProvider'
 import './BibliotecaAdmin.css'
 

@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import NavbarProfile from '../components/NavbarProfile'
-import { useStateValue } from '../StateProvider'
+import NavbarProfile from '../../components/User/NavbarProfile'
+import { useStateValue } from '../../StateProvider'
 import './Biblioteca.css'
-import Footer from '../components/Footer'
-import SpinnerComponent from '../components/SpinnerComponent'
-import WhatsappBtn from '../components/WhatsappBtn'
-import Banner from '../components/Banner'
+import Footer from '../../components/User/Footer'
+import SpinnerComponent from '../../components/User/SpinnerComponent'
+import WhatsappBtn from '../../components/User/WhatsappBtn'
+import Banner from '../../components/User/Banner'
+
 const Biblioteca = () => {
     const [{ token }] = useStateValue()
     const [files, setFiles] = useState([])
