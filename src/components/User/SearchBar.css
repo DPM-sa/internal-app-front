@@ -15,7 +15,7 @@
 }
 
 .SearchBar__form i {
-    left: 7%;
+    left: 8%;
     position: absolute;
     color: #004580;
 }
@@ -23,7 +23,7 @@
 .SearchBar__form-input {
     width: 100%;
     padding: 10px;
-    padding-left: 50px;
+    padding-left: 10%;
     border-radius: 40px;
     border: 2px solid #004580;
     margin-right: 5px;
@@ -56,8 +56,9 @@ button#dropdownMenuButton1 {
 .dropdown.SearchBar__filters-tag {
     flex: 0 1 calc(49% - 1rem);
 }
+
 @media screen and (max-width:767px) {
-    .SearchBar{
+    .SearchBar {
         flex-direction: column;
     }
     .SearchBar__form {
@@ -72,8 +73,25 @@ button#dropdownMenuButton1 {
         width: 100%;
         margin-bottom: 10px;
     }
-    
     .dropdown.SearchBar__filters-tag {
         width: 100%;
+    }
+}
+
+@media screen and (min-width:767px) {
+    .SearchBar__form i {
+        left: 7%;
+    }
+    .SearchBar__form-input {
+        padding-left: 12%;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .SearchBar__form i {
+        left: 6%;
+    }
+    .SearchBar__form-input {
+        padding-left: 5%;
     }
 }

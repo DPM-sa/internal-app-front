@@ -6,7 +6,6 @@ import Options from '../../components/User/Options'
 import SearchBar from '../../components/User/SearchBar'
 import Footer from '../../components/User/Footer'
 import WhatsappBtn from '../../components/User/WhatsappBtn'
-
 const Home = () => {
 
     return (

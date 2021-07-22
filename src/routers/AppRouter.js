@@ -27,8 +27,6 @@ import EditFile from '../views/Admin/EditFile'
 import SliderAdmin from '../views/Admin/SliderAdmin'
 import SugerenciasAdmin from '../views/Admin/SugerenciasAdmin'
 
-
-
 const AppRouter = () => {
     return (
         <>

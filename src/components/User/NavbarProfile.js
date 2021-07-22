@@ -29,11 +29,11 @@ const NavbarProfile = () => {
 
             <nav className="NavbarProfile__nav" id="nav-menu">
                 <div className="nav__content bd-grid">
-                    <Link exact to="/home" className="nav__perfil">
+                    <a href="/home" className="nav__perfil">
                         <div className="nav__img">
                             <img src="./assets/logo-header.png" alt="" />
                         </div>
-                    </Link>
+                    </a>
 
                     <div className="nav__menu">
                         <ul className="nav__list">

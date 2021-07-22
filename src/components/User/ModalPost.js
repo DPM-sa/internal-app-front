@@ -134,56 +134,58 @@ const ModalPost = () => {
     }
 
     return (
-        <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <img src={imgUrl} className="ModalPost__header-img" />
-                <div className="ModalPost__header-content">
-                    <div className="ModalPost-header-top">
-                        <h4>{titlePost}</h4>
-                        <p>{parse(truncateContent(contentPost))}</p>
+        <>
+            <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <img src={imgUrl} className="ModalPost__header-img" />
+                    <div className="ModalPost__header-content">
+                        <div className="ModalPost-header-top">
+                            <h4>{titlePost}</h4>
+                            <p>{parse(truncateContent(contentPost))}</p>
+                        </div>
+                        <div className="ModalPost__header-actions">
+                            <span>
+                                {
+                                    isPostLiked ? <i onClick={handleLike} className="fas fa-heart liked"></i> : <i onClick={handleLike} className="far fa-heart"></i>
+                                }
+                                {likesPost.length}
+                            </span>
+                            <span>
+                                <i className="far fa-comments"></i>
+                                {commentsPost.length}
+                            </span>
+                            <span>
+                                <i class="fas fa-tags"></i>
+                                {
+                                    tagsPost.map(tag => (
+                                        <span className="ModalPost__header-actions-tag">
+                                            {tag}
+                                        </span>
+                                    ))
+                                }
+                            </span>
+                        </div>
                     </div>
-                    <div className="ModalPost__header-actions">
-                        <span>
-                            {
-                                isPostLiked ? <i onClick={handleLike} className="fas fa-heart liked"></i> : <i onClick={handleLike} className="far fa-heart"></i>
-                            }
-                            {likesPost.length}
-                        </span>
-                        <span>
-                            <i className="far fa-comments"></i>
-                            {commentsPost.length}
-                        </span>
-                        <span>
-                            <i class="fas fa-tags"></i>
-                            {
-                                tagsPost.map(tag => (
-                                    <span className="ModalPost__header-actions-tag">
-                                        {tag}
-                                    </span>
-                                ))
-                            }
-                        </span>
-                    </div>
-                </div>
-            </Modal.Header>
-            <Modal.Body className="ModalPost__content">
-                <p className="ModalPost__content-text">{parse(contentPost)}</p>
-                <form onSubmit={handleSubmit} className="comment-box add-comment">
-                    <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" className="ModalPost__content-input" />
-                    <button disabled={comment === ""} type="submit" className="ModalPost__content-button">Comentar</button>
-                </form>
-                <label className="ModalPost__content-comments-label">Comentarios:</label>
-                {
-                    commentsPost.length > 0
-                        ? commentsPost.map(comment => (
-                            <Comment comment={comment} />
-                        ))
-                        : <p className="ModalPost__content-comments-no-comment">No hay comentarios, realiza uno</p>
+                </Modal.Header>
+                <Modal.Body className="ModalPost__content">
+                    <p className="ModalPost__content-text">{parse(contentPost)}</p>
+                    <form onSubmit={handleSubmit} className="comment-box add-comment">
+                        <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" className="ModalPost__content-input" />
+                        <button disabled={comment === ""} type="submit" className="ModalPost__content-button">Comentar</button>
+                    </form>
+                    <label className="ModalPost__content-comments-label">Comentarios:</label>
+                    {
+                        commentsPost.length > 0
+                            ? commentsPost.map(comment => (
+                                <Comment comment={comment} />
+                            ))
+                            : <p className="ModalPost__content-comments-no-comment">No hay comentarios, realiza uno</p>
 
-                }
-                <button className="ModalPost__back-button" onClick={handleClose}><i class="fas fa-chevron-left"></i> Volver</button>
-            </Modal.Body>
-        </Modal>
+                    }
+                    <button className="ModalPost__back-button" onClick={handleClose}><i class="fas fa-chevron-left"></i> Volver</button>
+                </Modal.Body>
+            </Modal>
+        </>
     )
 }
 

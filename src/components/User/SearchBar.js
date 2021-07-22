@@ -6,7 +6,7 @@ import './SearchBar.css'
 const SearchBar = () => {
     const [{ token, posts }, dispatch] = useStateValue()
     const [tags, setTags] = useState([])
-
+    const [typeOrder, setTypeOrder] = useState('recientes')
     const [form, setForm] = useState({
         search: ""
     })
@@ -49,6 +49,7 @@ const SearchBar = () => {
     }
 
     const reversePosts = () => {
+        setTypeOrder('antiguos')
         dispatch({
             type: "SET_POSTS",
             posts: posts.sort((a, b) => {
@@ -59,6 +60,7 @@ const SearchBar = () => {
     }
 
     const orderPosts = () => {
+        setTypeOrder('recientes')
         dispatch({
             type: "SET_POSTS",
             posts: posts.sort((a, b) => {
@@ -112,13 +114,18 @@ const SearchBar = () => {
     return (
         <div className="SearchBar">
             <form onSubmit={handleSubmit} className="SearchBar__form">
-                <input value={search} name="search" onChange={handleInputChange} className="SearchBar__form-input" placeholder="Busca un post por título" type="text" />
+                <input value={search} name="search" onChange={handleInputChange} className="SearchBar__form-input" placeholder="Buscá una publicación" type="text" />
                 <i className="fas fa-search"></i>
             </form>
             <div className="SearchBar__filters">
                 <div className="dropdown SearchBar__filters-date">
                     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Ordenar por más nuevos
+                        {
+                            typeOrder === 'recientes' && 'Más recientes'
+                        }
+                        {
+                            typeOrder === 'antiguos' && 'Más antiguos'
+                        }
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li onClick={orderPosts} className="dropdown-item">Más recientes</li>

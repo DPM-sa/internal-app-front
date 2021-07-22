@@ -14,9 +14,7 @@ const Sugerencias = () => {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+
     const [form, setForm] = useState({
         title: '',
         content: ''
@@ -50,9 +48,15 @@ const Sugerencias = () => {
         await axios.get('https://internal-app-dpm.herokuapp.com/usermessages', { headers })
             .then(resp => setSugerencias(resp.data.messages))
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     useEffect(() => {
         getSugerencias()
     }, [])
+
     return (
         <>
             <NavbarProfile />
@@ -60,14 +64,14 @@ const Sugerencias = () => {
 
             <div className="Sugerencias">
                 <h3>
-                    Enviar una sugerencia
+                    Completa el formulario con tu sugerencia
                 </h3>
                 <form onSubmit={handleSubmit}>
                     <div id="sugerencias" className="form-group">
-                        <input name="title" value={title} onChange={handleInputChange} type="text" className="Sugerencias__input" placeholder="Cuál es tu sugerencia?" />
+                        <input name="title" value={title} onChange={handleInputChange} type="text" className="Sugerencias__input" placeholder="¿Cuál es tu sugerencia?" />
                     </div>
                     <div className="form-group">
-                        <textarea name="content" value={content} onChange={handleInputChange} className="Sugerencias__textarea" rows="3" placeholder="Desarrolla aqui tu sugerencia, cuanta más informacion brindes mejor"></textarea>
+                        <textarea name="content" value={content} onChange={handleInputChange} className="Sugerencias__textarea" rows="3" placeholder="Desarrolla aquí tu sugerencia, mientras más información brindes mejor…"></textarea>
                     </div>
                     <button type="submit" className="Sugerencias__button">
                         <i class="far fa-paper-plane"></i>
