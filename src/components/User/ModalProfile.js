@@ -26,7 +26,11 @@ const ModalProfile = () => {
     }
 
     const formatDateProfile = (date) => {
-        return date.substring(0, 10)
+        let dateSubs = date.substring(0, 10)
+        let dateToArray = dateSubs.split('-')
+        let dateToArrayReverse = dateToArray.reverse()
+        let dateJoined = dateToArrayReverse.join('-')
+        return dateJoined
     }
 
     useEffect(() => {
@@ -39,9 +43,7 @@ const ModalProfile = () => {
 
     return (
         <Modal size="lg" className="ModalProfile" show={true} onHide={handleClose}>
-            <Modal.Header closeButton>
-
-            </Modal.Header>
+            <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
                 <div className="d-flex flex-column align-items-center text-center">
                     {user.image ? <img src={user.image} className="profile-image-medium rounded-circle" /> : <i class="far fa-user no-image-profile-medium"></i>}

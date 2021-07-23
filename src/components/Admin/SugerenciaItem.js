@@ -6,19 +6,22 @@ import { useStateValue } from '../../StateProvider'
 
 const SugerenciaItem = ({ sugerencia }) => {
     const [{ token }, dispatch] = useStateValue()
-    const [userMessage, setUserMessage] = useState({})
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+    const [userMessage, setUserMessage] = useState({})
+
     const getPostDate = (date) => {
         return moment(date).format('D MMM YYYY')
     }
+
     const renderTooltipSee = (props) => (
         <Tooltip id="button-tooltip" {...props}>
             Ver Sugerencia
         </Tooltip>
     );
+
     const getUser = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${sugerencia.userId}`, { headers })
             .then(resp => {
@@ -29,6 +32,7 @@ const SugerenciaItem = ({ sugerencia }) => {
     useEffect(() => {
         getUser()
     }, [])
+
     const handleClick = () => {
         dispatch({
             type: 'SET_SUGERENCIA',
@@ -36,6 +40,7 @@ const SugerenciaItem = ({ sugerencia }) => {
             userMessage
         })
     }
+
     return (
         <li className="PostsAdmin-posts-list-control">
             <span>{sugerencia.title}</span>

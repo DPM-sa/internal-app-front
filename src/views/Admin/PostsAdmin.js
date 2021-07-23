@@ -34,7 +34,6 @@ const PostsAdmin = () => {
     const getComments = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/allcomments`, { headers })
             .then(resp => {
-                console.log(resp.data)
                 setCommentsQuantity(resp.data.commentsDB.length)
             })
     }
@@ -138,6 +137,7 @@ const PostsAdmin = () => {
                 await axios.delete(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
                     .then(() => {
                         getPosts()
+                        getComments()
                     })
             }
         })

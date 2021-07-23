@@ -5,11 +5,13 @@ import './Footer.css'
 
 const Footer = () => {
     const [{ }, dispatch] = useStateValue()
+
     const handleLogout = () => {
         dispatch({
             type: 'LOGOUT'
         })
     }
+    
     return (
         <footer className="Footer">
 

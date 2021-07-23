@@ -6,7 +6,8 @@ export const initialState = {
     searching: '',
     sugerenciaSelected: null,
     userMessage: null,
-    openPost: false
+    openPost: false,
+    editProfile: false
 }
 
 const reducer = (state, action) => {
@@ -48,6 +49,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 openPost: action.openPost
+            }
+        }
+        case "SET_EDIT_PROFILE": {
+            return {
+                ...state,
+                editProfile: action.editProfile
             }
         }
         case "LOGOUT":

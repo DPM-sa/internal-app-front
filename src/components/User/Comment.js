@@ -35,6 +35,7 @@ const Comment = ({ comment }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
     const getComments = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/comments`, { headers })
             .then(async (resp) => {
@@ -44,6 +45,7 @@ const Comment = ({ comment }) => {
                 })
             })
     }
+
     const handleDelete = async () => {
         await axios.delete(`https://internal-app-dpm.herokuapp.com/comment/${comment._id}`, { headers })
             .then(() => {
@@ -51,6 +53,7 @@ const Comment = ({ comment }) => {
                 setShow(false)
             })
     }
+    
     return (
         <>
             <div className="comment-box">

@@ -13,11 +13,18 @@ const ModalPost = () => {
     const history = useHistory()
 
     const { id } = useParams()
-    const [postObj, setPostObj] = useState({})
     const [titlePost, setTitlePost] = useState('')
     const [contentPost, setContentPost] = useState('')
     const [likesPost, setLikesPost] = useState([])
     const [tagsPost, setTagsPost] = useState([])
+
+    const [post, setPost] = useState({
+        title: '',
+        content: '',
+        likes: [],
+        tags: []
+    })
+    const { title, content, likes, tags } = post
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [imgUrl, setImgUrl] = useState('')
     const [form, setForm] = useState({
@@ -41,7 +48,6 @@ const ModalPost = () => {
     const getPosts = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
             .then(resp => {
-                console.log(resp.data.posts)
                 dispatch({
                     type: "SET_POSTS",
                     posts: resp.data.posts
@@ -52,10 +58,12 @@ const ModalPost = () => {
     const getPost = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
             .then(resp => {
-                setTitlePost(resp.data.post.title)
-                setContentPost(resp.data.post.content)
-                setLikesPost(resp.data.post.likes)
-                setTagsPost(resp.data.post.tags)
+                setPost({
+                    title: resp.data.post.title,
+                    content: resp.data.post.content,
+                    likes: resp.data.post.likes,
+                    tags: resp.data.post.tags
+                })
                 setImgUrl(resp.data.post.image)
                 if (resp.data.post.likes.find(like => like._id === user._id)) {
                     setIsPostLiked(true)
@@ -82,7 +90,6 @@ const ModalPost = () => {
             { headers })
             .then(async () => {
                 getComments()
-                getPosts()
                 setForm({
                     comment: ''
                 })
@@ -140,15 +147,15 @@ const ModalPost = () => {
                     <img src={imgUrl} className="ModalPost__header-img" />
                     <div className="ModalPost__header-content">
                         <div className="ModalPost-header-top">
-                            <h4>{titlePost}</h4>
-                            <p>{parse(truncateContent(contentPost))}</p>
+                            <h4>{title}</h4>
+                            <p>{parse(truncateContent(content))}</p>
                         </div>
                         <div className="ModalPost__header-actions">
                             <span>
                                 {
                                     isPostLiked ? <i onClick={handleLike} className="fas fa-heart liked"></i> : <i onClick={handleLike} className="far fa-heart"></i>
                                 }
-                                {likesPost.length}
+                                {likes.length}
                             </span>
                             <span>
                                 <i className="far fa-comments"></i>
@@ -157,7 +164,7 @@ const ModalPost = () => {
                             <span>
                                 <i class="fas fa-tags"></i>
                                 {
-                                    tagsPost.map(tag => (
+                                    tags.map(tag => (
                                         <span className="ModalPost__header-actions-tag">
                                             {tag}
                                         </span>
@@ -168,7 +175,7 @@ const ModalPost = () => {
                     </div>
                 </Modal.Header>
                 <Modal.Body className="ModalPost__content">
-                    <p className="ModalPost__content-text">{parse(contentPost)}</p>
+                    <p className="ModalPost__content-text">{parse(content)}</p>
                     <form onSubmit={handleSubmit} className="comment-box add-comment">
                         <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" className="ModalPost__content-input" />
                         <button disabled={comment === ""} type="submit" className="ModalPost__content-button">Comentar</button>

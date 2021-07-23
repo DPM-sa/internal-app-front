@@ -48,11 +48,13 @@ const AppRouter = () => {
                 <PrivateRoute path="/sugerencias" component={Sugerencias} />
                 <Redirect to="/home" />
             </Switch>
+
             <Switch>
                 <PrivateRoute path="/home/post/:id">
                     <ModalPost />
                 </PrivateRoute>
             </Switch>
+
             <Switch>
                 <PrivateRoute path="/directorio/profile/:id">
                     <ModalProfile />
@@ -70,16 +72,19 @@ const AppRouter = () => {
                     <NewUser />
                 </AdminRoute>
             </Switch>
+
             <Switch>
                 <AdminRoute path="/directorioadmin/edituser/:id">
                     <EditUser />
                 </AdminRoute>
             </Switch>
+
             <Switch>
                 <AdminRoute path="/bibliotecaadmin/newfile">
                     <NewFile />
                 </AdminRoute>
             </Switch>
+
             <Switch>
                 <AdminRoute path="/bibliotecaadmin/editfile/:id">
                     <EditFile />

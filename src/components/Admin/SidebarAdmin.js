@@ -5,6 +5,7 @@ import './SidebarAdmin.css'
 
 const SidebarAdmin = () => {
     const [{ user }, dispatch] = useStateValue()
+
     const handleShowSidebar = () => {
         const sidebar = document.querySelector('.sidebar')
         const icon = document.querySelector('.icon')
@@ -12,11 +13,13 @@ const SidebarAdmin = () => {
         icon.classList.toggle('fa-bars')
         icon.classList.toggle('fa-times')
     }
+
     const handleLogout = () => {
         dispatch({
             type: 'LOGOUT'
         })
     }
+    
     return (
         <div className="sidebar">
             <div class="sidebar__content">

@@ -117,11 +117,21 @@
         padding-left: 11%;
     }
 }
+
 @media screen and (min-width:1200px) {
     .Directorio__search-input {
         padding-left: 9%;
     }
     .Directorio__search-icon {
         left: 7%;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .Directorio__list-header span:nth-child(4), .Directorio__list-header span:nth-child(5) {
+        display: none;
+    }
+    .Directorio__list-control div:nth-child(4), .Directorio__list-control div:nth-child(5) {
+        display: none;
     }
 }

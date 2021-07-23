@@ -85,7 +85,7 @@ const EditPost = () => {
             </>
         );
     };
-    const optionsTags = [
+    const [optionsTags, setOptionsTags] = useState([
         { value: 'Novedades generales', label: 'Novedades generales' },
         { value: 'Higiene y seguridad', label: 'Higiene y seguridad' },
         { value: 'Incorporaciones', label: 'Incorporaciones' },
@@ -98,13 +98,23 @@ const EditPost = () => {
         { value: 'Sistemas informáticos', label: 'Sistemas informáticos' },
         { value: 'Aniversarios', label: 'Aniversarios' },
         { value: 'Beneficios', label: 'Beneficios' },
-    ]
+    ])
 
     const getPost = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
             .then(resp => {
                 setTitle(resp.data.post.title)
                 setContent(resp.data.post.content)
+                let arrTags = resp.data.post.tags
+                let arrTagsObj = arrTags.map(tag => ({ value: tag, label: tag }))
+                let newArray = [...optionsTags, ...arrTagsObj]
+                let arrFlat = newArray.flat()
+                let arrWithoutRepeated = arrFlat.filter((item, index, self) =>
+                    index === self.findIndex((t) => (
+                        t.value === item.value && t.label === item.label
+                    ))
+                )
+                setOptionsTags(arrWithoutRepeated)
                 setTags(resp.data.post.tags)
                 setImgUrl(resp.data.post.image)
                 setFilename(resp.data.post.image)

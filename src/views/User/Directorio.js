@@ -120,6 +120,8 @@ const Directorio = () => {
                     <span>Nombre y apellido</span>
                     <span>Cargo</span>
                     <span>Sector</span>
+                    <span>Telefono</span>
+                    <span>Correo</span>
                 </li>
                 <ul className="Directorio__list-body">
                     {
@@ -144,6 +146,12 @@ const Directorio = () => {
                                 </div>
                                 <div className="Directorio__list-control-section">
                                     {user.sector}
+                                </div>
+                                <div className="Directorio__list-control-section">
+                                    {user.phone}
+                                </div>
+                                <div className="Directorio__list-control-section">
+                                    {user.correo}
                                 </div>
                             </li>
                         ))

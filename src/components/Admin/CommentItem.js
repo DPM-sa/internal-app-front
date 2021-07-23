@@ -1,17 +1,18 @@
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import moment from 'moment';
-import React, { useState, useEffect } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useStateValue } from '../../StateProvider';
 
 const CommentItem = ({ comment }) => {
+
     const [active, setActive] = useState('')
     const [userComment, setUserComment] = useState({})
-    const [{ token }, dispatch] = useStateValue()
     const { id } = useParams()
 
+    const [{ token }, dispatch] = useStateValue()
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
@@ -87,7 +88,7 @@ const CommentItem = ({ comment }) => {
                         {
                             "estado": !comment.estado
                         }, { headers })
-                        .then((resp) => {
+                        .then(() => {
                             getComments()
                         })
                 }
@@ -108,7 +109,7 @@ const CommentItem = ({ comment }) => {
                         {
                             "estado": !comment.estado
                         }, { headers })
-                        .then((resp) => {
+                        .then(() => {
                             getComments()
                         })
                 }
