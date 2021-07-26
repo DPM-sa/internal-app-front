@@ -23,6 +23,7 @@ const EditPost = () => {
     const [imgUrl, setImgUrl] = useState('')
     const [filename, setFilename] = useState('')
     const [tags, setTags] = useState([])
+    const [fileId, setFileId] = useState('')
     const [loadingImg, setLoadingImg] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -37,7 +38,7 @@ const EditPost = () => {
         e.preventDefault()
         if (title === "" || content === "" || imgUrl === "") return
         setLoading(true)
-        await axios.post('https://internal-app-dpm.herokuapp.com/post',
+        await axios.put(`https://internal-app-dpm.herokuapp.com/post/${id}`,
             {
                 "title": `${title}`,
                 "content": `${content}`,
@@ -53,11 +54,13 @@ const EditPost = () => {
                     'success'
                 )
                 setLoading(false)
+
                 setTitle('')
                 setContent('')
                 setImgUrl('')
                 setFilename('')
                 setTags([])
+                setFileId('')
             })
     }
     const handlePictureClick = () => {
@@ -66,7 +69,7 @@ const EditPost = () => {
     const handleFileChange = async (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
-        const storageRef = storage.ref().child('postImages').child(`${file.name}`)
+        const storageRef = storage.ref().child('postImages').child(`${fileId}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         setImgUrl(url)
@@ -118,6 +121,7 @@ const EditPost = () => {
                 setTags(resp.data.post.tags)
                 setImgUrl(resp.data.post.image)
                 setFilename(resp.data.post.image)
+                setFileId(resp.data.post.fileId)
             })
     }
 

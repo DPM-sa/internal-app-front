@@ -21,10 +21,13 @@ const EditUser = () => {
         sector: ''
     })
     const [role, setRole] = useState('')
+    const [fileId, setFileId] = useState('')
     const { user, password, nombre, apellido, email, phone, birth, position, sector } = form
+
     const [img, setImg] = useState('')
     const [imgTemp, setImgTemp] = useState('')
     const [imgToUpload, setImgToUpload] = useState({})
+
     const [loadingImg, setLoadingImg] = useState(false)
     const [loading, setLoading] = useState(false)
     const headers = {
@@ -47,6 +50,7 @@ const EditUser = () => {
                 })
                 setRole(resp.data.user.role)
                 console.log(resp.data.user)
+                setFileId(resp.data.user.fileId)
                 setImg(resp.data.user.image ? resp.data.user.image : '')
             })
     }
@@ -114,7 +118,7 @@ const EditUser = () => {
                         )
                     })
             } else if (imgTemp !== "") {
-                const storageRef = storage.ref().child('profileImages').child(`${user}`)
+                const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
                 const res = await storageRef.put(imgToUpload)
                 const url = await storageRef.getDownloadURL()
                 await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${id}`,
@@ -165,7 +169,7 @@ const EditUser = () => {
                         )
                     })
             } else if (imgTemp !== "") {
-                const storageRef = storage.ref().child('profileImages').child(`${user}`)
+                const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
                 const res = await storageRef.put(imgToUpload)
                 const url = await storageRef.getDownloadURL()
                 await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${id}`,
@@ -200,7 +204,7 @@ const EditUser = () => {
         setImgTemp('')
         setImgToUpload({})
         if (img.startsWith('https://firebasestorage.googleapis.com/')) {
-            const storageRef = storage.ref().child('profileImages').child(`${user}`)
+            const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             storageRef.delete().then(async () => {
                 await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${id}`,
                     {

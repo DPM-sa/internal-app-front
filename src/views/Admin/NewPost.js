@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import Trix from "trix";
 import { ReactTrixRTEInput, ReactTrixRTEToolbar } from "react-trix-rte";
@@ -9,6 +9,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import CreatableSelect from 'react-select/creatable';
 import { useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const NewPost = () => {
     const [{ token }] = useStateValue()
@@ -24,6 +25,7 @@ const NewPost = () => {
     const [tags, setTags] = useState([])
     const [loadingImg, setLoadingImg] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [fileId, setFileId] = useState('')
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value)
@@ -31,7 +33,10 @@ const NewPost = () => {
     const handleContentChange = (event) => {
         setContent(event.target.value)
     }
-
+    useEffect(() => {
+        let id = uuidv4()
+        setFileId(id)
+    }, [])
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (title === "" || content === "" || imgUrl === "") return
@@ -41,7 +46,8 @@ const NewPost = () => {
                 "title": `${title}`,
                 "content": `${content}`,
                 "image": `${imgUrl}`,
-                "tags": tags
+                "tags": tags,
+                "fileId": `${fileId}`
             },
             { headers })
             .then(resp => {
@@ -57,6 +63,7 @@ const NewPost = () => {
                 setImgUrl('')
                 setFilename('')
                 setTags([])
+                setFileId('')
             })
     }
     const handlePictureClick = () => {
@@ -65,7 +72,7 @@ const NewPost = () => {
     const handleFileChange = async (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
-        const storageRef = storage.ref().child('postImages').child(`${file.name}`)
+        const storageRef = storage.ref().child('postImages').child(`${fileId}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         setImgUrl(url)

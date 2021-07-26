@@ -4,6 +4,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
+import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import './BibliotecaAdmin.css'
 
@@ -105,7 +106,7 @@ const BibliotecaAdmin = () => {
         }
     }
 
-    const handleDeleteFile = async (id) => {
+    const handleDeleteFile = async (file) => {
         Swal.fire({
             title: 'Deseas eliminar este archivo?',
             showCloseButton: true,
@@ -117,10 +118,14 @@ const BibliotecaAdmin = () => {
                 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.delete(`https://internal-app-dpm.herokuapp.com/file/${id}`, { headers })
-                    .then(() => {
-                        getFiles()
-                    })
+                const storageRef = storage.ref().child('BibliotecaFiles').child(`${file.fileId}`)
+                storageRef.delete().then(async () => {
+                    await axios.delete(`https://internal-app-dpm.herokuapp.com/file/${file._id}`, { headers })
+                        .then(() => {
+                            getFiles()
+                        })
+                })
+
             }
         })
     }
@@ -189,7 +194,7 @@ const BibliotecaAdmin = () => {
                                                 overlay={renderTooltipDelete}
                                             >
                                                 <i
-                                                    onClick={() => handleDeleteFile(file._id)}
+                                                    onClick={() => handleDeleteFile(file)}
                                                     class="fas fa-trash-alt"
                                                 ></i>
                                             </OverlayTrigger>

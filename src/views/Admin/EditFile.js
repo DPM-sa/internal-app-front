@@ -17,8 +17,12 @@ const EditFile = () => {
         title: ''
     })
     const { title } = form
+
     const [file, setFile] = useState({})
     const [filename, setFilename] = useState('')
+    const [fileTemp, setFileTemp] = useState('')
+    const [fileId, setFileId] = useState('')
+
     const [loading, setLoading] = useState(false)
 
     const handlePictureClick = () => {
@@ -27,6 +31,7 @@ const EditFile = () => {
 
     const handleFileChange = (e) => {
         setFilename(e.target.files[0].name)
+        setFileTemp(e.target.files[0].name)
         setFile(e.target.files[0])
     }
 
@@ -41,27 +46,55 @@ const EditFile = () => {
         e.preventDefault()
         if (title === "") return
         setLoading(true)
-        const storageRef = storage.ref().child('BibliotecaFiles').child(`${title}`)
-        const res = await storageRef.put(file)
-        const url = await storageRef.getDownloadURL()
-        setFilename(url)
-        await axios.put(`https://internal-app-dpm.herokuapp.com/file/${id}`,
-            {
-                "title": `${title}`,
-                "url": `${url}`
-            }, { headers })
-            .then(() => {
-                setLoading(false)
-                Swal.fire(
-                    'Éxito',
-                    'El archivo se ha creado con éxito',
-                    'success'
-                )
-            })
+        if (fileTemp !== "") {
+            console.log('hay archivo')
+            const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}`)
+            const res = await storageRef.put(file)
+            const url = await storageRef.getDownloadURL()
+            setFilename(url)
+            await axios.put(`https://internal-app-dpm.herokuapp.com/file/${id}`,
+                {
+                    "title": `${title}`,
+                    "url": `${url}`
+                }, { headers })
+                .then(() => {
+                    setLoading(false)
+                    Swal.fire(
+                        'Éxito',
+                        'El archivo se ha editado con éxito',
+                        'success'
+                    ).then(resp => {
+                        if (resp) {
+                            history.push('/bibliotecaadmin')
+                        }
+                    })
+                })
+        } else if (fileTemp === "") {
+            console.log('no hay archivo')
+            await axios.put(`https://internal-app-dpm.herokuapp.com/file/${id}`,
+                {
+                    "title": `${title}`
+                }, { headers })
+                .then(() => {
+                    setLoading(false)
+                    Swal.fire(
+                        'Éxito',
+                        'El archivo se ha editado con éxito',
+                        'success'
+                    ).then(resp => {
+                        if (resp) {
+                            history.push('/bibliotecaadmin')
+                        }
+                    })
+                })
+        }
+
     }
+
     const handleReturn = () => {
         history.push('/bibliotecaadmin')
     }
+
     const getFile = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/file/${id}`, { headers })
             .then(resp => {
@@ -69,9 +102,10 @@ const EditFile = () => {
                     title: resp.data.file.title
                 })
                 setFilename(resp.data.file.url)
+                setFileId(resp.data.fileId)
             })
     }
-    
+
     useEffect(() => {
         getFile()
     }, [])

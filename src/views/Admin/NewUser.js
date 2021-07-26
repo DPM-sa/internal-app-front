@@ -1,9 +1,10 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
+import { v4 as uuidv4 } from 'uuid';
 import './NewUser.css'
 const NewUser = () => {
     const [{ token }] = useStateValue()
@@ -57,6 +58,7 @@ const NewUser = () => {
         e.preventDefault()
         if (user === "" || password === "" || nombre === "" || apellido === "" || position === "" || sector === "") return
         setLoading(true)
+        const fileId = uuidv4();
         if (imgTemp === "") {
             console.log('no hay imagen')
             await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
@@ -71,6 +73,7 @@ const NewUser = () => {
                     "sector": `${sector}`,
                     "phone": `${phone}`,
                     "birth": `${birth}`,
+                    "fileId": `${fileId}`
                 },
                 { headers })
                 .then(() => {
@@ -83,7 +86,7 @@ const NewUser = () => {
                 })
         } else if (imgTemp !== "") {
             console.log('hay imagen')
-            const storageRef = storage.ref().child('profileImages').child(`${user}`)
+            const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             const res = await storageRef.put(img)
             const url = await storageRef.getDownloadURL()
             await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
@@ -98,7 +101,8 @@ const NewUser = () => {
                     "sector": `${sector}`,
                     "phone": `${phone}`,
                     "birth": `${birth}`,
-                    "image": `${url}`
+                    "image": `${url}`,
+                    "fileId": `${fileId}`
                 },
                 { headers })
                 .then(() => {

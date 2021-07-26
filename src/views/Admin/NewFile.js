@@ -1,10 +1,12 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
+import { v4 as uuidv4 } from 'uuid';
 import './NewFile.css'
+
 const NewFile = () => {
     const [{ token }] = useStateValue()
 
@@ -14,7 +16,7 @@ const NewFile = () => {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
-
+    
     const [form, setForm] = useState({
         title: ''
     })
@@ -23,7 +25,6 @@ const NewFile = () => {
     const [file, setFile] = useState({})
     const [filename, setFilename] = useState('')
     const [loading, setLoading] = useState(false)
-
 
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
@@ -45,13 +46,15 @@ const NewFile = () => {
         e.preventDefault()
         if (title === "" || filename === "") return
         setLoading(true)
-        const storageRef = storage.ref().child('BibliotecaFiles').child(`${title}`)
+        let fileId = uuidv4()
+        const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         await axios.post('https://internal-app-dpm.herokuapp.com/file',
             {
                 "title": `${title}`,
-                "url": `${url}`
+                "url": `${url}`,
+                "fileId": `${fileId}`
             }, { headers })
             .then(() => {
                 setLoading(false)
@@ -59,7 +62,11 @@ const NewFile = () => {
                     'Éxito',
                     'El archivo se ha creado con éxito',
                     'success'
-                )
+                ).then(resp => {
+                    if (resp) {
+                        history.push('/bibliotecaadmin')
+                    }
+                })
             })
     }
     const handleReturn = () => {

@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import Swal from 'sweetalert2'
+import { storage } from '../../config/firebase'
 
 const PostsAdmin = () => {
     const history = useHistory()
@@ -122,7 +123,7 @@ const PostsAdmin = () => {
         }
     }
 
-    const handleDeletePost = async (id) => {
+    const handleDeletePost = async (post) => {
         Swal.fire({
             title: 'Deseas eliminar este post?',
             showCloseButton: true,
@@ -134,11 +135,14 @@ const PostsAdmin = () => {
                 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.delete(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
-                    .then(() => {
-                        getPosts()
-                        getComments()
-                    })
+                const storageRef = storage.ref().child('profileImages').child(`${post.fileId}`)
+                storageRef.delete().then(async () => {
+                    await axios.delete(`https://internal-app-dpm.herokuapp.com/post/${post._id}`, { headers })
+                        .then(() => {
+                            getPosts()
+                            getComments()
+                        })
+                })
             }
         })
     }
@@ -218,7 +222,7 @@ const PostsAdmin = () => {
                                                         overlay={renderTooltipDelete}
                                                     >
                                                         <i
-                                                            onClick={() => handleDeletePost(post._id)}
+                                                            onClick={() => handleDeletePost(post)}
                                                             class="fas fa-trash-alt"
                                                         ></i>
                                                     </OverlayTrigger>

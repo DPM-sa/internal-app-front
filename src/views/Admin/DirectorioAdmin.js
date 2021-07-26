@@ -5,6 +5,7 @@ import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
+import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 
 const DirectorioAdmin = () => {
@@ -105,7 +106,7 @@ const DirectorioAdmin = () => {
         }
     }
 
-    const handleDeleteUser = async (id) => {
+    const handleDeleteUser = async (user) => {
         Swal.fire({
             title: 'Deseas eliminar este usuario?',
             showCloseButton: true,
@@ -117,10 +118,14 @@ const DirectorioAdmin = () => {
                 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.delete(`https://internal-app-dpm.herokuapp.com/usuario/${id}`, { headers })
-                    .then(() => {
-                        getUsers()
-                    })
+                const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
+                storageRef.delete().then(async () => {
+                    await axios.delete(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`, { headers })
+                        .then(() => {
+                            getUsers()
+                        })
+                })
+
             }
         })
     }
@@ -202,7 +207,7 @@ const DirectorioAdmin = () => {
                                                         overlay={renderTooltipDelete}
                                                     >
                                                         <i
-                                                            onClick={() => handleDeleteUser(user._id)}
+                                                            onClick={() => handleDeleteUser(user)}
                                                             class="fas fa-trash-alt"
                                                         ></i>
                                                     </OverlayTrigger>

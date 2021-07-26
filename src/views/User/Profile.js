@@ -27,11 +27,10 @@ const Profile = () => {
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
     }
-
     const handleFileChange = async (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
-        const storageRef = storage.ref().child('profileImages').child(`${user.user}`)
+        const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
@@ -53,7 +52,7 @@ const Profile = () => {
 
     const handleDeleteImage = () => {
         setLoadingImg(true)
-        const storageRef = storage.ref().child('profileImages').child(`${user.user}`)
+        const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
         storageRef.delete().then(async () => {
             await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
                 {
