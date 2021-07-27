@@ -138,7 +138,7 @@ const PostsAdmin = () => {
                 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const storageRef = storage.ref().child('profileImages').child(`${post.fileId}`)
+                const storageRef = storage.ref().child('postImages').child(`${post.fileId}`)
                 storageRef.delete().then(async () => {
                     await axios.delete(`https://internal-app-dpm.herokuapp.com/post/${post._id}`, { headers })
                         .then(() => {

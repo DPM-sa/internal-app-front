@@ -146,6 +146,15 @@ a.PostsAdmin-content-actions-item {
     color: gray;
 }
 
+@media screen and (max-width:576px) {
+    .PostsAdmin-posts-list-control {
+        padding: 10px 0px;
+    }
+    .posts-lists-control-actions i {
+        margin-right: 2px;
+    }
+}
+
 @media screen and (max-width:767px) {
     .PostsAdmin {
         margin-left: 25px

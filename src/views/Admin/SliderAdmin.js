@@ -19,6 +19,18 @@ const SliderAdmin = () => {
     const [loadingImg2, setLoadingImg2] = useState(false)
     const [loadingImg3, setLoadingImg3] = useState(false)
 
+    const [title1error, setTitle1error] = useState('')
+    const [content1error, setContent1error] = useState('')
+    const [url1error, setUrl1error] = useState('')
+
+    const [title2error, setTitle2error] = useState('')
+    const [content2error, setContent2error] = useState('')
+    const [url2error, setUrl2error] = useState('')
+
+    const [title3error, setTitle3error] = useState('')
+    const [content3error, setContent3error] = useState('')
+    const [url3error, setUrl3error] = useState('')
+
     const [form1, setForm1] = useState({
         title1: '',
         content1: '',
@@ -60,14 +72,31 @@ const SliderAdmin = () => {
     }
     const handleInputChange3 = (e) => {
         setForm3({
-            ...form1,
+            ...form3,
             [e.target.name]: e.target.value
         })
     }
 
     const handleSubmit1 = async (e) => {
         e.preventDefault()
-        if (title1 === "", content1 === "", url1 === "") return
+        if (title1 === "" || content1 === "" || url1 === "") {
+            if (title1 === "") {
+                setTitle1error('El titulo es requerido')
+            } else {
+                setTitle1error('')
+            }
+            if (content1 === "") {
+                setContent1error('La descripcion es requerida')
+            } else {
+                setContent1error('')
+            }
+            if (url1 === "") {
+                setUrl1error('La url es requerida')
+            } else {
+                setUrl1error('')
+            }
+            return
+        }
         setLoadingForm1(true)
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id1}`,
             {
@@ -83,8 +112,25 @@ const SliderAdmin = () => {
 
     const handleSubmit2 = async (e) => {
         e.preventDefault()
+        if (title2 === "" || content2 === "" || url2 === "") {
+            if (title2 === "") {
+                setTitle2error('El titulo es requerido')
+            } else {
+                setTitle2error('')
+            }
+            if (content2 === "") {
+                setContent2error('La descripcion es requerida')
+            } else {
+                setContent2error('')
+            }
+            if (url2 === "") {
+                setUrl2error('La url es requerida')
+            } else {
+                setUrl2error('')
+            }
+            return
+        }
         setLoadingForm2(true)
-        if (title2 === "", content2 === "", url2 === "") return
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id2}`,
             {
                 "title": `${title2}`,
@@ -99,8 +145,25 @@ const SliderAdmin = () => {
 
     const handleSubmit3 = async (e) => {
         e.preventDefault()
+        if (title3 === "" || content3 === "" || url3 === "") {
+            if (title3 === "") {
+                setTitle3error('El titulo es requerido')
+            } else {
+                setTitle3error('')
+            }
+            if (content3 === "") {
+                setContent3error('La descripcion es requerida')
+            } else {
+                setContent3error('')
+            }
+            if (url3 === "") {
+                setUrl3error('La url es requerida')
+            } else {
+                setUrl3error('')
+            }
+            return
+        }
         setLoadingForm3(true)
-        if (title3 === "", content3 === "", url3 === "") return
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id3}`,
             {
                 "title": `${title3}`,
@@ -299,9 +362,27 @@ const SliderAdmin = () => {
                                 </div>
                             }
                             <form onSubmit={handleSubmit1}>
-                                <input disabled={loadingForm1} value={title1} name="title1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
-                                <input disabled={loadingForm1} value={content1} name="content1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
-                                <input disabled={loadingForm1} value={url1} name="url1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
+                                <div>
+                                    <input disabled={loadingForm1} value={title1} name="title1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
+                                    {
+                                        title1error && !title1
+                                        && <span className="submitError">{title1error}</span>
+                                    }
+                                </div>
+                                <div>
+                                    <input disabled={loadingForm1} value={content1} name="content1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
+                                    {
+                                        content1error && !content1
+                                        && <span className="submitError">{content1error}</span>
+                                    }
+                                </div>
+                                <div>
+                                    <input disabled={loadingForm1} value={url1} name="url1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
+                                    {
+                                        url1error && !url1
+                                        && <span className="submitError">{url1error}</span>
+                                    }
+                                </div>
                                 <button disabled={loadingForm1} type="submit">
                                     {
                                         loadingForm1
@@ -351,9 +432,27 @@ const SliderAdmin = () => {
                                 </div>
                             }
                             <form onSubmit={handleSubmit2}>
-                                <input disabled={loadingForm2} value={title2} name="title2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
-                                <input disabled={loadingForm2} value={content2} name="content2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
-                                <input disabled={loadingForm2} value={url2} name="url2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
+                                <div>
+                                    <input disabled={loadingForm2} value={title2} name="title2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
+                                    {
+                                        title2error && !title2
+                                        && <span className="submitError">{title2error}</span>
+                                    }
+                                </div>
+                                <div>
+                                    <input disabled={loadingForm2} value={content2} name="content2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
+                                    {
+                                        content2error && !content2
+                                        && <span className="submitError">{content2error}</span>
+                                    }
+                                </div>
+                                <div>
+                                    <input disabled={loadingForm2} value={url2} name="url2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
+                                    {
+                                        url2error && !url2
+                                        && <span className="submitError">{url2error}</span>
+                                    }
+                                </div>
                                 <button disabled={loadingForm2} type="submit">
                                     {
                                         loadingForm2
@@ -403,9 +502,28 @@ const SliderAdmin = () => {
                                 </div>
                             }
                             <form onSubmit={handleSubmit3}>
-                                <input disabled={loadingForm3} value={title3} name="title3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
-                                <input disabled={loadingForm3} value={content3} name="content3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
-                                <input disabled={loadingForm3} value={url3} name="url3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
+                                <div>
+                                    <input disabled={loadingForm3} value={title3} name="title3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
+                                    {
+                                        title3error && !title3
+                                        && <span className="submitError">{title3error}</span>
+                                    }
+                                </div>
+                                <div>
+                                    <input disabled={loadingForm3} value={content3} name="content3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
+                                    {
+                                        content3error && !content3
+                                        && <span className="submitError">{content3error}</span>
+                                    }
+                                </div>
+                                <div>
+                                    <input disabled={loadingForm3} value={url3} name="url3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
+                                    {
+                                        url3error && !url3
+                                        && <span className="submitError">{url3error}</span>
+                                    }
+                                </div>
+
                                 <button disabled={loadingForm3} type="submit">
                                     {
                                         loadingForm3

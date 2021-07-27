@@ -7,7 +7,9 @@ export const initialState = {
     sugerenciaSelected: null,
     userMessage: null,
     openPost: false,
-    editProfile: false
+    editProfile: false,
+    editOrNewUser: false,
+    editOrNewFile: false
 }
 
 const reducer = (state, action) => {
@@ -55,6 +57,18 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 editProfile: action.editProfile
+            }
+        }
+        case "SET_EDIT_NEW_USER": {
+            return {
+                ...state,
+                editOrNewUser: action.editOrNewUser
+            }
+        }
+        case "SET_EDIT_NEW_FILE": {
+            return {
+                ...state,
+                editOrNewFile: action.editOrNewFile
             }
         }
         case "LOGOUT":

@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import './NewFile.css'
 
 const NewFile = () => {
-    const [{ token }] = useStateValue()
+    const [{ token, editOrNewFile }, dispatch] = useStateValue()
 
     const history = useHistory()
 
@@ -16,7 +16,7 @@ const NewFile = () => {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
-    
+
     const [form, setForm] = useState({
         title: ''
     })
@@ -25,6 +25,8 @@ const NewFile = () => {
     const [file, setFile] = useState({})
     const [filename, setFilename] = useState('')
     const [loading, setLoading] = useState(false)
+    const [titleError, setTitleError] = useState('')
+    const [filenameError, setFilenameError] = useState('')
 
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
@@ -44,7 +46,19 @@ const NewFile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (title === "" || filename === "") return
+        if (title === "" || filename === "") {
+            if (title === "") {
+                setTitleError('El titulo es requerido')
+            } else {
+                setTitleError('')
+            }
+            if (filename === "") {
+                setFilenameError('El archivo es requerido')
+            } else {
+                setFilenameError('')
+            }
+            return
+        }
         setLoading(true)
         let fileId = uuidv4()
         const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}`)
@@ -64,6 +78,10 @@ const NewFile = () => {
                     'success'
                 ).then(resp => {
                     if (resp) {
+                        dispatch({
+                            type: 'SET_EDIT_NEW_FILE',
+                            editOrNewFile: !editOrNewFile
+                        })
                         history.push('/bibliotecaadmin')
                     }
                 })
@@ -85,11 +103,27 @@ const NewFile = () => {
                 />
                 <form onSubmit={handleSubmit} className="NewFile__content">
                     <div className="NewFile__content-top">
-                        <button disabled={loading} onClick={handlePictureClick} type="button">
-                            <i class="fas fa-plus"></i>
-                            Cargar el nuevo archivo
-                        </button>
-                        <input disabled={loading} name="title" value={title} onChange={handleInputChange} type="text" placeholder="Titulo del archivo" />
+
+                        <div className="NewFile__content-top-actions">
+                            <button disabled={loading} onClick={handlePictureClick} type="button">
+                                <i class="fas fa-plus"></i>
+                                Cargar el nuevo archivo
+                            </button>
+                            <input disabled={loading} name="title" value={title} onChange={handleInputChange} type="text" placeholder="Titulo del archivo" />
+                        </div>
+
+                        <div className="NewFile__errors">
+                            {
+                                (filenameError && !filename)
+                                    ? <span>{filenameError}</span>
+                                    : <span></span>
+                            }
+                            {
+                                (titleError && !title)
+                                && <span>{titleError}</span>
+                            }
+                        </div>
+
                     </div>
                     {filename && <span>{filename}</span>}
                     <div className="NewFile__content-bottom">

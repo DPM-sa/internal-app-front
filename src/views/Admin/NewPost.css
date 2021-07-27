@@ -58,13 +58,30 @@ trix-editor {
     }
 }
 
-.NewPost__actions {
+.NewPost__actions div:first-of-type {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.NewPost__errors {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.NewPost__errors span {
+    flex: 0 1 calc(50% - 1rem);
+}
+
+.submitError {
+    font-weight: bold;
+    font-size: 16px;
+    color: #842029;
 }
 
 .NewPost__actions button {

@@ -7,7 +7,7 @@ import { useStateValue } from '../../StateProvider'
 
 const EditFile = () => {
     const { id } = useParams()
-    const [{ token }] = useStateValue()
+    const [{ token, editOrNewFile }, dispatch] = useStateValue()
     const history = useHistory()
     const headers = {
         'Content-Type': 'application/json',
@@ -24,6 +24,7 @@ const EditFile = () => {
     const [fileId, setFileId] = useState('')
 
     const [loading, setLoading] = useState(false)
+    const [titleError, setTitleError] = useState('')
 
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
@@ -44,7 +45,14 @@ const EditFile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (title === "") return
+        if (title === "") {
+            if (title === "") {
+                setTitleError('El titulo es requerido')
+            } else {
+                setTitleError('')
+            }
+            return
+        }
         setLoading(true)
         if (fileTemp !== "") {
             console.log('hay archivo')
@@ -65,6 +73,10 @@ const EditFile = () => {
                         'success'
                     ).then(resp => {
                         if (resp) {
+                            dispatch({
+                                type: 'SET_EDIT_NEW_FILE',
+                                editOrNewFile: !editOrNewFile
+                            })
                             history.push('/bibliotecaadmin')
                         }
                     })
@@ -83,6 +95,10 @@ const EditFile = () => {
                         'success'
                     ).then(resp => {
                         if (resp) {
+                            dispatch({
+                                type: 'SET_EDIT_NEW_FILE',
+                                editOrNewFile: !editOrNewFile
+                            })
                             history.push('/bibliotecaadmin')
                         }
                     })
@@ -123,11 +139,22 @@ const EditFile = () => {
                 />
                 <form onSubmit={handleSubmit} className="NewFile__content">
                     <div className="NewFile__content-top">
-                        <button disabled={loading} onClick={handlePictureClick} type="button">
-                            <i class="fas fa-plus"></i>
-                            Cargar el nuevo archivo
-                        </button>
-                        <input disabled={loading} name="title" value={title} onChange={handleInputChange} type="text" placeholder="Titulo del archivo" />
+
+                        <div className="NewFile__content-top-actions">
+                            <button disabled={loading} onClick={handlePictureClick} type="button">
+                                <i class="fas fa-plus"></i>
+                                Cargar el nuevo archivo
+                            </button>
+                            <input disabled={loading} name="title" value={title} onChange={handleInputChange} type="text" placeholder="Titulo del archivo" />
+                        </div>
+
+                        <div className="NewFile__errors">
+                            <span></span>
+                            {
+                                (titleError && !title)
+                                && <span>{titleError}</span>
+                            }
+                        </div>
                     </div>
                     <p>{filename}</p>
                     <div className="NewFile__content-bottom">
@@ -156,7 +183,7 @@ const EditFile = () => {
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     )
 }
 

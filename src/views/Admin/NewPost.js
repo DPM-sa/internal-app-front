@@ -26,7 +26,9 @@ const NewPost = () => {
     const [loadingImg, setLoadingImg] = useState(false)
     const [loading, setLoading] = useState(false)
     const [fileId, setFileId] = useState('')
-
+    const [imgError, setImgError] = useState('')
+    const [titleError, setTitleError] = useState('')
+    const [contentError, setContentError] = useState('')
     const handleTitleChange = (event) => {
         setTitle(event.target.value)
     }
@@ -40,7 +42,24 @@ const NewPost = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (title === "" || content === "" || imgUrl === "") return
+        if (title === "" || content === "" || imgUrl === "") {
+            if (imgUrl === "") {
+                setImgError('La imagen es requerida')
+            } else {
+                setImgError('')
+            }
+            if (title === "") {
+                setTitleError('El titulo es requerido')
+            } else {
+                setTitleError('')
+            }
+            if (content === "") {
+                setContentError('La descripcion es requerida')
+            } else {
+                setContentError('')
+            }
+            return
+        }
         setLoading(true)
         await axios.post('https://internal-app-dpm.herokuapp.com/post',
             {
@@ -130,20 +149,33 @@ const NewPost = () => {
                         />
                         <form onSubmit={handleSubmit}>
                             <div className="NewPost__actions">
-                                <button disabled={loadingImg || loading} type="button" onClick={handlePictureClick}>
-                                    {
-                                        loadingImg
-                                            ? <>
-                                                Espere...
-                                            </>
-                                            : <>
-                                                <i class="fas fa-plus"></i>
-                                                Cargar imagen para publicacion
-                                            </>
-                                    }
+                                <div>
+                                    <button disabled={loadingImg || loading} type="button" onClick={handlePictureClick}>
+                                        {
+                                            loadingImg
+                                                ? <>
+                                                    Espere...
+                                                </>
+                                                : <>
+                                                    <i class="fas fa-plus"></i>
+                                                    Cargar imagen para publicacion
+                                                </>
+                                        }
 
-                                </button>
-                                <input disabled={loading} value={title} onChange={handleTitleChange} placeholder="Insertar titulo de la publicación" />
+                                    </button>
+                                    <input disabled={loading} value={title} onChange={handleTitleChange} placeholder="Insertar titulo de la publicación" />
+                                </div>
+                                <div className="NewPost__errors">
+                                    {
+                                        (imgError && !filename)
+                                            ? <span className="submitError">{imgError}</span>
+                                            : <span></span>
+                                    }
+                                    {
+                                        (titleError && !title)
+                                        && <span className="submitError">{titleError}</span>
+                                    }
+                                </div>
                             </div>
                             {filename && <span>{filename}</span>}
                             <div className="editor">
@@ -156,6 +188,11 @@ const NewPost = () => {
                                     placeholder="Insertar aquí texto de la publicación"
                                 />
                             </div>
+                            {
+                                (contentError && !content)
+                                &&
+                                <span className="submitError">{contentError}</span>
+                            }
                             <div className="NewPost__actions-bottom">
                                 <CreatableSelect
                                     isMulti

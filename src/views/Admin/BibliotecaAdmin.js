@@ -9,7 +9,7 @@ import { useStateValue } from '../../StateProvider'
 import './BibliotecaAdmin.css'
 
 const BibliotecaAdmin = () => {
-    const [{ token }] = useStateValue()
+    const [{ token, editOrNewFile }] = useStateValue()
 
     const headers = {
         'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const BibliotecaAdmin = () => {
 
     useEffect(() => {
         getFiles()
-    }, [])
+    }, [editOrNewFile])
 
     const renderTooltipDownload = (props) => (
         <Tooltip id="button-tooltip" {...props}>

@@ -11,7 +11,7 @@ import { useStateValue } from '../../StateProvider'
 const DirectorioAdmin = () => {
     const history = useHistory()
 
-    const [{ token }] = useStateValue()
+    const [{ token, editOrNewUser }] = useStateValue()
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
@@ -39,7 +39,7 @@ const DirectorioAdmin = () => {
 
     useEffect(() => {
         getUsers()
-    }, [])
+    }, [editOrNewUser])
 
     const renderTooltipSee = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -121,14 +121,20 @@ const DirectorioAdmin = () => {
                 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
-                storageRef.delete().then(async () => {
+                if (!user.image || user.image === "") {
                     await axios.delete(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`, { headers })
                         .then(() => {
                             getUsers()
                         })
-                })
-
+                } else if (user.image || user.image !== "") {
+                    const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
+                    storageRef.delete().then(async () => {
+                        await axios.delete(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`, { headers })
+                            .then(() => {
+                                getUsers()
+                            })
+                    })
+                }
             }
         })
     }

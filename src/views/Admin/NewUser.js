@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
@@ -7,7 +7,7 @@ import { useStateValue } from '../../StateProvider'
 import { v4 as uuidv4 } from 'uuid';
 import './NewUser.css'
 const NewUser = () => {
-    const [{ token }] = useStateValue()
+    const [{ token, editOrNewUser }, dispatch] = useStateValue()
     let headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
@@ -29,6 +29,13 @@ const NewUser = () => {
     const [imgTemp, setImgTemp] = useState('')
     const [loadingImg, setLoadingImg] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [userError, setUserError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [nombreError, setNombreError] = useState('')
+    const [apellidoError, setApellidoError] = useState('')
+    const [positionError, setPositionError] = useState('')
+    const [sectorError, setSectorError] = useState('')
+
     const history = useHistory()
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
@@ -56,7 +63,44 @@ const NewUser = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (user === "" || password === "" || nombre === "" || apellido === "" || position === "" || sector === "") return
+        if (user === "" || password === "" || nombre === "" || apellido === "" || position === "" || sector === "") {
+            if (user === "") {
+                setUserError('El nombre de usuario es requerido')
+            } else {
+                setUserError('')
+            }
+
+            if (password === "") {
+                setPasswordError('La contraseña es requerida')
+            } else {
+                setPasswordError('')
+            }
+
+            if (nombre === "") {
+                setNombreError('El nombre es requerido')
+            } else {
+                setNombreError('')
+            }
+
+            if (apellido === "") {
+                setApellidoError('El apellido es requerido')
+            } else {
+                setApellidoError('')
+            }
+
+            if (position === "") {
+                setPositionError('La posicion es requerida')
+            } else {
+                setPositionError('')
+            }
+
+            if (sector === "") {
+                setSectorError('El sector es requerido')
+            } else {
+                setSectorError('')
+            }
+            return
+        }
         setLoading(true)
         const fileId = uuidv4();
         if (imgTemp === "") {
@@ -82,7 +126,15 @@ const NewUser = () => {
                         'Éxito',
                         'El usuario se ha creado con éxito',
                         'success'
-                    )
+                    ).then(resp => {
+                        if (resp) {
+                            dispatch({
+                                type: 'SET_EDIT_NEW_USER',
+                                editOrNewUser: !editOrNewUser
+                            })
+                            history.push('/directorioadmin')
+                        }
+                    })
                 })
         } else if (imgTemp !== "") {
             console.log('hay imagen')
@@ -111,7 +163,15 @@ const NewUser = () => {
                         'Éxito',
                         'El usuario se ha creado con éxito',
                         'success'
-                    )
+                    ).then(resp => {
+                        if (resp) {
+                            dispatch({
+                                type: 'SET_EDIT_NEW_USER',
+                                editOrNewUser: !editOrNewUser
+                            })
+                            history.push('/directorioadmin')
+                        }
+                    })
                 })
         }
     }
@@ -129,47 +189,91 @@ const NewUser = () => {
                     <form onSubmit={handleSubmit} className="NewUser__data">
                         <div className="NewUser__data-row">
                             <label>Nombre de usuario</label>
-                            <input disabled={loading} onChange={handleInputChange} type="text" name="user" value={user} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="text" name="user" value={user} />
+                                {
+                                    userError && !user
+                                    && <span className="submitError">{userError}</span>
+                                }
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Contraseña</label>
-                            <input disabled={loading} onChange={handleInputChange} type="password" name="password" value={password} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="password" name="password" value={password} />
+                                {
+                                    passwordError && !password
+                                    && <span className="submitError">{passwordError}</span>
+                                }
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Nombre</label>
-                            <input disabled={loading} onChange={handleInputChange} type="text" name="nombre" value={nombre} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="text" name="nombre" value={nombre} />
+                                {
+                                    nombreError && !nombre
+                                    && <span className="submitError">{nombreError}</span>
+                                }
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Apellido</label>
-                            <input disabled={loading} onChange={handleInputChange} type="text" name="apellido" value={apellido} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="text" name="apellido" value={apellido} />
+                                {
+                                    apellidoError && !apellido
+                                    && <span className="submitError">{apellidoError}</span>
+                                }
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Email (Opcional)</label>
-                            <input disabled={loading} onChange={handleInputChange} type="email" name="email" value={email} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="email" name="email" value={email} />
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Teléfono (Opcional)</label>
-                            <input disabled={loading} onChange={handleInputChange} type="tel" name="phone" value={phone} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="tel" name="phone" value={phone} />
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Fecha de nacimiento</label>
-                            <input disabled={loading} onChange={handleInputChange} type="date" name="birth" value={birth} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="date" name="birth" value={birth} />
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Cargo</label>
-                            <input disabled={loading} onChange={handleInputChange} type="text" name="position" value={position} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="text" name="position" value={position} />
+                                {
+                                    positionError && !position
+                                    && <span className="submitError">{positionError}</span>
+                                }
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Sector</label>
-                            <input disabled={loading} onChange={handleInputChange} type="text" name="sector" value={sector} />
+                            <div>
+                                <input disabled={loading} onChange={handleInputChange} type="text" name="sector" value={sector} />
+                                {
+                                    sectorError && !sector
+                                    && <span className="submitError">{sectorError}</span>
+                                }
+                            </div>
                         </div>
                         <div className="NewUser__data-row">
                             <label>Rol</label>
-                            <select disabled={loading} onChange={handleRole} value={role}>
-                                <option value="">-- Seleccione --</option>
-                                <option value="USER_ROLE">Usuario</option>
-                                <option value="ADMIN_ROLE">Administrador</option>
-                            </select>
+                            <div>
+                                <select disabled={loading} onChange={handleRole} value={role}>
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="USER_ROLE">Usuario</option>
+                                    <option value="ADMIN_ROLE">Administrador</option>
+                                </select>
+                            </div>
                         </div>
                         <div className="NewUser__data-buttons">
                             <button disabled={loading} type="submit">

@@ -27,6 +27,10 @@ const EditPost = () => {
     const [loadingImg, setLoadingImg] = useState(false)
     const [loading, setLoading] = useState(false)
 
+    const [imgError, setImgError] = useState('')
+    const [titleError, setTitleError] = useState('')
+    const [contentError, setContentError] = useState('')
+
     const handleTitleChange = (event) => {
         setTitle(event.target.value)
     }
@@ -36,7 +40,24 @@ const EditPost = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (title === "" || content === "" || imgUrl === "") return
+        if (title === "" || content === "" || imgUrl === "") {
+            if (imgUrl === "") {
+                setImgError('La imagen es requerida')
+            } else {
+                setImgError('')
+            }
+            if (title === "") {
+                setTitleError('El titulo es requerido')
+            } else {
+                setTitleError('')
+            }
+            if (content === "") {
+                setContentError('La descripcion es requerida')
+            } else {
+                setContentError('')
+            }
+            return
+        }
         setLoading(true)
         await axios.put(`https://internal-app-dpm.herokuapp.com/post/${id}`,
             {
@@ -162,19 +183,32 @@ const EditPost = () => {
                         />
                         <form onSubmit={handleSubmit}>
                             <div className="NewPost__actions">
-                                {
-                                    loadingImg
-                                        ?
-                                        <button disabled type="button">
-                                            Espere...
-                                        </button>
-                                        :
-                                        <button disabled={loadingImg || loading} type="button" onClick={handlePictureClick}>
-                                            <i class="fas fa-plus"></i>
-                                            Cambiar imagen de publicacion
-                                        </button>
-                                }
-                                <input disabled={loading} value={title} onChange={handleTitleChange} placeholder="Insertar titulo de la publicación" />
+                                <div>
+                                    {
+                                        loadingImg
+                                            ?
+                                            <button disabled type="button">
+                                                Espere...
+                                            </button>
+                                            :
+                                            <button disabled={loadingImg || loading} type="button" onClick={handlePictureClick}>
+                                                <i class="fas fa-plus"></i>
+                                                Cambiar imagen de publicacion
+                                            </button>
+                                    }
+                                    <input disabled={loading} value={title} onChange={handleTitleChange} placeholder="Insertar titulo de la publicación" />
+                                </div>
+                                <div className="NewPost__actions">
+                                    {
+                                        (imgError && !filename)
+                                            ? <span>{imgError}</span>
+                                            : <span></span>
+                                    }
+                                    {
+                                        (titleError && !title)
+                                        && <span>{titleError}</span>
+                                    }
+                                </div>
                             </div>
                             {filename && <span>{filename}</span>}
                             <div className="editor">
@@ -185,6 +219,11 @@ const EditPost = () => {
                                     onEditorReady={handleEditorReady}
                                 />
                             </div>
+                            {
+                                (contentError && !content)
+                                &&
+                                <span className="submitError">{contentError}</span>
+                            }
                             <div className="EditPost__actions-bottom">
                                 <CreatableSelect
                                     isMulti

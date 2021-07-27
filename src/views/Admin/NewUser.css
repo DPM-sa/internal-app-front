@@ -24,8 +24,12 @@
     flex: 0 1 calc(29% - 1rem);
 }
 
-.NewUser__data-row input {
+.NewUser__data-row div {
     flex: 0 1 calc(69% - 1rem);
+}
+
+.NewUser__data-row input {
+    width: 100%;
     background-color: transparent;
     border: 2px solid white;
     border-radius: 40px;
@@ -40,7 +44,7 @@
 }
 
 .NewUser__data-row select {
-    flex: 0 1 calc(69% - 1rem);
+    width: 100%;
     background-color: transparent;
     border: 2px solid white;
     border-radius: 40px;
@@ -142,6 +146,9 @@
 .editImage.disabled {
     opacity: .5;
     cursor: not-allowed;
+}
+.NewUser__data-row .submitError{
+    color: red;
 }
 
 @media screen and (max-width:767px) {
