@@ -18,10 +18,15 @@ const BibliotecaAdmin = () => {
     const history = useHistory()
 
     const [files, setFiles] = useState([])
+    const [loadingFiles, setLoadingFiles] = useState(false)
 
     const getFiles = async () => {
+        setLoadingFiles(true)
         await axios.get("https://internal-app-dpm.herokuapp.com/allfiles", { headers })
-            .then(resp => setFiles(resp.data.filesDB))
+            .then(resp => {
+                setFiles(resp.data.filesDB)
+                setLoadingFiles(false)
+            })
     }
 
     useEffect(() => {
@@ -144,6 +149,11 @@ const BibliotecaAdmin = () => {
                         </div>
                         <div className="BibliotecaAdmin-files">
                             {
+                                loadingFiles &&
+                                <p>Cargando...</p>
+                            }
+                            {
+                                !loadingFiles &&
                                 files.map(file => (
                                     <div className="BibliotecaAdmin-file">
                                         <i class="far fa-file-alt Biblioteca__file-icon"></i>

@@ -7,6 +7,7 @@ import './Profile.css'
 import Footer from '../../components/User/Footer'
 import EditProfileInfo from '../../components/User/EditProfileInfo'
 import UserProfileInfo from '../../components/User/UserProfileInfo'
+import { v4 as uuidv4 } from 'uuid';
 
 const Profile = () => {
     const [{ user, token, editProfile }, dispatch] = useStateValue()
@@ -30,24 +31,47 @@ const Profile = () => {
     const handleFileChange = async (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
-        const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
-        const res = await storageRef.put(file)
-        const url = await storageRef.getDownloadURL()
-        await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
-            {
-                "image": `${url}`
-            },
-            { headers })
-            .then((resp) => {
-                console.log(resp.data.usuario)
-                dispatch({
-                    type: 'LOGIN',
-                    user: resp.data.usuario,
-                    token: token
+        if (!user.fileId || user.fileId === "") {
+            let fileId = uuidv4()
+            const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
+            const res = await storageRef.put(file)
+            const url = await storageRef.getDownloadURL()
+            await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
+                {
+                    "image": `${url}`,
+                    "fileId": `${fileId}`
+                },
+                { headers })
+                .then((resp) => {
+                    console.log(resp.data.usuario)
+                    dispatch({
+                        type: 'LOGIN',
+                        user: resp.data.usuario,
+                        token: token
+                    })
+                    setImageProfile(url)
+                    setLoadingImg(false)
                 })
-                setImageProfile(url)
-                setLoadingImg(false)
-            })
+        } else {
+            const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
+            const res = await storageRef.put(file)
+            const url = await storageRef.getDownloadURL()
+            await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
+                {
+                    "image": `${url}`
+                },
+                { headers })
+                .then((resp) => {
+                    console.log(resp.data.usuario)
+                    dispatch({
+                        type: 'LOGIN',
+                        user: resp.data.usuario,
+                        token: token
+                    })
+                    setImageProfile(url)
+                    setLoadingImg(false)
+                })
+        }
     }
 
     const handleDeleteImage = () => {

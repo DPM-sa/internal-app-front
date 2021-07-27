@@ -11,10 +11,14 @@ const SugerenciasAdmin = () => {
         "token": `${token}`
     }
     const [sugerencias, setSugerencias] = useState([])
-
+    const [loadingSugerencias, setLoadingSugerencias] = useState(false)
     const getSugerencias = async () => {
+        setLoadingSugerencias(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/allmessages`, { headers })
-            .then(resp => setSugerencias(resp.data.messages))
+            .then(resp => {
+                setSugerencias(resp.data.messages)
+                setLoadingSugerencias(false)
+            })
     }
     useEffect(() => {
         getSugerencias()
@@ -36,6 +40,11 @@ const SugerenciasAdmin = () => {
                             </li>
                             <ul className="PostsAdmin-posts-list-body">
                                 {
+                                    loadingSugerencias &&
+                                    <li>Cargando...</li>
+                                }
+                                {
+                                    !loadingSugerencias &&
                                     sugerencias.map(sugerencia => (
                                         <SugerenciaItem sugerencia={sugerencia} />
                                     ))

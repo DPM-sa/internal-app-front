@@ -52,15 +52,19 @@ const EditPost = () => {
                     'Exito',
                     'El post se ha subido con exito',
                     'success'
-                )
-                setLoading(false)
+                ).then((resp) => {
+                    if (resp) {
+                        setLoading(false)
+                        setTitle('')
+                        setContent('')
+                        setImgUrl('')
+                        setFilename('')
+                        setTags([])
+                        setFileId('')
+                        history.push('/admin')
+                    }
+                })
 
-                setTitle('')
-                setContent('')
-                setImgUrl('')
-                setFilename('')
-                setTags([])
-                setFileId('')
             })
     }
     const handlePictureClick = () => {
@@ -196,11 +200,11 @@ const EditPost = () => {
                                 {
                                     loading
                                         ?
-                                        <button disabled type="submit">
+                                        <button disabled={loading} type="submit">
                                             Espere..
                                         </button>
                                         :
-                                        <button disabled={loading} type="submit">
+                                        <button disabled={loading || loadingImg} type="submit">
                                             <i class="fas fa-plus"></i>
                                             Guardar
                                         </button>

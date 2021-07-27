@@ -17,11 +17,13 @@ const DirectorioAdmin = () => {
         "token": `${token}`
     }
     const [users, setUsers] = useState([])
+    const [loadingUsers, setLoadingUsers] = useState(false)
     const [usersQuantity, setUsersQuantity] = useState(0)
     const [usersActive, setUsersActive] = useState(0)
     const [usersInactive, setUsersInactive] = useState(0)
 
     const getUsers = async () => {
+        setLoadingUsers(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/allusuarios`, { headers })
             .then(resp => {
                 console.log(resp)
@@ -31,6 +33,7 @@ const DirectorioAdmin = () => {
                 setUsersActive(usersActiveArr.length)
                 setUsersInactive(usersInactiveArr.length)
                 setUsers(resp.data.usuarios)
+                setLoadingUsers(false)
             })
     }
 
@@ -166,6 +169,11 @@ const DirectorioAdmin = () => {
                                 </li>
                                 <ul className="PostsAdmin-posts-list-body">
                                     {
+                                        loadingUsers &&
+                                        <li>Cargando...</li>
+                                    }
+                                    {
+                                        !loadingUsers &&
                                         users.map(user => (
                                             <li className="PostsAdmin-posts-list-control">
                                                 <span>{user.user}</span>

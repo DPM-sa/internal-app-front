@@ -21,14 +21,17 @@ const PostsAdmin = () => {
     const [postsQuantity, setPostsQuantity] = useState(0)
     const [likesQuantity, setLikesQuantity] = useState(0)
     const [commentsQuantity, setCommentsQuantity] = useState(0)
+    const [loadingPosts, setLoadingPosts] = useState(false)
 
     const getPosts = async () => {
+        setLoadingPosts(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
             .then(resp => {
                 let likes = resp.data.posts.map(item => item.likes)
                 setLikesQuantity(likes.flat(1).length)
                 setPostsQuantity(resp.data.cuantos)
                 setPosts(resp.data.posts)
+                setLoadingPosts(false)
             })
     }
 
@@ -181,6 +184,11 @@ const PostsAdmin = () => {
                                 </li>
                                 <ul className="PostsAdmin-posts-list-body">
                                     {
+                                        loadingPosts
+                                        && <li>Cargando...</li>
+                                    }
+                                    {
+                                        !loadingPosts &&
                                         posts.map(post => (
                                             <li className="PostsAdmin-posts-list-control">
                                                 <span>{post.title}</span>

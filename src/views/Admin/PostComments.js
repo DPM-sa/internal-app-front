@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { useStateValue } from '../../StateProvider'
@@ -9,7 +9,7 @@ import './PostComments.css'
 const PostComments = () => {
     const { id } = useParams()
     const [{ token, commentsPost }, dispatch] = useStateValue()
-
+    const [loadingComments, setLoadingComments] = useState(false)
     const history = useHistory()
 
     const headers = {
@@ -18,12 +18,14 @@ const PostComments = () => {
     }
 
     const getComments = async () => {
+        setLoadingComments(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/allcomments`, { headers })
             .then(async (resp) => {
                 dispatch({
                     type: 'SET_COMMENTS_POST',
                     commentsPost: resp.data.comments
                 })
+                setLoadingComments(false)
             })
     }
 
@@ -48,10 +50,18 @@ const PostComments = () => {
                         </li>
                         <ul className="PostsComments-posts-list-body">
                             {
-                                commentsPost.length > 0 &&
-                                commentsPost.map(comment => (
+                                loadingComments &&
+                                <li>Cargando...</li>
+                            }
+                            {
+                                (!loadingComments && commentsPost.length > 0)
+                                && commentsPost.map(comment => (
                                     <CommentItem comment={comment} />
                                 ))
+                            }
+                            {
+                                (!loadingComments && commentsPost.length === 0)
+                                && <li>No se han realizado comentarios en esta publicación</li>
                             }
                         </ul>
                     </ul>

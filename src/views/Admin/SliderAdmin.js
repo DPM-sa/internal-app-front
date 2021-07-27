@@ -7,6 +7,9 @@ import './SliderAdmin.css'
 
 const SliderAdmin = () => {
     const [{ token }] = useStateValue()
+    const [loadingForm1, setLoadingForm1] = useState(false)
+    const [loadingForm2, setLoadingForm2] = useState(false)
+    const [loadingForm3, setLoadingForm3] = useState(false)
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
@@ -56,6 +59,7 @@ const SliderAdmin = () => {
     const handleSubmit1 = async (e) => {
         e.preventDefault()
         if (title1 === "", content1 === "", url1 === "") return
+        setLoadingForm1(true)
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id1}`,
             {
                 "title": `${title1}`,
@@ -64,10 +68,12 @@ const SliderAdmin = () => {
             }, { headers })
             .then(() => {
                 getSlider()
+                setLoadingForm1(false)
             })
     }
     const handleSubmit2 = async (e) => {
         e.preventDefault()
+        setLoadingForm2(true)
         if (title2 === "", content2 === "", url2 === "") return
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id2}`,
             {
@@ -77,10 +83,12 @@ const SliderAdmin = () => {
             }, { headers })
             .then(() => {
                 getSlider()
+                setLoadingForm2(false)
             })
     }
     const handleSubmit3 = async (e) => {
         e.preventDefault()
+        setLoadingForm3(true)
         if (title3 === "", content3 === "", url3 === "") return
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id3}`,
             {
@@ -90,6 +98,7 @@ const SliderAdmin = () => {
             }, { headers })
             .then(() => {
                 getSlider()
+                setLoadingForm3(false)
             })
     }
 
@@ -133,7 +142,7 @@ const SliderAdmin = () => {
 
     const handleFileChange1 = async (e) => {
         const file = e.target.files[0]
-        const storageRef = storage.ref().child('profileImages').child(`${id1}`)
+        const storageRef = storage.ref().child('sliderImages').child(`${id1}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id1}`,
@@ -146,7 +155,7 @@ const SliderAdmin = () => {
             })
     }
     const handleDeleteImage1 = () => {
-        const storageRef = storage.ref().child('profileImages').child(`${id1}`)
+        const storageRef = storage.ref().child('sliderImages').child(`${id1}`)
         storageRef.delete().then(async () => {
             await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id1}`,
                 {
@@ -164,7 +173,7 @@ const SliderAdmin = () => {
 
     const handleFileChange2 = async (e) => {
         const file = e.target.files[0]
-        const storageRef = storage.ref().child('profileImages').child(`${id2}`)
+        const storageRef = storage.ref().child('sliderImages').child(`${id2}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id2}`,
@@ -177,7 +186,7 @@ const SliderAdmin = () => {
             })
     }
     const handleDeleteImage2 = () => {
-        const storageRef = storage.ref().child('profileImages').child(`${id2}`)
+        const storageRef = storage.ref().child('sliderImages').child(`${id2}`)
         storageRef.delete().then(async () => {
             await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id2}`,
                 {
@@ -195,7 +204,7 @@ const SliderAdmin = () => {
 
     const handleFileChange3 = async (e) => {
         const file = e.target.files[0]
-        const storageRef = storage.ref().child('profileImages').child(`${id3}`)
+        const storageRef = storage.ref().child('sliderImages').child(`${id3}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id3}`,
@@ -208,7 +217,7 @@ const SliderAdmin = () => {
             })
     }
     const handleDeleteImage3 = () => {
-        const storageRef = storage.ref().child('profileImages').child(`${id3}`)
+        const storageRef = storage.ref().child('sliderImages').child(`${id3}`)
         storageRef.delete().then(async () => {
             await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id3}`,
                 {
@@ -258,17 +267,21 @@ const SliderAdmin = () => {
                                     </div>
                             }
                             <form onSubmit={handleSubmit1}>
-                                <input value={title1} name="title1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
-                                <input value={content1} name="content1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
-                                <input value={url1} name="url1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
-                                <button type="submit">
-                                    Guardar
+                                <input disabled={loadingForm1} value={title1} name="title1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
+                                <input disabled={loadingForm1} value={content1} name="content1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
+                                <input disabled={loadingForm1} value={url1} name="url1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
+                                <button disabled={loadingForm1} type="submit">
+                                    {
+                                        loadingForm1
+                                            ? 'Espere...'
+                                            : 'Guardar'
+                                    }
                                 </button>
                             </form>
                         </div>
                         <div className="SliderAdmin">
                             <input
-                                id="fileSelector1"
+                                id="fileSelector2"
                                 type="file"
                                 name="file"
                                 style={{ display: "none" }}
@@ -297,17 +310,21 @@ const SliderAdmin = () => {
                                     </div>
                             }
                             <form onSubmit={handleSubmit2}>
-                                <input value={title2} name="title2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
-                                <input value={content2} name="content2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
-                                <input value={url2} name="url2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
-                                <button type="submit">
-                                    Guardar
+                                <input disabled={loadingForm2} value={title2} name="title2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
+                                <input disabled={loadingForm2} value={content2} name="content2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
+                                <input disabled={loadingForm2} value={url2} name="url2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
+                                <button disabled={loadingForm2} type="submit">
+                                    {
+                                        loadingForm2
+                                            ? 'Espere...'
+                                            : 'Guardar'
+                                    }
                                 </button>
                             </form>
                         </div>
                         <div className="SliderAdmin">
                             <input
-                                id="fileSelector1"
+                                id="fileSelector3"
                                 type="file"
                                 name="file"
                                 style={{ display: "none" }}
@@ -336,11 +353,15 @@ const SliderAdmin = () => {
                                     </div>
                             }
                             <form onSubmit={handleSubmit3}>
-                                <input value={title3} name="title3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
-                                <input value={content3} name="content3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
-                                <input value={url3} name="url3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
-                                <button type="submit">
-                                    Guardar
+                                <input disabled={loadingForm3} value={title3} name="title3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
+                                <input disabled={loadingForm3} value={content3} name="content3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
+                                <input disabled={loadingForm3} value={url3} name="url3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
+                                <button disabled={loadingForm3} type="submit">
+                                    {
+                                        loadingForm3
+                                            ? 'Espere...'
+                                            : 'Guardar'
+                                    }
                                 </button>
                             </form>
                         </div>

@@ -66,3 +66,10 @@
     font-weight: bold;
     width: 100%;
 }
+
+@media screen and (max-width:767px) {
+    .messageSelected-user {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

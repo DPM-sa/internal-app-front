@@ -56,14 +56,19 @@ const NewPost = () => {
                     'Exito',
                     'El post se ha subido con exito',
                     'success'
-                )
-                setLoading(false)
-                setTitle('')
-                setContent('')
-                setImgUrl('')
-                setFilename('')
-                setTags([])
-                setFileId('')
+                ).then((resp) => {
+                    if (resp) {
+                        setLoading(false)
+                        setTitle('')
+                        setContent('')
+                        setImgUrl('')
+                        setFilename('')
+                        setTags([])
+                        setFileId('')
+                        history.push('/admin')
+                    }
+
+                })
             })
     }
     const handlePictureClick = () => {
@@ -161,7 +166,7 @@ const NewPost = () => {
                                     noOptionsMessage={NoOptionsMessage}
                                     isDisabled={loading}
                                 />
-                                <button disabled={loading} type="submit">
+                                <button disabled={loading || loadingImg} type="submit">
                                     {
                                         loading
                                             ?
@@ -176,7 +181,7 @@ const NewPost = () => {
                                     }
 
                                 </button>
-                                <button onClick={handleReturn} disabled={loading} type="button">
+                                <button onClick={handleReturn} disabled={loading || loadingImg} type="button">
                                     <i class="fas fa-chevron-left"></i>
                                     Volver atrás
                                 </button>
