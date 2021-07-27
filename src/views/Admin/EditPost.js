@@ -50,7 +50,7 @@ const EditPost = () => {
                 console.log(resp)
                 Swal.fire(
                     'Exito',
-                    'El post se ha subido con exito',
+                    'El post se ha actualizado con éxito',
                     'success'
                 ).then((resp) => {
                     if (resp) {

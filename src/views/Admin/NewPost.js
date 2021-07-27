@@ -37,6 +37,7 @@ const NewPost = () => {
         let id = uuidv4()
         setFileId(id)
     }, [])
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (title === "" || content === "" || imgUrl === "") return

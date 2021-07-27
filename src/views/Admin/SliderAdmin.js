@@ -7,13 +7,18 @@ import './SliderAdmin.css'
 
 const SliderAdmin = () => {
     const [{ token }] = useStateValue()
-    const [loadingForm1, setLoadingForm1] = useState(false)
-    const [loadingForm2, setLoadingForm2] = useState(false)
-    const [loadingForm3, setLoadingForm3] = useState(false)
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+
+    const [loadingForm1, setLoadingForm1] = useState(false)
+    const [loadingForm2, setLoadingForm2] = useState(false)
+    const [loadingForm3, setLoadingForm3] = useState(false)
+    const [loadingImg1, setLoadingImg1] = useState(false)
+    const [loadingImg2, setLoadingImg2] = useState(false)
+    const [loadingImg3, setLoadingImg3] = useState(false)
+
     const [form1, setForm1] = useState({
         title1: '',
         content1: '',
@@ -22,6 +27,7 @@ const SliderAdmin = () => {
     const { title1, content1, url1 } = form1
     const [img1, setImg1] = useState('')
     const [id1, setId1] = useState('')
+
     const [form2, setForm2] = useState({
         title2: '',
         content2: '',
@@ -30,6 +36,7 @@ const SliderAdmin = () => {
     const { title2, content2, url2 } = form2
     const [img2, setImg2] = useState('')
     const [id2, setId2] = useState('')
+
     const [form3, setForm3] = useState({
         title3: '',
         content3: '',
@@ -38,6 +45,7 @@ const SliderAdmin = () => {
     const { title3, content3, url3 } = form3
     const [img3, setImg3] = useState('')
     const [id3, setId3] = useState('')
+
     const handleInputChange1 = (e) => {
         setForm1({
             ...form1,
@@ -56,6 +64,7 @@ const SliderAdmin = () => {
             [e.target.name]: e.target.value
         })
     }
+
     const handleSubmit1 = async (e) => {
         e.preventDefault()
         if (title1 === "", content1 === "", url1 === "") return
@@ -71,6 +80,7 @@ const SliderAdmin = () => {
                 setLoadingForm1(false)
             })
     }
+
     const handleSubmit2 = async (e) => {
         e.preventDefault()
         setLoadingForm2(true)
@@ -86,6 +96,7 @@ const SliderAdmin = () => {
                 setLoadingForm2(false)
             })
     }
+
     const handleSubmit3 = async (e) => {
         e.preventDefault()
         setLoadingForm3(true)
@@ -141,6 +152,7 @@ const SliderAdmin = () => {
     }
 
     const handleFileChange1 = async (e) => {
+        setLoadingImg1(true)
         const file = e.target.files[0]
         const storageRef = storage.ref().child('sliderImages').child(`${id1}`)
         const res = await storageRef.put(file)
@@ -152,9 +164,11 @@ const SliderAdmin = () => {
             { headers })
             .then(() => {
                 getSlider()
+                setLoadingImg1(false)
             })
     }
     const handleDeleteImage1 = () => {
+        setLoadingImg1(true)
         const storageRef = storage.ref().child('sliderImages').child(`${id1}`)
         storageRef.delete().then(async () => {
             await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id1}`,
@@ -164,6 +178,7 @@ const SliderAdmin = () => {
                 { headers })
                 .then(() => {
                     getSlider()
+                    setLoadingImg1(false)
                 })
         })
     }
@@ -172,6 +187,7 @@ const SliderAdmin = () => {
     }
 
     const handleFileChange2 = async (e) => {
+        setLoadingImg2(true)
         const file = e.target.files[0]
         const storageRef = storage.ref().child('sliderImages').child(`${id2}`)
         const res = await storageRef.put(file)
@@ -183,9 +199,11 @@ const SliderAdmin = () => {
             { headers })
             .then(() => {
                 getSlider()
+                setLoadingImg2(false)
             })
     }
     const handleDeleteImage2 = () => {
+        setLoadingImg2(true)
         const storageRef = storage.ref().child('sliderImages').child(`${id2}`)
         storageRef.delete().then(async () => {
             await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id2}`,
@@ -195,6 +213,7 @@ const SliderAdmin = () => {
                 { headers })
                 .then(() => {
                     getSlider()
+                    setLoadingImg2(false)
                 })
         })
     }
@@ -203,6 +222,7 @@ const SliderAdmin = () => {
     }
 
     const handleFileChange3 = async (e) => {
+        setLoadingImg3(true)
         const file = e.target.files[0]
         const storageRef = storage.ref().child('sliderImages').child(`${id3}`)
         const res = await storageRef.put(file)
@@ -214,9 +234,11 @@ const SliderAdmin = () => {
             { headers })
             .then(() => {
                 getSlider()
+                setLoadingImg3(false)
             })
     }
     const handleDeleteImage3 = () => {
+        setLoadingImg3(true)
         const storageRef = storage.ref().child('sliderImages').child(`${id3}`)
         storageRef.delete().then(async () => {
             await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id3}`,
@@ -226,6 +248,7 @@ const SliderAdmin = () => {
                 { headers })
                 .then(() => {
                     getSlider()
+                    setLoadingImg3(false)
                 })
         })
     }
@@ -245,26 +268,35 @@ const SliderAdmin = () => {
                                 onChange={handleFileChange1}
                             />
                             {
-                                img1 === ""
-                                    ?
-                                    <div className="SliderAdmin-no-img" onClick={handlePictureClick1}>
-                                        <i class="fas fa-plus"></i>
-                                        <p>Cargar imagen para slider 1</p>
+                                loadingImg1
+                                && <div className="SliderAdmin-no-img" onClick={handlePictureClick1}>
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Cargando...</p>
+                                </div>
+                            }
+                            {
+                                (!loadingImg1 && img1 === "")
+                                &&
+                                <div className="SliderAdmin-no-img" onClick={handlePictureClick1}>
+                                    <i class="fas fa-plus"></i>
+                                    <p>Cargar imagen para slider 1</p>
+                                </div>
+                            }
+                            {
+                                (!loadingImg1 && img1 !== "")
+                                && <div className="SliderAdmin-img">
+                                    <img src={img1} />
+                                    <div className="SliderAdmin-img-content">
+                                        <p className="editImage" onClick={handlePictureClick1}>
+                                            <i class="fas fa-plus"></i>
+                                            Reemplazar imagen
+                                        </p>
+                                        <p className="editImage" onClick={handleDeleteImage1}>
+                                            <i class="fas fa-trash-alt"></i>
+                                            Eliminar imagen
+                                        </p>
                                     </div>
-                                    :
-                                    <div className="SliderAdmin-img">
-                                        <img src={img1} />
-                                        <div className="SliderAdmin-img-content">
-                                            <p className="editImage" onClick={handlePictureClick1}>
-                                                <i class="fas fa-plus"></i>
-                                                Reemplazar imagen
-                                            </p>
-                                            <p className="editImage" onClick={handleDeleteImage1}>
-                                                <i class="fas fa-trash-alt"></i>
-                                                Eliminar imagen
-                                            </p>
-                                        </div>
-                                    </div>
+                                </div>
                             }
                             <form onSubmit={handleSubmit1}>
                                 <input disabled={loadingForm1} value={title1} name="title1" onChange={handleInputChange1} type="text" className="SliderAdmin__input" />
@@ -288,26 +320,35 @@ const SliderAdmin = () => {
                                 onChange={handleFileChange2}
                             />
                             {
-                                img2 === ""
-                                    ?
-                                    <div className="SliderAdmin-no-img" onClick={handlePictureClick2}>
-                                        <i class="fas fa-plus"></i>
-                                        <p>Cargar imagen para slider 1</p>
+                                loadingImg2
+                                && <div className="SliderAdmin-no-img" onClick={handlePictureClick2}>
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Cargando...</p>
+                                </div>
+                            }
+                            {
+                                (!loadingImg2 && img2 === "")
+                                &&
+                                <div className="SliderAdmin-no-img" onClick={handlePictureClick2}>
+                                    <i class="fas fa-plus"></i>
+                                    <p>Cargar imagen para slider 2</p>
+                                </div>
+                            }
+                            {
+                                (!loadingImg2 && img2 !== "")
+                                && <div className="SliderAdmin-img">
+                                    <img src={img2} />
+                                    <div className="SliderAdmin-img-content">
+                                        <p className="editImage" onClick={handlePictureClick2}>
+                                            <i class="fas fa-plus"></i>
+                                            Reemplazar imagen
+                                        </p>
+                                        <p className="editImage" onClick={handleDeleteImage2}>
+                                            <i class="fas fa-trash-alt"></i>
+                                            Eliminar imagen
+                                        </p>
                                     </div>
-                                    :
-                                    <div className="SliderAdmin-img">
-                                        <img src={img2} />
-                                        <div className="SliderAdmin-img-content">
-                                            <p className="editImage" onClick={handlePictureClick2}>
-                                                <i class="fas fa-plus"></i>
-                                                Reemplazar imagen
-                                            </p>
-                                            <p className="editImage" onClick={handleDeleteImage2}>
-                                                <i class="fas fa-trash-alt"></i>
-                                                Eliminar imagen
-                                            </p>
-                                        </div>
-                                    </div>
+                                </div>
                             }
                             <form onSubmit={handleSubmit2}>
                                 <input disabled={loadingForm2} value={title2} name="title2" onChange={handleInputChange2} type="text" className="SliderAdmin__input" />
@@ -331,26 +372,35 @@ const SliderAdmin = () => {
                                 onChange={handleFileChange3}
                             />
                             {
-                                img3 === ""
-                                    ?
-                                    <div className="SliderAdmin-no-img" onClick={handlePictureClick3}>
-                                        <i class="fas fa-plus"></i>
-                                        <p>Cargar imagen para slider 1</p>
+                                loadingImg3
+                                && <div className="SliderAdmin-no-img" onClick={handlePictureClick3}>
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Cargando...</p>
+                                </div>
+                            }
+                            {
+                                (!loadingImg3 && img3 === "")
+                                &&
+                                <div className="SliderAdmin-no-img" onClick={handlePictureClick3}>
+                                    <i class="fas fa-plus"></i>
+                                    <p>Cargar imagen para slider 3</p>
+                                </div>
+                            }
+                            {
+                                (!loadingImg3 && img3 !== "")
+                                && <div className="SliderAdmin-img">
+                                    <img src={img3} />
+                                    <div className="SliderAdmin-img-content">
+                                        <p className="editImage" onClick={handlePictureClick3}>
+                                            <i class="fas fa-plus"></i>
+                                            Reemplazar imagen
+                                        </p>
+                                        <p className="editImage" onClick={handleDeleteImage3}>
+                                            <i class="fas fa-trash-alt"></i>
+                                            Eliminar imagen
+                                        </p>
                                     </div>
-                                    :
-                                    <div className="SliderAdmin-img">
-                                        <img src={img3} />
-                                        <div className="SliderAdmin-img-content">
-                                            <p className="editImage" onClick={handlePictureClick3}>
-                                                <i class="fas fa-plus"></i>
-                                                Reemplazar imagen
-                                            </p>
-                                            <p className="editImage" onClick={handleDeleteImage3}>
-                                                <i class="fas fa-trash-alt"></i>
-                                                Eliminar imagen
-                                            </p>
-                                        </div>
-                                    </div>
+                                </div>
                             }
                             <form onSubmit={handleSubmit3}>
                                 <input disabled={loadingForm3} value={title3} name="title3" onChange={handleInputChange3} type="text" className="SliderAdmin__input" />
