@@ -23,7 +23,6 @@ const PostSection = () => {
         setLoading(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
             .then(resp => {
-                console.log(resp.data.posts)
                 dispatch({
                     type: "SET_POSTS",
                     posts: resp.data.posts

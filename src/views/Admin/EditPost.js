@@ -68,7 +68,6 @@ const EditPost = () => {
             },
             { headers })
             .then(resp => {
-                console.log(resp)
                 Swal.fire(
                     'Exito',
                     'El post se ha actualizado con éxito',

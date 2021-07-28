@@ -51,7 +51,6 @@ const Biblioteca = () => {
         setLoading(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
             .then(resp => {
-                console.log(resp.data.filesDB)
                 if (typeOrder === 'alfabetico') {
                     setFiles(sortGreatest(resp.data.filesDB))
                 } else if (typeOrder === 'antiguos') {

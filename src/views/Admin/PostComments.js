@@ -35,6 +35,10 @@ const PostComments = () => {
 
     const handleReturn = () => {
         history.goBack()
+        dispatch({
+            type: 'SET_COMMENTS_POST',
+            commentsPost: []
+        })
     }
 
     return (
@@ -56,7 +60,7 @@ const PostComments = () => {
                             {
                                 (!loadingComments && commentsPost.length > 0)
                                 && commentsPost.map(comment => (
-                                    <CommentItem comment={comment} />
+                                    <CommentItem key={comment._id} comment={comment} />
                                 ))
                             }
                             {

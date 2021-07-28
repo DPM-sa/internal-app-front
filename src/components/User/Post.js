@@ -84,8 +84,8 @@ const Post = ({ title, content, post, date }) => {
                                 <i class="fas fa-tags"></i>
                                 {
                                     post.tags.length > 0
-                                    && post.tags.map(tag => (
-                                        <span className="Post__content-tag">
+                                    && post.tags.map((tag, i) => (
+                                        <span key={i} className="Post__content-tag">
                                             {tag}
                                         </span>
                                     ))

@@ -190,7 +190,7 @@ const PostsAdmin = () => {
                                     {
                                         !loadingPosts &&
                                         posts.map(post => (
-                                            <li className="PostsAdmin-posts-list-control">
+                                            <li key={post._id} className="PostsAdmin-posts-list-control">
                                                 <span>{post.title}</span>
                                                 <span>{getPostDate(post.date)}</span>
                                                 <span className="posts-lists-control-actions">

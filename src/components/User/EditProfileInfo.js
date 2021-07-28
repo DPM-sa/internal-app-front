@@ -32,7 +32,6 @@ const EditProfileInfo = ({ imageProfile }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        console.log(imageProfile)
         await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
             {
                 "nombre": `${nombre}`,

@@ -155,7 +155,7 @@ const BibliotecaAdmin = () => {
                             {
                                 !loadingFiles &&
                                 files.map(file => (
-                                    <div className="BibliotecaAdmin-file">
+                                    <div key={file._id} className="BibliotecaAdmin-file">
                                         <i class="far fa-file-alt Biblioteca__file-icon"></i>
                                         <p>{file.title}</p>
                                         <div className="BibliotecaAdmin-file-actions">

@@ -71,7 +71,6 @@ const NewPost = () => {
             },
             { headers })
             .then(resp => {
-                console.log(resp)
                 Swal.fire(
                     'Exito',
                     'El post se ha subido con exito',

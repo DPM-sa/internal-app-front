@@ -60,7 +60,6 @@ const Directorio = () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/usuarios`, { headers })
             .then(resp => {
                 if (typeOrder === 'alfabetico') {
-                    console.log(resp.data.usuarios)
                     setUsers(sortGreatest(resp.data.usuarios))
                 } else if ((typeOrder === 'antiguos')) {
                     setUsers(orderUsers(resp.data.usuarios))

@@ -43,7 +43,6 @@ const Profile = () => {
                 },
                 { headers })
                 .then((resp) => {
-                    console.log(resp.data.usuario)
                     dispatch({
                         type: 'LOGIN',
                         user: resp.data.usuario,
@@ -62,7 +61,6 @@ const Profile = () => {
                 },
                 { headers })
                 .then((resp) => {
-                    console.log(resp.data.usuario)
                     dispatch({
                         type: 'LOGIN',
                         user: resp.data.usuario,
@@ -84,7 +82,6 @@ const Profile = () => {
                 },
                 { headers })
                 .then((resp) => {
-                    console.log(resp.data.usuario)
                     dispatch({
                         type: 'LOGIN',
                         user: resp.data.usuario,

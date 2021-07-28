@@ -56,7 +56,6 @@ const EditUser = () => {
                     sector: resp.data.user.sector
                 })
                 setRole(resp.data.user.role)
-                console.log(resp.data.user)
                 setFileId(resp.data.user.fileId)
                 setImg(resp.data.user.image ? resp.data.user.image : '')
             })

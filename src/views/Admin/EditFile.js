@@ -55,7 +55,6 @@ const EditFile = () => {
         }
         setLoading(true)
         if (fileTemp !== "") {
-            console.log('hay archivo')
             const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}`)
             const res = await storageRef.put(file)
             const url = await storageRef.getDownloadURL()
@@ -82,7 +81,6 @@ const EditFile = () => {
                     })
                 })
         } else if (fileTemp === "") {
-            console.log('no hay archivo')
             await axios.put(`https://internal-app-dpm.herokuapp.com/file/${id}`,
                 {
                     "title": `${title}`

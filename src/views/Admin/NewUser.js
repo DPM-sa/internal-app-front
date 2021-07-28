@@ -23,7 +23,7 @@ const NewUser = () => {
         position: '',
         sector: ''
     })
-    const [role, setRole] = useState('')
+    const [role, setRole] = useState('USER_ROLE')
     const { user, password, nombre, apellido, email, phone, birth, position, sector } = form
     const [img, setImg] = useState({})
     const [imgTemp, setImgTemp] = useState('')
@@ -104,7 +104,19 @@ const NewUser = () => {
         setLoading(true)
         const fileId = uuidv4();
         if (imgTemp === "") {
-            console.log('no hay imagen')
+            console.log({
+                "nombre": `${nombre}`,
+                "apellido": `${apellido}`,
+                "user": `${user}`,
+                "correo": `${email}`,
+                "password": `${password}`,
+                "role": `${role}`,
+                "position": `${position}`,
+                "sector": `${sector}`,
+                "phone": `${phone}`,
+                "birth": `${birth}`,
+                "fileId": `${fileId}`
+            })
             await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
                 {
                     "nombre": `${nombre}`,
@@ -120,7 +132,8 @@ const NewUser = () => {
                     "fileId": `${fileId}`
                 },
                 { headers })
-                .then(() => {
+                .then((resp) => {
+                    console.log(resp)
                     setLoading(false)
                     Swal.fire(
                         'Éxito',
@@ -137,7 +150,6 @@ const NewUser = () => {
                     })
                 })
         } else if (imgTemp !== "") {
-            console.log('hay imagen')
             const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             const res = await storageRef.put(img)
             const url = await storageRef.getDownloadURL()
@@ -269,7 +281,6 @@ const NewUser = () => {
                             <label>Rol</label>
                             <div>
                                 <select disabled={loading} onChange={handleRole} value={role}>
-                                    <option value="">-- Seleccione --</option>
                                     <option value="USER_ROLE">Usuario</option>
                                     <option value="ADMIN_ROLE">Administrador</option>
                                 </select>

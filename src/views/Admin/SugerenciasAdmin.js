@@ -46,7 +46,7 @@ const SugerenciasAdmin = () => {
                                 {
                                     !loadingSugerencias &&
                                     sugerencias.map(sugerencia => (
-                                        <SugerenciaItem sugerencia={sugerencia} />
+                                        <SugerenciaItem key={sugerencia._id} sugerencia={sugerencia} />
                                     ))
                                 }
                             </ul>

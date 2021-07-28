@@ -86,7 +86,7 @@ const Sugerencias = () => {
                     }
                     {
                         sugerencias.map(sugerencia => (
-                            <div className="Sugerencia">
+                            <div key={sugerencia._id} className="Sugerencia">
                                 <h5>{sugerencia.title}</h5>
                                 <p>{sugerencia.content}</p>
                             </div>

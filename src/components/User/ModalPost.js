@@ -164,8 +164,8 @@ const ModalPost = () => {
                             <span>
                                 <i class="fas fa-tags"></i>
                                 {
-                                    tags.map(tag => (
-                                        <span className="ModalPost__header-actions-tag">
+                                    tags.map((tag, i) => (
+                                        <span key={i} className="ModalPost__header-actions-tag">
                                             {tag}
                                         </span>
                                     ))
