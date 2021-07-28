@@ -31,14 +31,66 @@ const DirectorioAdmin = () => {
                 setUsersQuantity(resp.data.cuantos)
                 setUsersActive(usersActiveArr.length)
                 setUsersInactive(usersInactiveArr.length)
-                setUsers(resp.data.usuarios)
+                if (typeOrder === 'alfabetico') {
+                    setUsers(sortGreatest(resp.data.usuarios))
+                } else if ((typeOrder === 'antiguos')) {
+                    setUsers(orderUsers(resp.data.usuarios))
+                } else if (typeOrder === 'recientes') {
+                    setUsers(reverseUsers(resp.data.usuarios))
+                }
                 setLoadingUsers(false)
             })
     }
 
+    const [form, setForm] = useState({
+        search: ''
+    })
+    const { search } = form
+    const [typeOrder, setTypeOrder] = useState('antiguos')
+    const handleInputChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        await axios.get(`https://internal-app-dpm.herokuapp.com/allusuarios`, { headers })
+            .then(resp => {
+                setUsers(resp.data.usuarios.filter(user => user.nombre.toLowerCase().includes(search.toLowerCase())))
+            })
+    }
+    function sortGreatest(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            for (let j = i; j < arr.length; j++) {
+                if (arr[i].nombre.toLowerCase() > arr[j].nombre.toLowerCase()) {
+                    let temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                };
+            };
+        };
+        return arr;
+    };
+
+    const reverseUsers = (arr) => {
+        return arr.sort((a, b) => {
+            return new Date(b.date).getTime()
+                - new Date(a.date).getTime()
+        })
+    }
+
+    const orderUsers = (arr) => {
+        return arr.sort((a, b) => {
+            return new Date(a.date).getTime()
+                - new Date(b.date).getTime()
+        })
+    }
+
     useEffect(() => {
         getUsers()
-    }, [editOrNewUser])
+    }, [editOrNewUser, typeOrder])
 
     const renderTooltipSee = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -166,6 +218,24 @@ const DirectorioAdmin = () => {
                             </div>
                         </div>
                         <div className="PostsAdmin-posts">
+                            <div className="Directorio__search">
+                                <form id="directorio" onSubmit={handleSubmit}>
+                                    <input value={search} name="search" onChange={handleInputChange} type="text" className="Directorio__search-input" placeholder="Busca un colaraborador/a por nombre" />
+                                    <i className="fas fa-search Directorio__search-icon"></i>
+                                </form>
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {typeOrder === 'alfabetico' && 'Ordenar alfabeticamente'}
+                                        {typeOrder === 'recientes' && 'Más recientes'}
+                                        {typeOrder === 'antiguos' && 'Más antiguos'}
+                                    </button>
+                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li onClick={() => setTypeOrder('alfabetico')} className="dropdown-item">Ordenar alfabeticamente</li>
+                                        <li onClick={() => setTypeOrder('recientes')} className="dropdown-item">Más recientes</li>
+                                        <li onClick={() => setTypeOrder('antiguos')} className="dropdown-item">Más antiguos</li>
+                                    </ul>
+                                </div>
+                            </div>
                             <ul className="PostsAdmin-posts-list">
                                 <li className="PostsAdmin-posts-list-header">
                                     <span>Usuario</span>

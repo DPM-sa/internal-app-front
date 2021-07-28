@@ -8,16 +8,16 @@ import { Link, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
+import SearchBar from '../../components/User/SearchBar'
 
 const PostsAdmin = () => {
     const history = useHistory()
 
-    const [{ token }] = useStateValue()
+    const [{ token, posts }, dispatch] = useStateValue()
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
-    const [posts, setPosts] = useState([])
     const [postsQuantity, setPostsQuantity] = useState(0)
     const [likesQuantity, setLikesQuantity] = useState(0)
     const [commentsQuantity, setCommentsQuantity] = useState(0)
@@ -30,7 +30,14 @@ const PostsAdmin = () => {
                 let likes = resp.data.posts.map(item => item.likes)
                 setLikesQuantity(likes.flat(1).length)
                 setPostsQuantity(resp.data.cuantos)
-                setPosts(resp.data.posts)
+                dispatch({
+                    type: "SET_POSTS",
+                    posts: resp.data.posts
+                })
+                dispatch({
+                    type: 'SEARCHING_POST',
+                    searching: ''
+                })
                 setLoadingPosts(false)
             })
     }
@@ -176,6 +183,7 @@ const PostsAdmin = () => {
                             </div>
                         </div>
                         <div className="PostsAdmin-posts">
+                            <SearchBar />
                             <ul className="PostsAdmin-posts-list">
                                 <li className="PostsAdmin-posts-list-header">
                                     <span>Publicacion</span>
@@ -186,6 +194,11 @@ const PostsAdmin = () => {
                                     {
                                         loadingPosts
                                         && <li>Cargando...</li>
+                                    }
+                                    {
+                                        (!loadingPosts &&
+                                            posts.length === 0) &&
+                                        <li>No hay posts con ese termino</li>
                                     }
                                     {
                                         !loadingPosts &&

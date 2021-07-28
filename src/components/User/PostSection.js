@@ -5,7 +5,7 @@ import Post from './Post'
 import './PostSection.css'
 import SpinnerComponent from './SpinnerComponent'
 const PostSection = () => {
-    const [{ token, posts, openPost }, dispatch] = useStateValue()
+    const [{ token, posts}, dispatch] = useStateValue()
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`

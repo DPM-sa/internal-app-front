@@ -57,6 +57,7 @@ const SearchBar = () => {
                     new Date(b.date).getTime()
             })
         })
+        console.log(posts)
     }
 
     const orderPosts = () => {
@@ -68,6 +69,7 @@ const SearchBar = () => {
                     new Date(a.date).getTime()
             })
         })
+        console.log(posts)
     }
 
     const getPostsBySearching = async (search) => {
@@ -81,8 +83,10 @@ const SearchBar = () => {
     }
 
     const getPostsByTag = async (tag) => {
+        console.log(tag)
         await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
             .then(resp => {
+                console.log(resp.data)
                 dispatch({
                     type: "SET_POSTS",
                     posts: resp.data.posts.filter(post => {
