@@ -7,6 +7,8 @@ import Swal from 'sweetalert2'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
+import './DirectorioAdmin.css'
+
 
 const DirectorioAdmin = () => {
     const history = useHistory()
@@ -221,7 +223,6 @@ const DirectorioAdmin = () => {
                             <div className="Directorio__search">
                                 <form id="directorio" onSubmit={handleSubmit}>
                                     <input value={search} name="search" onChange={handleInputChange} type="text" className="Directorio__search-input" placeholder="Busca un colaraborador/a por nombre" />
-                                    <i className="fas fa-search Directorio__search-icon"></i>
                                 </form>
                                 <div className="dropdown">
                                     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

@@ -79,6 +79,17 @@ const EditFile = () => {
                             history.push('/bibliotecaadmin')
                         }
                     })
+                }).catch(() => {
+                    Swal.fire(
+                        'Error',
+                        'Ha ocurrido un error, comuníquese con el administrador',
+                        'error'
+                    ).then((resp) => {
+                        if (resp) {
+                            setLoading(false)
+                        }
+
+                    })
                 })
         } else if (fileTemp === "") {
             await axios.put(`https://internal-app-dpm.herokuapp.com/file/${id}`,
@@ -99,6 +110,17 @@ const EditFile = () => {
                             })
                             history.push('/bibliotecaadmin')
                         }
+                    })
+                }).catch(() => {
+                    Swal.fire(
+                        'Error',
+                        'Ha ocurrido un error, comuníquese con el administrador',
+                        'error'
+                    ).then((resp) => {
+                        if (resp) {
+                            setLoading(false)
+                        }
+
                     })
                 })
         }

@@ -146,6 +146,28 @@ a.PostsAdmin-content-actions-item {
     color: gray;
 }
 
+.PostsAdmin-posts .SearchBar__form i {
+    display: none;
+}
+
+.PostsAdmin-posts .SearchBar {
+    width: 100%;
+    margin: 20px 0px;
+}
+
+@media screen and (max-width:1200px) {
+    .PostsAdmin-posts .SearchBar {
+        flex-direction: column;
+    }
+    .PostsAdmin-posts .SearchBar__form {
+        width: 100%;
+    }
+    .PostsAdmin-posts .SearchBar__filters {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
 @media screen and (max-width:576px) {
     .PostsAdmin-posts-list-control {
         padding: 10px 0px;

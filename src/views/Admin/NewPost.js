@@ -70,7 +70,8 @@ const NewPost = () => {
                 "fileId": `${fileId}`
             },
             { headers })
-            .then(resp => {
+            .then((resp) => {
+                console.log(resp.data)
                 Swal.fire(
                     'Exito',
                     'El post se ha subido con exito',
@@ -85,6 +86,18 @@ const NewPost = () => {
                         setTags([])
                         setFileId('')
                         history.push('/admin')
+                    }
+
+                })
+            })
+            .catch(() => {
+                Swal.fire(
+                    'Error',
+                    'Ha ocurrido un error, comuníquese con el administrador',
+                    'error'
+                ).then((resp) => {
+                    if (resp) {
+                        setLoading(false)
                     }
 
                 })
@@ -115,7 +128,24 @@ const NewPost = () => {
             </>
         );
     };
-    const optionsTags = [
+    const getTags = async () => {
+        await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
+            .then(resp => {
+                let arrTags = resp.data.arrayWithoutRepeatedTags
+                let arrTagsObj = arrTags.map(tag => ({ value: tag, label: tag }))
+                let newArray = [...optionsTags, ...arrTagsObj]
+                let arrWithoutRepeated = newArray.filter((item, index, self) =>
+                    index === self.findIndex((t) => (
+                        t.value === item.value && t.label === item.label
+                    ))
+                )
+                setOptionsTags(arrWithoutRepeated)
+            })
+    }
+    useEffect(() => {
+        getTags()
+    }, [])
+    const [optionsTags, setOptionsTags] = useState([
         { value: 'Novedades generales', label: 'Novedades generales' },
         { value: 'Higiene y seguridad', label: 'Higiene y seguridad' },
         { value: 'Incorporaciones', label: 'Incorporaciones' },
@@ -128,7 +158,7 @@ const NewPost = () => {
         { value: 'Sistemas informáticos', label: 'Sistemas informáticos' },
         { value: 'Aniversarios', label: 'Aniversarios' },
         { value: 'Beneficios', label: 'Beneficios' },
-    ]
+    ])
     const handleReturn = () => {
         history.push('/admin')
     }

@@ -21,6 +21,7 @@ const PostComments = () => {
         setLoadingComments(true)
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/allcomments`, { headers })
             .then(async (resp) => {
+                console.log(resp)
                 dispatch({
                     type: 'SET_COMMENTS_POST',
                     commentsPost: resp.data.comments

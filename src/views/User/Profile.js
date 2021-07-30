@@ -94,7 +94,7 @@ const Profile = () => {
     }
 
     return (
-        <>
+        <div className="Profile__component">
             <NavbarProfile />
             <div className="Profile">
                 <div className="card-body">
@@ -143,7 +143,7 @@ const Profile = () => {
                 }
             </div>
             <Footer />
-        </>
+        </div>
     )
 }
 

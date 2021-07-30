@@ -12,6 +12,7 @@
     flex-direction: column;
     width: 100%;
     color: #004580;
+    height: 500px;
 }
 
 .Profile__name {

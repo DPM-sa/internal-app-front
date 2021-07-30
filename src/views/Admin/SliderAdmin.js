@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import Swal from 'sweetalert2'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
@@ -107,6 +108,17 @@ const SliderAdmin = () => {
             .then(() => {
                 getSlider()
                 setLoadingForm1(false)
+            }).catch(() => {
+                Swal.fire(
+                    'Error',
+                    'Ha ocurrido un error, comuníquese con el administrador',
+                    'error'
+                ).then((resp) => {
+                    if (resp) {
+                        setLoadingForm1(false)
+                    }
+
+                })
             })
     }
 
@@ -140,6 +152,17 @@ const SliderAdmin = () => {
             .then(() => {
                 getSlider()
                 setLoadingForm2(false)
+            }).catch(() => {
+                Swal.fire(
+                    'Error',
+                    'Ha ocurrido un error, comuníquese con el administrador',
+                    'error'
+                ).then((resp) => {
+                    if (resp) {
+                        setLoadingForm2(false)
+                    }
+
+                })
             })
     }
 
@@ -173,6 +196,17 @@ const SliderAdmin = () => {
             .then(() => {
                 getSlider()
                 setLoadingForm3(false)
+            }).catch(() => {
+                Swal.fire(
+                    'Error',
+                    'Ha ocurrido un error, comuníquese con el administrador',
+                    'error'
+                ).then((resp) => {
+                    if (resp) {
+                        setLoadingForm3(false)
+                    }
+
+                })
             })
     }
 

@@ -17,7 +17,7 @@
 .Directorio__search-input {
     width: 100%;
     padding: 10px;
-    padding-left: 10%;
+    padding-left: 7%;
     border-radius: 40px;
     border: 2px solid #004580;
     margin-right: 5px;
@@ -25,6 +25,10 @@
 
 .Directorio__search-input::placeholder {
     color: #004580;
+}
+
+.Directorio__search-input::-webkit-input-placeholder {
+    text-align: center;
 }
 
 .Directorio__search-icon {
@@ -85,7 +89,10 @@
 }
 
 .Directorio__list-control-section {
-    flex: 0 1 33%;
+    flex: 0 1 calc(33% - 1rem);
+    overflow: hidden;
+    overflow-wrap: break-word;
+    font-size: 12px;
 }
 
 .modalBody {
@@ -113,15 +120,9 @@
     .Directorio__list .no-image-profile-small, .Directorio__list .profile-image-small {
         margin-right: 10px;
     }
-    .Directorio__search-input {
-        padding-left: 11%;
-    }
 }
 
 @media screen and (min-width:1200px) {
-    .Directorio__search-input {
-        padding-left: 9%;
-    }
     .Directorio__search-icon {
         left: 7%;
     }

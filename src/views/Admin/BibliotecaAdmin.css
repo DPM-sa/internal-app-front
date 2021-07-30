@@ -1,8 +1,13 @@
-.BibliotecaAdmin-files {
+.BibliotecaAdmin__content {
     flex: 0 1 calc(68% - 1rem);
+}
+
+.BibliotecaAdmin-files {
+    width: 100%;
     max-height: 500px;
     overflow-y: scroll;
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
@@ -27,7 +32,7 @@
 }
 
 .BibliotecaAdmin-file {
-    flex: 0 1 calc(33% - 1rem);
+    flex: 0 1 calc(100% - 1rem);
     margin-bottom: 3%;
     display: flex;
     border: 2px solid #004580;
@@ -37,6 +42,7 @@
     border-radius: 20px;
     padding: 20px;
     color: #004580;
+    height: 250px;
 }
 
 .BibliotecaAdmin-file p {
@@ -48,9 +54,41 @@
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .BibliotecaAdmin-file-actions a {
     color: #004580;
+}
+
+.PostsAdmin .Biblioteca__search {
+    width: 100%;
+    margin: 20px 0px;
+    flex-direction: column;
+}
+
+.PostsAdmin .Biblioteca__search form {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@media screen and (min-width: 992px) {
+    .PostsAdmin .Biblioteca__search {
+        flex-direction: row;
+    }
+    .BibliotecaAdmin-file {
+        flex: 0 1 calc(50% - 1rem);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .BibliotecaAdmin-file {
+        flex: 0 1 calc(33% - 1rem);
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .BibliotecaAdmin-file {
+        flex: 0 1 calc(25% - 1rem);
+    }
 }

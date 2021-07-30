@@ -23,7 +23,6 @@
 .SearchBar__form-input {
     width: 100%;
     padding: 10px;
-    padding-left: 10%;
     border-radius: 40px;
     border: 2px solid #004580;
     margin-right: 5px;
@@ -31,6 +30,10 @@
 
 .SearchBar__form-input::placeholder {
     color: #004580;
+}
+
+.SearchBar__form-input::-webkit-input-placeholder {
+    text-align: center;
 }
 
 .SearchBar__filters {
@@ -82,16 +85,10 @@ button#dropdownMenuButton1 {
     .SearchBar__form i {
         left: 7%;
     }
-    .SearchBar__form-input {
-        padding-left: 12%;
-    }
 }
 
 @media screen and (min-width:1200px) {
     .SearchBar__form i {
         left: 6%;
-    }
-    .SearchBar__form-input {
-        padding-left: 5%;
     }
 }

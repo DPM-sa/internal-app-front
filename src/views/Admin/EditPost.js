@@ -7,8 +7,8 @@ import { storage } from '../../config/firebase';
 import { useStateValue } from '../../StateProvider';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import CreatableSelect from 'react-select/creatable';
 import { useHistory, useParams } from 'react-router-dom'
+import CreatableSelect from 'react-select/creatable';
 
 const EditPost = () => {
     const history = useHistory()
@@ -67,7 +67,7 @@ const EditPost = () => {
                 "tags": tags
             },
             { headers })
-            .then(resp => {
+            .then(() => {
                 Swal.fire(
                     'Exito',
                     'El post se ha actualizado con éxito',
@@ -85,6 +85,17 @@ const EditPost = () => {
                     }
                 })
 
+            }).catch(() => {
+                Swal.fire(
+                    'Error',
+                    'Ha ocurrido un error, comuníquese con el administrador',
+                    'error'
+                ).then((resp) => {
+                    if (resp) {
+                        setLoading(false)
+                    }
+
+                })
             })
     }
     const handlePictureClick = () => {
@@ -100,10 +111,6 @@ const EditPost = () => {
         setFilename(file.name)
         setLoadingImg(false)
     }
-    const handleTags = (value) => {
-        const valuesToArray = value.map(item => item.value)
-        setTags(valuesToArray)
-    }
 
     const NoOptionsMessage = () => {
         return (
@@ -112,6 +119,11 @@ const EditPost = () => {
             </>
         );
     };
+    const handleTags = (value) => {
+        const valuesToArray = value.map(item => item.value)
+        setTags(valuesToArray)
+    }
+
     const [optionsTags, setOptionsTags] = useState([
         { value: 'Novedades generales', label: 'Novedades generales' },
         { value: 'Higiene y seguridad', label: 'Higiene y seguridad' },
@@ -132,7 +144,17 @@ const EditPost = () => {
             .then(resp => {
                 setTitle(resp.data.post.title)
                 setContent(resp.data.post.content)
-                let arrTags = resp.data.post.tags
+                setTags(resp.data.post.tags)
+                setImgUrl(resp.data.post.image)
+                setFilename(resp.data.post.image)
+                setFileId(resp.data.post.fileId)
+            })
+    }
+
+    const getTags = async () => {
+        await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
+            .then(resp => {
+                let arrTags = resp.data.arrayWithoutRepeatedTags
                 let arrTagsObj = arrTags.map(tag => ({ value: tag, label: tag }))
                 let newArray = [...optionsTags, ...arrTagsObj]
                 let arrFlat = newArray.flat()
@@ -142,12 +164,12 @@ const EditPost = () => {
                     ))
                 )
                 setOptionsTags(arrWithoutRepeated)
-                setTags(resp.data.post.tags)
-                setImgUrl(resp.data.post.image)
-                setFilename(resp.data.post.image)
-                setFileId(resp.data.post.fileId)
             })
     }
+
+    useEffect(() => {
+        getTags()
+    }, [])
 
     useEffect(() => {
         getPost()
@@ -205,7 +227,7 @@ const EditPost = () => {
                                     }
                                     {
                                         (titleError && !title)
-                                        && <span>{titleError}</span>
+                                        && <span className="submitError">{titleError}</span>
                                     }
                                 </div>
                             </div>

@@ -104,19 +104,6 @@ const NewUser = () => {
         setLoading(true)
         const fileId = uuidv4();
         if (imgTemp === "") {
-            console.log({
-                "nombre": `${nombre}`,
-                "apellido": `${apellido}`,
-                "user": `${user}`,
-                "correo": `${email}`,
-                "password": `${password}`,
-                "role": `${role}`,
-                "position": `${position}`,
-                "sector": `${sector}`,
-                "phone": `${phone}`,
-                "birth": `${birth}`,
-                "fileId": `${fileId}`
-            })
             await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
                 {
                     "nombre": `${nombre}`,
@@ -132,8 +119,7 @@ const NewUser = () => {
                     "fileId": `${fileId}`
                 },
                 { headers })
-                .then((resp) => {
-                    console.log(resp)
+                .then(() => {
                     setLoading(false)
                     Swal.fire(
                         'Éxito',
@@ -147,6 +133,17 @@ const NewUser = () => {
                             })
                             history.push('/directorioadmin')
                         }
+                    })
+                }).catch(() => {
+                    Swal.fire(
+                        'Error',
+                        'Ha ocurrido un error, comuníquese con el administrador',
+                        'error'
+                    ).then((resp) => {
+                        if (resp) {
+                            setLoading(false)
+                        }
+
                     })
                 })
         } else if (imgTemp !== "") {
@@ -183,6 +180,17 @@ const NewUser = () => {
                             })
                             history.push('/directorioadmin')
                         }
+                    })
+                }).catch(() => {
+                    Swal.fire(
+                        'Error',
+                        'Ha ocurrido un error, comuníquese con el administrador',
+                        'error'
+                    ).then((resp) => {
+                        if (resp) {
+                            setLoading(false)
+                        }
+
                     })
                 })
         }

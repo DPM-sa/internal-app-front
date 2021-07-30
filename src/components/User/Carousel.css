@@ -2,6 +2,10 @@
     margin: 48px auto 0px;
 }
 
+.carousel.slide.carousel-fade, .carousel.slide.carousel-fade, .carousel-item {
+    height: 400px;
+}
+
 div.carousel-caption {
     display: flex;
     flex-direction: column;
@@ -28,6 +32,7 @@ div.carousel-caption {
     left: 15%;
     position: relative;
     width: 75%;
+    text-align: start;
 }
 
 .carousel-caption h3 {

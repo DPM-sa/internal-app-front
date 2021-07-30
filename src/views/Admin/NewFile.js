@@ -85,6 +85,17 @@ const NewFile = () => {
                         history.push('/bibliotecaadmin')
                     }
                 })
+            }).catch(() => {
+                Swal.fire(
+                    'Error',
+                    'Ha ocurrido un error, comuníquese con el administrador',
+                    'error'
+                ).then((resp) => {
+                    if (resp) {
+                        setLoading(false)
+                    }
+
+                })
             })
     }
     const handleReturn = () => {

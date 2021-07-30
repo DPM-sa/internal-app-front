@@ -167,6 +167,17 @@ const EditUser = () => {
                                 history.push('/directorioadmin')
                             }
                         })
+                    }).catch(() => {
+                        Swal.fire(
+                            'Error',
+                            'Ha ocurrido un error, comuníquese con el administrador',
+                            'error'
+                        ).then((resp) => {
+                            if (resp) {
+                                setLoading(false)
+                            }
+
+                        })
                     })
             } else if (imgTemp !== "") {
                 const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
@@ -200,6 +211,17 @@ const EditUser = () => {
                                 })
                                 history.push('/directorioadmin')
                             }
+                        })
+                    }).catch(() => {
+                        Swal.fire(
+                            'Error',
+                            'Ha ocurrido un error, comuníquese con el administrador',
+                            'error'
+                        ).then((resp) => {
+                            if (resp) {
+                                setLoading(false)
+                            }
+
                         })
                     })
             }
@@ -234,6 +256,17 @@ const EditUser = () => {
                                 history.push('/directorioadmin')
                             }
                         })
+                    }).catch(() => {
+                        Swal.fire(
+                            'Error',
+                            'Ha ocurrido un error, comuníquese con el administrador',
+                            'error'
+                        ).then((resp) => {
+                            if (resp) {
+                                setLoading(false)
+                            }
+
+                        })
                     })
             } else if (imgTemp !== "") {
                 const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
@@ -268,6 +301,17 @@ const EditUser = () => {
                                 })
                                 history.push('/directorioadmin')
                             }
+                        })
+                    }).catch(() => {
+                        Swal.fire(
+                            'Error',
+                            'Ha ocurrido un error, comuníquese con el administrador',
+                            'error'
+                        ).then((resp) => {
+                            if (resp) {
+                                setLoading(false)
+                            }
+
                         })
                     })
             }
