@@ -50,6 +50,10 @@ const NavbarProfile = () => {
                             </li>
 
                             <li className="nav__item">
+                                <a href="https://dpmsa.com.ar/pedidomercaderia/" target="_blank" rel="noopener noreferrer" className="nav__link">Pedido de mercaderia</a>
+                            </li>
+
+                            <li className="nav__item">
                                 <NavLink exact to="/biblioteca" activeClassName="active" className="nav__link">Biblioteca</NavLink>
                             </li>
 
