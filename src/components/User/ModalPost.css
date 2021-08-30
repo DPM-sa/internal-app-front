@@ -11,6 +11,8 @@
     position: relative;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    height: 100%;
+    object-fit: cover;
 }
 
 .ModalPost .modal-header {
@@ -122,10 +124,17 @@
 }
 
 .commenter-pic {
-    display: inline-block;
     border-radius: 100%;
     border: 2px solid #004580;
     overflow: hidden;
+    margin-right: 10px;
+}
+
+.comment-box-top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .ModalPost__content-input {
@@ -166,19 +175,13 @@
 }
 
 .commenter-name {
-    display: inline-block;
-    position: relative;
-    top: -20px;
-    left: 10px;
     font-size: 16px;
     font-weight: bold;
     color: #004580;
 }
 
 .icon-delete-comment {
-    position: absolute;
     margin: 10px;
-    right: 9%;
     color: #004580;
     cursor: pointer;
 }

@@ -65,6 +65,9 @@ const NavbarProfile = () => {
                                         <NavLink exact to="/miperfil" class="nav__link">Mis Datos</NavLink>
                                     </li>
                                     <li class="dropdown-item">
+                                        <a href="https://dpmsa.com.ar/actualizardatos/" target="_blank" class="nav__link">Form. datos básicos</a>
+                                    </li>
+                                    <li class="dropdown-item">
                                         <NavLink onClick={handleLogout} exact to="/login" class="nav__link">Cerrar Sesión</NavLink>
                                     </li>
                                 </ul>

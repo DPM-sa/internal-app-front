@@ -53,17 +53,19 @@ const Comment = ({ comment }) => {
                 setShow(false)
             })
     }
-    
+
     return (
         <>
             <div className="comment-box">
-                <span className="commenter-pic">
-                    {userComment.image ? <img className="profile-image-small" src={userComment.image} /> : <i class="far fa-user no-image-profile-small"></i>}
-                </span>
-                <span className="commenter-name">
-                    {userComment.nombre} {userComment.apellido}<span className="comment-time">{commentDate(comment.date)}</span>
-                </span>
-                {user._id === userId && <i onClick={handleShow} class="icon-delete-comment fas fa-trash-alt"></i>}
+                <div className="comment-box-top">
+                    <span className="commenter-pic">
+                        {userComment.image ? <img className="profile-image-small" src={userComment.image} /> : <i class="far fa-user no-image-profile-small"></i>}
+                    </span>
+                    <span className="commenter-name">
+                        {userComment.nombre} {userComment.apellido}<span className="comment-time">{commentDate(comment.date)}</span>
+                    </span>
+                    {user._id === userId && <i onClick={handleShow} class="icon-delete-comment fas fa-trash-alt"></i>}
+                </div>
                 <p className="comment-txt">
                     {comment.content}
                 </p>
