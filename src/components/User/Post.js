@@ -29,6 +29,8 @@ const Post = ({ title, content, post, date }) => {
 
     const commentsLengthNumber = commentsLength.filter(comment => post._id === comment.postId)
 
+    /*formateo de fecha de posteo*/
+
     const fecha = moment(date).format('D MMM YYYY')
     const fechaArr = fecha.split(" ")
     const fechaObj = {}
@@ -64,6 +66,7 @@ const Post = ({ title, content, post, date }) => {
                             {title}
                         </h5>
                         <div className="Post__content-content">
+                            {/* parse() parsea contenido html para luego renderizarlo*/}
                             {parse(truncateContent(content))}
                         </div>
 

@@ -13,10 +13,6 @@ const ModalPost = () => {
     const history = useHistory()
 
     const { id } = useParams()
-    const [titlePost, setTitlePost] = useState('')
-    const [contentPost, setContentPost] = useState('')
-    const [likesPost, setLikesPost] = useState([])
-    const [tagsPost, setTagsPost] = useState([])
 
     const [post, setPost] = useState({
         title: '',
@@ -148,6 +144,7 @@ const ModalPost = () => {
                     <div className="ModalPost__header-content">
                         <div className="ModalPost-header-top">
                             <h4>{title}</h4>
+                            {/*parse() parsea contenido html para luego renderizar */}
                             <p>{parse(truncateContent(content))}</p>
                         </div>
                         <div className="ModalPost__header-actions">
@@ -175,6 +172,7 @@ const ModalPost = () => {
                     </div>
                 </Modal.Header>
                 <Modal.Body className="ModalPost__content">
+                    {/*parse() parsea contenido html para luego renderizar */}
                     <p className="ModalPost__content-text">{parse(content)}</p>
                     <form onSubmit={handleSubmit} className="comment-box add-comment">
                         <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" className="ModalPost__content-input" />

@@ -103,6 +103,7 @@ const NewUser = () => {
         }
         setLoading(true)
         const fileId = uuidv4();
+        /*crea un fileId y lo asigna para evitar la sobrecarga en storage de firebase */
         if (imgTemp === "") {
             await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
                 {

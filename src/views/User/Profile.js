@@ -31,6 +31,7 @@ const Profile = () => {
     const handleFileChange = async (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
+        /*si no tiene fileId, se le asigna uno, para evitar la sobrecarga en storage de firebase */
         if (!user.fileId || user.fileId === "") {
             let fileId = uuidv4()
             const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
