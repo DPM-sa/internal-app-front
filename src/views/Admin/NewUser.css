@@ -151,6 +151,33 @@
     color: red;
 }
 
+.NewUser__data-row-combo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.NewUser__data-row-combo .select {
+    width: calc(69% - 1rem);
+    color: white;
+}
+
+.NewUser__data-row-combo .react-select__control.react-select__control {
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+}
+
+.NewUser__data-row-combo .react-select__single-value {
+    color: white;
+}
+
+.NewUser__data-row-combo .react-select__placeholder.react-select__placeholder {
+    color: white;
+}
+
+
 @media screen and (max-width:767px) {
     .NewUser__content {
         flex-direction: column;

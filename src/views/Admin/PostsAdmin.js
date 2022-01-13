@@ -24,28 +24,29 @@ const PostsAdmin = () => {
     const [loadingPosts, setLoadingPosts] = useState(false)
 
     const getPosts = async () => {
-        setLoadingPosts(true)
-        await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
-            .then(resp => {
-                let likes = resp.data.posts.map(item => item.likes)
-                setLikesQuantity(likes.flat(1).length)
-                setPostsQuantity(resp.data.cuantos)
-                dispatch({
-                    type: "SET_POSTS",
-                    posts: resp.data.posts
+
+            setLoadingPosts(true)
+            await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
+                .then(resp => {
+                    let likes = resp.data.posts.map(item => item.likes)
+                    setLikesQuantity(likes.flat(1).length)
+                    setPostsQuantity(resp.data.cuantos)
+                    dispatch({
+                        type: "SET_POSTS",
+                        posts: resp.data.posts
+                    })
+                    dispatch({
+                        type: 'SEARCHING_POST',
+                        searching: ''
+                    })
+                    setLoadingPosts(false)
                 })
-                dispatch({
-                    type: 'SEARCHING_POST',
-                    searching: ''
-                })
-                setLoadingPosts(false)
-            })
     }
 
     const getComments = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/allcomments`, { headers })
-            .then(resp => {
-                setCommentsQuantity(resp.data.commentsDB.length)
+            await axios.get(`https://internal-app-dpm.herokuapp.com/allcomments`, { headers })
+                        .then(resp => {
+                            setCommentsQuantity(resp.data.commentsDB.length)
             })
     }
 
@@ -159,7 +160,7 @@ const PostsAdmin = () => {
 
     return (
         <>
-            <SidebarAdmin />
+        <SidebarAdmin />
             <div className="PostsAdmin">
                 <div className="PostsAdmin-container">
                     <h1>Gestionar publicaciones</h1>

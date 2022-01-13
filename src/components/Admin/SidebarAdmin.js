@@ -6,6 +6,8 @@ import './SidebarAdmin.css'
 const SidebarAdmin = () => {
     const [{ user }, dispatch] = useStateValue()
 
+    const admin = ( user.role === "ADMIN_ROLE" );
+
     const handleShowSidebar = () => {
         const sidebar = document.querySelector('.sidebar')
         const icon = document.querySelector('.icon')
@@ -24,10 +26,13 @@ const SidebarAdmin = () => {
         <div className="sidebar">
             <div class="sidebar__content">
                 <div className="sidebar__content-img">
-                    <img src={window.location.origin + "/assets/logo-footer.png"} className="sidebar__logo" />
+                    <img alt="logo" src={window.location.origin + "/assets/logo-footer.png"} className="sidebar__logo" />
                 </div>
                 <p className="sidebar__text">Panel administrador del espacio de comunicación interna.</p>
                 <ul className="sidebar__options">
+                    
+                    { admin &&
+                    <>
                     <li className="sidebar__options-item">
                         <Link exact to="/admin">
                             <i class="far fa-file-alt"></i>
@@ -52,6 +57,8 @@ const SidebarAdmin = () => {
                             Slider principal
                         </Link>
                     </li>
+                    </>
+                    }
                     <li className="sidebar__options-item">
                         <Link exact to="/bibliotecaadmin">
                             <i class="far fa-copy"></i>

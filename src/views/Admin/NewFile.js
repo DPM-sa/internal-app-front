@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
@@ -9,6 +9,9 @@ import './NewFile.css'
 
 const NewFile = () => {
     const [{ token, editOrNewFile }, dispatch] = useStateValue()
+
+    const { sector } = useParams()
+    const ruta = "https://internal-app-dpm.herokuapp.com";
 
     const history = useHistory()
 
@@ -64,10 +67,11 @@ const NewFile = () => {
         const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
-        await axios.post('https://internal-app-dpm.herokuapp.com/file',
+        await axios.post(`${ ruta }/file`,
             {
                 "title": `${title}`,
                 "url": `${url}`,
+                "sector": `${sector}`,
                 "fileId": `${fileId}`
             }, { headers })
             .then(() => {
@@ -140,6 +144,7 @@ const NewFile = () => {
                     <div className="NewFile__content-bottom">
                         <p>Formatos aceptados</p>
                         <p>.doc / .xls / .xlsx / .pdf / .jpg / .jpeg / .png / .gif / .mp4</p>
+                        <p>Carpeta de destino: { sector }</p>
                         <div className="NewFile-content-bottom-actions">
                             <button disabled={loading} type="submit">
                                 {

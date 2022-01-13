@@ -6,12 +6,17 @@ import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import { v4 as uuidv4 } from 'uuid';
 import './NewUser.css'
+// import CreatableSelect from 'react-select/creatable';
+import sectores from '../../data/sectores';
+
 const NewUser = () => {
     const [{ token, editOrNewUser }, dispatch] = useStateValue()
     let headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+    const ruta = "https://internal-app-dpm.herokuapp.com";
+
     const [form, setForm] = useState({
         user: '',
         password: '',
@@ -24,7 +29,8 @@ const NewUser = () => {
         sector: ''
     })
     const [role, setRole] = useState('USER_ROLE')
-    const { user, password, nombre, apellido, email, phone, birth, position, sector } = form
+    const [ sector, setSector ] = useState('')
+    const { user, password, nombre, apellido, email, phone, birth, position } = form
     const [img, setImg] = useState({})
     const [imgTemp, setImgTemp] = useState('')
     const [loadingImg, setLoadingImg] = useState(false)
@@ -105,7 +111,7 @@ const NewUser = () => {
         const fileId = uuidv4();
         /*crea un fileId y lo asigna para evitar la sobrecarga en storage de firebase */
         if (imgTemp === "") {
-            await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
+            await axios.post(`${ ruta }/usuario`,
                 {
                     "nombre": `${nombre}`,
                     "apellido": `${apellido}`,
@@ -151,7 +157,7 @@ const NewUser = () => {
             const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             const res = await storageRef.put(img)
             const url = await storageRef.getDownloadURL()
-            await axios.post("https://internal-app-dpm.herokuapp.com/usuario",
+            await axios.post(`${ ruta }/usuario`,
                 {
                     "nombre": `${nombre}`,
                     "apellido": `${apellido}`,
@@ -196,9 +202,26 @@ const NewUser = () => {
                 })
         }
     }
+    
     const handleRole = (e) => {
         setRole(e.target.value)
     }
+
+    const handleSector = (e) => {
+        setSector(e.target.value)
+    }
+
+    /* */
+
+    /* Para integrar con el crud de secttores */
+    // const NoOptionsMessage = "No hay sectores definidos";
+
+    // const handleSectores = ( e ) => {
+    //     setSector( e.value )
+    // }
+    /**/
+
+
     const handleReturn = () => {
         history.push('/directorioadmin')
     }
@@ -276,21 +299,42 @@ const NewUser = () => {
                                 }
                             </div>
                         </div>
-                        <div className="NewUser__data-row">
+
+                        {/* <div className="NewUser__data-row-combo">
                             <label>Sector</label>
+                            <div className="select">
+                                <CreatableSelect
+                                    onChange={handleSectores}
+                                    options={optionsSectores}
+                                    placeholder="Elegir un sector"
+                                    formatCreateLabel={userInput => `Agregar: ${userInput}`}
+                                    classNamePrefix="react-select"
+                                    noOptionsMessage={NoOptionsMessage}
+                                    isDisabled={loading}
+                                />
+                            </div>
+                        </div> */}
+
+                        <div className="NewUser__data-row">
+                            <label>Rol</label>
                             <div>
-                                <input disabled={loading} onChange={handleInputChange} type="text" name="sector" value={sector} />
-                                {
-                                    sectorError && !sector
-                                    && <span className="submitError">{sectorError}</span>
-                                }
+                                <select disabled={loading} onChange={handleSector} value={sector}>
+                                    {
+                                        sectores.map( p => (  
+                                            <option value={ p.label }>{ p.label }</option>
+                                        ))
+
+                                    }
+                                </select>
                             </div>
                         </div>
+
                         <div className="NewUser__data-row">
                             <label>Rol</label>
                             <div>
                                 <select disabled={loading} onChange={handleRole} value={role}>
                                     <option value="USER_ROLE">Usuario</option>
+                                    <option value="EDITOR_ROLE">Editor</option>
                                     <option value="ADMIN_ROLE">Administrador</option>
                                 </select>
                             </div>

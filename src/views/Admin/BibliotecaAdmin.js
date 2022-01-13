@@ -7,9 +7,12 @@ import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import './BibliotecaAdmin.css'
+import { Folders } from '../../components/Admin/Folders'
 
 const BibliotecaAdmin = () => {
-    const [{ token, editOrNewFile }] = useStateValue()
+    const [{ token, editOrNewFile, user }] = useStateValue()
+
+    const ruta = "https://internal-app-dpm.herokuapp.com";
 
     const headers = {
         'Content-Type': 'application/json',
@@ -20,10 +23,13 @@ const BibliotecaAdmin = () => {
         search: ''
     })
     const { search } = form
+    const admin = ( user.role === "ADMIN_ROLE" );
+
+    const initialFolder = admin ? "General" : user.sector;
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await axios.get(`https://internal-app-dpm.herokuapp.com/allfiles`, { headers })
+        await axios.get(`${ ruta }/allfiles`, { headers })
             .then(resp => {
                 setFiles(resp.data.filesDB.filter(file => file.title.toLowerCase().includes(search.toLowerCase())))
             })
@@ -68,8 +74,9 @@ const BibliotecaAdmin = () => {
 
     const getFiles = async () => {
         setLoadingFiles(true)
-        await axios.get("https://internal-app-dpm.herokuapp.com/allfiles", { headers })
+        await axios.get(`${ ruta }/allfiles`, { headers })
             .then(resp => {
+
                 if (typeOrder === 'alfabetico') {
                     setFiles(sortGreatest(resp.data.filesDB))
                 } else if (typeOrder === 'antiguos') {
@@ -77,6 +84,8 @@ const BibliotecaAdmin = () => {
                 } else if (typeOrder === 'recientes') {
                     setFiles(reverseFiles(resp.data.filesDB))
                 }
+                
+                openFolder( initialFolder )
                 setLoadingFiles(false)
             })
     }
@@ -130,7 +139,7 @@ const BibliotecaAdmin = () => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/file/${file._id}`,
+                    await axios.put(`${ ruta }/file/${file._id}`,
                         {
                             "estado": !file.estado
                         }, { headers })
@@ -151,7 +160,7 @@ const BibliotecaAdmin = () => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/file/${file._id}`,
+                    await axios.put(`${ ruta }/file/${file._id}`,
                         {
                             "estado": !file.estado
                         }, { headers })
@@ -177,7 +186,7 @@ const BibliotecaAdmin = () => {
             if (result.isConfirmed) {
                 const storageRef = storage.ref().child('BibliotecaFiles').child(`${file.fileId}`)
                 storageRef.delete().then(async () => {
-                    await axios.delete(`https://internal-app-dpm.herokuapp.com/file/${file._id}`, { headers })
+                    await axios.delete(`${ ruta }/file/${file._id}`, { headers })
                         .then(() => {
                             getFiles()
                         })
@@ -186,6 +195,13 @@ const BibliotecaAdmin = () => {
             }
         })
     }
+
+    const [ sector, setSector ] = useState('');
+
+    const openFolder = ( sector ) => {
+        setSector( sector );
+    }
+
     return (
         <>
             <SidebarAdmin />
@@ -194,7 +210,7 @@ const BibliotecaAdmin = () => {
                     <h1>Biblioteca de archivos</h1>
                     <div className="PostsAdmin-content">
                         <div className="PostsAdmin-content-actions">
-                            <Link to="bibliotecaadmin/newfile" className="PostsAdmin-content-actions-item">
+                            <Link to={ `/bibliotecaadmin/newfile/${ sector }` } className="PostsAdmin-content-actions-item">
                                 <span>+</span>
                                 <p>Cargar un nuevo archivo</p>
                             </Link>
@@ -217,6 +233,13 @@ const BibliotecaAdmin = () => {
                                     </ul>
                                 </div>
                             </div>
+
+                            {
+                                admin &&
+                                <Folders openFolder={ openFolder }/>
+                            }
+
+                            <div className="root-title"><i class="far fa-folder"></i> { sector }</div>
                             <div className="BibliotecaAdmin-files">
                                 {
                                     loadingFiles &&
@@ -224,7 +247,8 @@ const BibliotecaAdmin = () => {
                                 }
                                 {
                                     !loadingFiles &&
-                                    files.map(file => (
+                                    files.filter( f => f.sector === sector ).map
+                                    (file => (
                                         <div key={file._id} className="BibliotecaAdmin-file">
                                             <i class="far fa-file-alt Biblioteca__file-icon"></i>
                                             <p>{file.title}</p>

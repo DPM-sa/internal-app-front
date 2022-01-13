@@ -7,9 +7,10 @@ import Footer from '../../components/User/Footer'
 import SpinnerComponent from '../../components/User/SpinnerComponent'
 import WhatsappBtn from '../../components/User/WhatsappBtn'
 import Banner from '../../components/User/Banner'
+import { TabComponent } from './TabComponent'
 
 const Biblioteca = () => {
-    const [{ token }] = useStateValue()
+    const [{ token, user }] = useStateValue()
     const [files, setFiles] = useState([])
     const [loading, setLoading] = useState(false)
     const [typeOrder, setTypeOrder] = useState('alfabetico')
@@ -20,6 +21,7 @@ const Biblioteca = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+
     function sortGreatest(arr) {
         for (let i = 0; i < arr.length; i++) {
             for (let j = i; j < arr.length; j++) {
@@ -82,10 +84,20 @@ const Biblioteca = () => {
         getFiles()
     }, [typeOrder])
 
+
+    const [ sector, setSector ] = useState("General");
+
+    const openFolder = ( sector ) => {
+        setSector( sector );
+    } 
+
     return (
         <>
             <NavbarProfile />
             <Banner image={'./assets/banner-biblioteca.jpg'} title={'Biblioteca'} content={'Encontrá aquí materiales a disposición para todos los colaboradores de DPM'} linkto={'biblioteca'} />
+            
+            <TabComponent sector={ user.sector } openFolder={ openFolder } />
+
             <div className="Biblioteca__search">
                 <form onSubmit={handleSubmit} id="biblioteca">
                     <input name="search" value={search} onChange={handleInputChange} type="text" className="Biblioteca__search-input" placeholder="Buscar un archivo por nombre" />
@@ -104,6 +116,7 @@ const Biblioteca = () => {
                     </ul>
                 </div>
             </div>
+
             <div className="Biblioteca__files-section">
                 {
                     loading && <SpinnerComponent />
@@ -116,7 +129,9 @@ const Biblioteca = () => {
                     </p>
                 }
                 {
-                    !loading && files.map(file => (
+                    !loading &&
+                    files.filter( f => f.sector === sector ).map
+                    (file => (
                         <div key={file._id} className="Biblioteca__file" >
                             <i class="far fa-file-alt Biblioteca__file-icon"></i>
                             <h5 className="card-title text-center">{file.title}</h5>

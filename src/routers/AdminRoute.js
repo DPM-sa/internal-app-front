@@ -7,7 +7,7 @@ const AdminRoute = ({ component: Component, ...props }) => {
     const [{ user }] = useStateValue()
 
     return (
-        <Route {...props} render={props => user.role !== "ADMIN_ROLE" ? (
+        <Route {...props} render={props => user.role === "USER_ROLE" ? (
             <Redirect to="/home" />
         ) : (
             <Component {...props} />

@@ -1,0 +1,63 @@
+.folders {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    max-height: 210px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+}
+
+.folders .dir {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.folders span {
+    text-align: center;
+    font-size: 16px;
+    text-align: center;
+    color: #888;
+    line-height: 1.1;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+
+.folders i {
+    color: #004580;
+    font-size: 40px;
+    margin-bottom: 5px;
+}
+
+
+.folders .dir.activo {
+    cursor: unset;
+    background-color: #fafafa;
+}
+
+.folders::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.folders::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+.folders::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #004580;
+}

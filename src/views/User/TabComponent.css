@@ -1,0 +1,53 @@
+
+.tab-component {
+    width: 90%;
+    margin: 30px auto;
+    display: flex;
+    border-bottom: 2px solid #004580;
+    box-sizing: border-box;
+}
+
+.tab-component .item {
+    display: flex;
+    cursor: pointer;
+    border: 2px solid #004580;
+    border-radius: 16px 16px 0 0;
+    padding: 8px 24px;
+    border-bottom: 0;
+    margin-right: -2px;
+    background-color: #F5F5F5;
+    border-bottom: 2px solid #004580;
+    margin-bottom: -2px;
+}
+
+.tab-component .item.activo {
+    background-color: white;
+    border-bottom: white;
+    cursor: initial;
+}
+
+.tab-component .item i {
+    color: #004580;
+    font-size: 30px;
+    margin-right: 5px;
+}
+
+.tab-component .item span {
+    color: #004580;
+    font-size: 20px;
+}
+
+
+@media (max-width: 600px) {
+    
+    .tab-component .item {
+        width: 50%;
+    }
+
+    .tab-component .item span {
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

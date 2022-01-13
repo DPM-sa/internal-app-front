@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
+import sectores from '../../data/sectores';
 
 const EditUser = () => {
     const { id } = useParams()
@@ -20,9 +21,13 @@ const EditUser = () => {
         position: '',
         sector: ''
     })
+
+    const ruta = "https://internal-app-dpm.herokuapp.com";
+
     const [role, setRole] = useState('')
+    const [sector, setSector] = useState('');
     const [fileId, setFileId] = useState('')
-    const { user, password, nombre, apellido, email, phone, birth, position, sector } = form
+    const { user, password, nombre, apellido, email, phone, birth, position } = form
 
     const [img, setImg] = useState('')
     const [imgTemp, setImgTemp] = useState('')
@@ -43,7 +48,7 @@ const EditUser = () => {
     }
 
     const getUser = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${id}`, { headers })
+        await axios.get(`${ ruta }/usuario/${id}`, { headers })
             .then(resp => {
                 setForm({
                     user: resp.data.user.user,
@@ -52,10 +57,10 @@ const EditUser = () => {
                     email: resp.data.user.correo ? resp.data.user.correo : '',
                     phone: resp.data.user.phone ? resp.data.user.phone : '',
                     birth: resp.data.user.birth ? resp.data.user.birth : '',
-                    position: resp.data.user.position,
-                    sector: resp.data.user.sector
+                    position: resp.data.user.position
                 })
                 setRole(resp.data.user.role)
+                setSector(resp.data.user.sector)
                 setFileId(resp.data.user.fileId)
                 setImg(resp.data.user.image ? resp.data.user.image : '')
             })
@@ -75,6 +80,9 @@ const EditUser = () => {
     }, [])
     const handleRole = (e) => {
         setRole(e.target.value)
+    }
+    const handleSector = (e) => {
+        setSector(e.target.value)
     }
     const handleReturn = () => {
         history.push('/directorioadmin')
@@ -138,8 +146,9 @@ const EditUser = () => {
         }
         setLoading(true)
         if (!password) {
+
             if (imgTemp === "") {
-                await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${id}`,
+                await axios.put(`${ ruta }/usuario/${id}`,
                     {
                         "user": `${user}`,
                         "nombre": `${nombre}`,
@@ -183,7 +192,7 @@ const EditUser = () => {
                 const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
                 const res = await storageRef.put(imgToUpload)
                 const url = await storageRef.getDownloadURL()
-                await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${id}`,
+                await axios.put(`${ ruta }/usuario/${id}`,
                     {
                         "user": `${user}`,
                         "nombre": `${nombre}`,
@@ -227,7 +236,7 @@ const EditUser = () => {
             }
         } else if (password) {
             if (imgTemp === "") {
-                await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${id}`,
+                await axios.put(`${ ruta }/usuario/${id}`,
                     {
                         "user": `${user}`,
                         "nombre": `${nombre}`,
@@ -272,7 +281,8 @@ const EditUser = () => {
                 const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
                 const res = await storageRef.put(imgToUpload)
                 const url = await storageRef.getDownloadURL()
-                await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${id}`,
+
+                await axios.put(`${ ruta }/usuario/${id}`,
                     {
                         "user": `${user}`,
                         "nombre": `${nombre}`,
@@ -325,7 +335,7 @@ const EditUser = () => {
         if (img.startsWith('https://firebasestorage.googleapis.com/')) {
             const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             storageRef.delete().then(async () => {
-                await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${id}`,
+                await axios.put(`${ ruta }/usuario/${id}`,
                     {
                         "image": ""
                     },
@@ -408,22 +418,28 @@ const EditUser = () => {
                                 }
                             </div>
                         </div>
+
                         <div className="NewUser__data-row">
-                            <label>Sector</label>
+                            <label>Rol</label>
                             <div>
-                                <input disabled={loading} onChange={handleInputChange} type="text" name="sector" value={sector} />
-                                {
-                                    sectorError && !sector
-                                    && <span className="submitError">{sectorError}</span>
-                                }
+                                <select disabled={loading} onChange={handleSector} value={sector}>
+                                    {
+                                        sectores.map( p => (  
+                                            <option value={ p.label }>{ p.label }</option>
+                                        ))
+
+                                    }
+                                </select>
                             </div>
                         </div>
+
                         <div className="NewUser__data-row">
                             <label>Rol</label>
                             <div>
                                 <select disabled={loading} onChange={handleRole} value={role}>
                                     <option value="">-- Seleccione --</option>
                                     <option value="USER_ROLE">Usuario</option>
+                                    <option value="EDITOR_ROLE">Editor</option>
                                     <option value="ADMIN_ROLE">Administrador</option>
                                 </select>
                             </div>
@@ -461,7 +477,7 @@ const EditUser = () => {
                             img && !imgTemp
                             &&
                             <>
-                                <img src={img} className="Profile-pic" />
+                                <img src={img} className="Profile-pic" alt="Profile-pic" />
                                 <p className={loading ? 'editImage disabled' : 'editImage'} onClick={handlePictureClick}>
                                     <i class="fas fa-plus"></i>
                                     Cambiar foto de perfil
@@ -475,7 +491,7 @@ const EditUser = () => {
                         {
                             imgTemp
                             && <>
-                                <img src={imgTemp} className="Profile-pic" />
+                                <img alt="Profile-pic" src={imgTemp} className="Profile-pic" />
                                 <p className={loading ? 'editImage disabled' : 'editImage'} onClick={handlePictureClick}>
                                     <i class="fas fa-plus"></i>
                                     Cambiar foto de perfil

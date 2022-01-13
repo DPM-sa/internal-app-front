@@ -26,6 +26,7 @@ import NewFile from '../views/Admin/NewFile'
 import EditFile from '../views/Admin/EditFile'
 import SliderAdmin from '../views/Admin/SliderAdmin'
 import SugerenciasAdmin from '../views/Admin/SugerenciasAdmin'
+import IndexAdmin from '../views/Admin/IndexAdmin'
 
 const AppRouter = () => {
     return (
@@ -33,7 +34,7 @@ const AppRouter = () => {
             <Switch>
                 <PublicRoute path="/login" component={Login} />
 
-                <AdminRoute path="/admin" component={PostsAdmin} />
+                <AdminRoute path="/admin" component={IndexAdmin} />
                 <AdminRoute path="/nuevopost" component={NewPost} />
                 <AdminRoute path="/editpost/:id" component={EditPost} />
                 <AdminRoute path="/directorioadmin" component={DirectorioAdmin} />
@@ -80,7 +81,7 @@ const AppRouter = () => {
             </Switch>
 
             <Switch>
-                <AdminRoute path="/bibliotecaadmin/newfile">
+                <AdminRoute path="/bibliotecaadmin/newfile/:sector">
                     <NewFile />
                 </AdminRoute>
             </Switch>
