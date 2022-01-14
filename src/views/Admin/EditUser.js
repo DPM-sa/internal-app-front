@@ -145,187 +145,86 @@ const EditUser = () => {
             return
         }
         setLoading(true)
-        if (!password) {
 
-            if (imgTemp === "") {
-                await axios.put(`${ ruta }/usuario/${id}`,
-                    {
-                        "user": `${user}`,
-                        "nombre": `${nombre}`,
-                        "apellido": `${apellido}`,
-                        "correo": `${email}`,
-                        "phone": `${phone}`,
-                        "birth": `${birth}`,
-                        "position": `${position}`,
-                        "sector": `${sector}`,
-                        "role": `${role}`
-                    },
-                    { headers })
-                    .then(() => {
-                        setLoading(false)
-                        Swal.fire(
-                            'Éxito',
-                            'El usuario se ha actualizado con éxito',
-                            'success'
-                        ).then(resp => {
-                            if (resp) {
-                                dispatch({
-                                    type: 'SET_EDIT_NEW_USER',
-                                    editOrNewUser: !editOrNewUser
-                                })
-                                history.push('/directorioadmin')
-                            }
-                        })
-                    }).catch(() => {
-                        Swal.fire(
-                            'Error',
-                            'Ha ocurrido un error, comuníquese con el administrador',
-                            'error'
-                        ).then((resp) => {
-                            if (resp) {
-                                setLoading(false)
-                            }
+        let userEdit = {
+            "user": `${user}`,
+            "nombre": `${nombre}`,
+            "apellido": `${apellido}`,
+            "correo": `${email}`,
+            "phone": `${phone}`,
+            "birth": `${birth}`,
+            "position": `${position}`,
+            "sector": `${sector}`,
+            "role": `${role}`
+        };
 
-                        })
-                    })
-            } else if (imgTemp !== "") {
-                const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
-                const res = await storageRef.put(imgToUpload)
-                const url = await storageRef.getDownloadURL()
-                await axios.put(`${ ruta }/usuario/${id}`,
-                    {
-                        "user": `${user}`,
-                        "nombre": `${nombre}`,
-                        "apellido": `${apellido}`,
-                        "correo": `${email}`,
-                        "phone": `${phone}`,
-                        "birth": `${birth}`,
-                        "position": `${position}`,
-                        "sector": `${sector}`,
-                        "image": `${url}`,
-                        "role": `${role}`
-                    },
-                    { headers })
-                    .then(() => {
-                        setLoading(false)
-                        Swal.fire(
-                            'Éxito',
-                            'El usuario se ha actualizado con éxito',
-                            'success'
-                        ).then(resp => {
-                            if (resp) {
-                                dispatch({
-                                    type: 'SET_EDIT_NEW_USER',
-                                    editOrNewUser: !editOrNewUser
-                                })
-                                history.push('/directorioadmin')
-                            }
-                        })
-                    }).catch(() => {
-                        Swal.fire(
-                            'Error',
-                            'Ha ocurrido un error, comuníquese con el administrador',
-                            'error'
-                        ).then((resp) => {
-                            if (resp) {
-                                setLoading(false)
-                            }
-
-                        })
-                    })
-            }
-        } else if (password) {
-            if (imgTemp === "") {
-                await axios.put(`${ ruta }/usuario/${id}`,
-                    {
-                        "user": `${user}`,
-                        "nombre": `${nombre}`,
-                        "apellido": `${apellido}`,
-                        "correo": `${email}`,
-                        "password": `${password}`,
-                        "phone": `${phone}`,
-                        "birth": `${birth}`,
-                        "position": `${position}`,
-                        "sector": `${sector}`,
-                        "role": `${role}`
-                    },
-                    { headers })
-                    .then(() => {
-                        setLoading(false)
-                        Swal.fire(
-                            'Éxito',
-                            'El usuario se ha actualizado con éxito',
-                            'success'
-                        ).then(resp => {
-                            if (resp) {
-                                dispatch({
-                                    type: 'SET_EDIT_NEW_USER',
-                                    editOrNewUser: !editOrNewUser
-                                })
-                                history.push('/directorioadmin')
-                            }
-                        })
-                    }).catch(() => {
-                        Swal.fire(
-                            'Error',
-                            'Ha ocurrido un error, comuníquese con el administrador',
-                            'error'
-                        ).then((resp) => {
-                            if (resp) {
-                                setLoading(false)
-                            }
-
-                        })
-                    })
-            } else if (imgTemp !== "") {
-                const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
-                const res = await storageRef.put(imgToUpload)
-                const url = await storageRef.getDownloadURL()
-
-                await axios.put(`${ ruta }/usuario/${id}`,
-                    {
-                        "user": `${user}`,
-                        "nombre": `${nombre}`,
-                        "apellido": `${apellido}`,
-                        "correo": `${email}`,
-                        "password": `${password}`,
-                        "phone": `${phone}`,
-                        "birth": `${birth}`,
-                        "position": `${position}`,
-                        "sector": `${sector}`,
-                        "image": `${url}`,
-                        "role": `${role}`
-                    },
-                    { headers })
-                    .then(() => {
-                        setLoading(false)
-                        Swal.fire(
-                            'Éxito',
-                            'El usuario se ha actualizado con éxito',
-                            'success'
-                        ).then(resp => {
-                            if (resp) {
-                                dispatch({
-                                    type: 'SET_EDIT_NEW_USER',
-                                    editOrNewUser: !editOrNewUser
-                                })
-                                history.push('/directorioadmin')
-                            }
-                        })
-                    }).catch(() => {
-                        Swal.fire(
-                            'Error',
-                            'Ha ocurrido un error, comuníquese con el administrador',
-                            'error'
-                        ).then((resp) => {
-                            if (resp) {
-                                setLoading(false)
-                            }
-
-                        })
-                    })
-            }
+        if ( password ) {
+            userEdit = { ...userEdit, password  }
         }
+
+        if (imgTemp === "") {
+            await axios.put(`${ ruta }/usuario/${id}`, userEdit,
+                { headers })
+                .then(() => {
+                    setLoading(false)
+                    Swal.fire(
+                        'Éxito',
+                        'El usuario se ha actualizado con éxito',
+                        'success'
+                    ).then(resp => {
+                        if (resp) {
+                            dispatch({
+                                type: 'SET_EDIT_NEW_USER',
+                                editOrNewUser: !editOrNewUser
+                            })
+                            history.push('/directorioadmin')
+                        }
+                    })
+                }).catch(() => {
+                    Swal.fire(
+                        'Error',
+                        'Ha ocurrido un error, comuníquese con el administrador',
+                        'error'
+                    ).then((resp) => {
+                        if (resp) {
+                            setLoading(false)
+                        }
+                    })
+                })
+        } else if (imgTemp !== "") {
+            const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
+            const res = await storageRef.put(imgToUpload)
+            const url = await storageRef.getDownloadURL()
+            await axios.put(`${ ruta }/usuario/${id}`, userEdit,
+                { headers })
+                .then(() => {
+                    setLoading(false)
+                    Swal.fire(
+                        'Éxito',
+                        'El usuario se ha actualizado con éxito',
+                        'success'
+                    ).then(resp => {
+                        if (resp) {
+                            dispatch({
+                                type: 'SET_EDIT_NEW_USER',
+                                editOrNewUser: !editOrNewUser
+                            })
+                            history.push('/directorioadmin')
+                        }
+                    })
+                }).catch(() => {
+                    Swal.fire(
+                        'Error',
+                        'Ha ocurrido un error, comuníquese con el administrador',
+                        'error'
+                    ).then((resp) => {
+                        if (resp) {
+                            setLoading(false)
+                        }
+
+                    })
+                })
+        }   
     }
 
     const handleDeleteImage = () => {
@@ -420,7 +319,7 @@ const EditUser = () => {
                         </div>
 
                         <div className="NewUser__data-row">
-                            <label>Rol</label>
+                            <label>Sector</label>
                             <div>
                                 <select disabled={loading} onChange={handleSector} value={sector}>
                                     {

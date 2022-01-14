@@ -316,7 +316,7 @@ const NewUser = () => {
                         </div> */}
 
                         <div className="NewUser__data-row">
-                            <label>Rol</label>
+                            <label>Sector</label>
                             <div>
                                 <select disabled={loading} onChange={handleSector} value={sector}>
                                     {

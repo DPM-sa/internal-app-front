@@ -216,6 +216,14 @@ const BibliotecaAdmin = () => {
                             </Link>
                         </div>
                         <div className="BibliotecaAdmin__content">
+
+                            {
+                                admin &&
+                                <Folders openFolder={ openFolder } actualFolder={ sector }  />
+                            }
+
+                            <div className="root-title"><i class="far fa-folder"></i> { sector }</div>
+                            
                             <div className="Biblioteca__search">
                                 <form onSubmit={handleSubmit} id="biblioteca">
                                     <input name="search" value={search} onChange={handleInputChange} type="text" className="Biblioteca__search-input" placeholder="Buscar un archivo por nombre" />
@@ -233,13 +241,7 @@ const BibliotecaAdmin = () => {
                                     </ul>
                                 </div>
                             </div>
-
-                            {
-                                admin &&
-                                <Folders openFolder={ openFolder }/>
-                            }
-
-                            <div className="root-title"><i class="far fa-folder"></i> { sector }</div>
+                            
                             <div className="BibliotecaAdmin-files">
                                 {
                                     loadingFiles &&
