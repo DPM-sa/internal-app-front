@@ -1,0 +1,81 @@
+
+
+.BirthdayBanner{
+  background-color: #004580;
+  position: fixed;
+  top: 0;
+  color:#ffffff;
+  width: 100vw;
+  text-align: center;
+  z-index: 100;
+  box-shadow: 2px 2px 6px rgb(0 0 0 / 60%);
+  font-size: 0.8rem;
+  height: 40px;
+}
+
+.Separador{
+  padding: 0 5px;
+}
+
+.BirthdayBanner{
+  padding: 7px 0 5px 0;
+}
+
+.title{
+  color:#fffefeda;
+  padding: 0 5px;
+}
+
+.scroll-container {
+  border: 3px solid black;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.scroll-text {
+  display: inline-table;
+  /* animation properties */
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  
+  -moz-animation: my-animation 55s linear infinite;
+  -webkit-animation: my-animation 55s linear infinite;
+  animation: my-animation 55s linear infinite;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* for Firefox */
+@-moz-keyframes my-animation {
+  from { -moz-transform: translateX(100%); }
+  to { -moz-transform: translateX(-100%); }
+}
+
+/* for Chrome */
+@-webkit-keyframes my-animation {
+  from { -webkit-transform: translateX(100%); }
+  to { -webkit-transform: translateX(-100%); }
+}
+
+@keyframes my-animation {
+  from {
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  to {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+
+.close{
+  color: #ffffff !important;
+  position: fixed;
+  top: 5px;
+  left: 15px;
+  cursor: pointer;
+  z-index: 101;
+}

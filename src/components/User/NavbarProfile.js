@@ -1,83 +1,93 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from "react-router-dom";
+import { useGetBirthdays } from '../../hooks/useGetBirthdays';
 import { useStateValue } from '../../StateProvider'
+import BirthdayBanner from './BirthdayBanner';
 import './NavbarProfile.css'
-const NavbarProfile = () => {
 
+
+const NavbarProfile = () => {
+    const { cumples, hayCumples } = useGetBirthdays()
     const [{ }, dispatch] = useStateValue()
+    const [closeCumples, setCloseCumples] = useState(false)
+
     const showMenu = () => {
         const toggle = document.getElementById('header-toggle')
         const nav = document.getElementById('nav-menu')
         nav.classList.toggle('show')
         toggle.classList.toggle('bx-x')
     }
+
     const handleLogout = () => {
         dispatch({
             type: 'LOGOUT'
         })
     }
 
+    const handleCloseCumples = () => setCloseCumples(true);
+
     return (
-        <header className="NavbarProfile">
-            <div className="header__logo">
-                <div className="nav__img">
-                    <img src="./assets/logo-header.png" alt="" />
-                </div>
-            </div>
+        <>
+            {hayCumples &&
+                <BirthdayBanner
+                    dataString={cumples}
+                    isClose={closeCumples}
+                    handleClose={handleCloseCumples}
+                />}
+            <header className={`NavbarProfile ${hayCumples && !closeCumples && 'NavbarProfile_desplaz'}`}>
 
-            <i onClick={showMenu} className='bx bx-menu header__toggle' id="header-toggle"></i>
-
-            <nav className="NavbarProfile__nav" id="nav-menu">
-                <div className="nav__content bd-grid">
-                    <a href="/home" className="nav__perfil">
-                        <div className="nav__img">
-                            <img src="./assets/logo-header.png" alt="" />
-                        </div>
-                    </a>
-
-                    <div className="nav__menu">
-                        <ul className="nav__list">
-                            <li className="nav__item">
-                                <NavLink exact to="/home" activeClassName="active" className="nav__link">Inicio</NavLink>
-                            </li>
-
-                            <li className="nav__item">
-                                <NavLink exact to="/directorio" activeClassName="active" className="nav__link">Directorio</NavLink>
-                            </li>
-
-                            <li className="nav__item">
-                                <NavLink exact to="/sugerencias" activeClassName="active" className="nav__link">Sugerencias</NavLink>
-                            </li>
-
-                            <li className="nav__item">
-                                <a href="https://dpmsa.com.ar/pedidomercaderia/" target="_blank" rel="noopener noreferrer" className="nav__link">Pedido de mercaderia</a>
-                            </li>
-
-                            <li className="nav__item">
-                                <NavLink exact to="/biblioteca" activeClassName="active" className="nav__link">Biblioteca</NavLink>
-                            </li>
-
-                            <li className="nav__item dropdown">
-                                <span id="dropdownNav" data-bs-toggle="dropdown" className="nav__link dropdown-toggle">Mi Perfil</span>
-
-                                <ul aria-labelledby="dropdownNav" class="dropdown-menu">
-                                    <li class="dropdown-item">
-                                        <NavLink exact to="/miperfil" class="nav__link">Mis Datos</NavLink>
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <a href="https://dpmsa.com.ar/actualizardatos/" target="_blank" class="nav__link">Form. datos básicos</a>
-                                    </li>
-                                    <li class="dropdown-item">
-                                        <NavLink onClick={handleLogout} exact to="/login" class="nav__link">Cerrar Sesión</NavLink>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                <div className="header__logo">
+                    <div className="nav__img">
+                        <img src="./assets/logo-header.png" alt="" />
                     </div>
                 </div>
-            </nav>
-        </header>
 
+                <i onClick={showMenu} className='bx bx-menu header__toggle' id="header-toggle"></i>
+
+                <nav className="NavbarProfile__nav" id="nav-menu">
+                    <div className="nav__content bd-grid">
+                        <a href="/home" className="nav__perfil">
+                            <div className="nav__img">
+                                <img src="./assets/logo-header.png" alt="" />
+                            </div>
+                        </a>
+
+                        <div className="nav__menu">
+                            <ul className="nav__list">
+                                <li className="nav__item">
+                                    <NavLink exact to="/home" activeClassName="active" className="nav__link">Inicio</NavLink>
+                                </li>
+
+                                <li className="nav__item">
+                                    <NavLink exact to="/directorio" activeClassName="active" className="nav__link">Directorio</NavLink>
+                                </li>
+
+                                <li className="nav__item">
+                                    <NavLink exact to="/sugerencias" activeClassName="active" className="nav__link">Sugerencias</NavLink>
+                                </li>
+
+                                <li className="nav__item">
+                                    <NavLink exact to="/biblioteca" activeClassName="active" className="nav__link">Biblioteca</NavLink>
+                                </li>
+
+                                <li className="nav__item dropdown">
+                                    <span id="dropdownNav" data-bs-toggle="dropdown" className="nav__link dropdown-toggle">Mi Perfil</span>
+
+                                    <ul aria-labelledby="dropdownNav" class="dropdown-menu">
+                                        <li class="dropdown-item">
+                                            <NavLink exact to="/miperfil" class="nav__link">Mis Datos</NavLink>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <NavLink onClick={handleLogout} exact to="/login" class="nav__link">Cerrar Sesión</NavLink>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        </>
     )
 }
 

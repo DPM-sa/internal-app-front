@@ -58,6 +58,10 @@ a {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.NavbarProfile_desplaz{
+  top: 40px !important;
+}
+
 .header__logo {
   color: var(--dark-color);
 }
@@ -76,7 +80,7 @@ a {
     width: 80%;
     height: 100vh;
     padding: 2rem 0;
-    z-index: var(--z-fixed);
+    z-index: 120;
     transition: .5s;
     overflow-y: auto;
   }
