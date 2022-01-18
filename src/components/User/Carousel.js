@@ -1,29 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { useStateValue } from '../../StateProvider'
+import React from 'react'
 import { Carousel as CarouselBt } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import './Carousel.css'
+import { useGetSliders } from '../../hooks/useGetSliders'
 
 const Carousel = () => {
-    const [{ token }] = useStateValue()
-    const [slider, setSlider] = useState([])
-
-    const headers = {
-        'Content-Type': 'application/json',
-        "token": `${token}`
-    }
-
-    const getSlider = async () => {
-        await axios.get('https://internal-app-dpm.herokuapp.com/sliders', { headers })
-            .then(resp => {
-                setSlider(resp.data.slidersDB)
-            })
-    }
-
-    useEffect(() => {
-        getSlider()
-    }, [])
+    const { slider } = useGetSliders()
 
     return (
         <CarouselBt fade>
