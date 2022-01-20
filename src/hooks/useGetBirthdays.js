@@ -89,7 +89,7 @@ export const useGetBirthdays = () => {
         getCumples()
             .then(resp => {
                 // resp.usuarios = newMockCumples;
-                if (resp.usuarios.length > 0) {
+                if (resp?.usuarios?.length > 0) {
                     let formattedData = toStringCumplesArr(resp.usuarios)
                     setCumples(formattedData.join(' - '))
                     setHayCumples(formattedData.length > 0)
