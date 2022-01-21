@@ -8,16 +8,25 @@ import SpinnerComponent from '../../components/User/SpinnerComponent'
 import WhatsappBtn from '../../components/User/WhatsappBtn'
 import Banner from '../../components/User/Banner'
 import { TabComponent } from './TabComponent'
+import { useGetUser } from '../../hooks/useGetUser'
 
 const Biblioteca = () => {
     const [{ token, user }] = useStateValue()
+    const { userForm } = useGetUser(user._id)
     const [files, setFiles] = useState([])
     const [loading, setLoading] = useState(false)
     const [typeOrder, setTypeOrder] = useState('alfabetico')
+    const [ sector, setSector ] = useState("General");
+    const [form, setForm] = useState({
+        search: ''
+    })
+    const { search } = form
+
     const headers = {
         'Content-Type': 'application/json',
         "token": `${token}`
     }
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -63,10 +72,9 @@ const Biblioteca = () => {
                 setLoading(false)
             })
     }
-    const [form, setForm] = useState({
-        search: ''
-    })
-    const { search } = form
+
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         await axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
@@ -74,18 +82,18 @@ const Biblioteca = () => {
                 setFiles(resp.data.filesDB.filter(file => file.title.toLowerCase().includes(search.toLowerCase())))
             })
     }
+
     const handleInputChange = (e) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         })
     }
+
     useEffect(() => {
         getFiles()
     }, [typeOrder])
 
-
-    const [ sector, setSector ] = useState("General");
 
     const openFolder = ( sector ) => {
         setSector( sector );
@@ -96,7 +104,7 @@ const Biblioteca = () => {
             <NavbarProfile />
             <Banner image={'./assets/banner-biblioteca.jpg'} title={'Biblioteca'} content={'Encontrá aquí materiales a disposición para todos los colaboradores de DPM'} linkto={'biblioteca'} />
             
-            <TabComponent sector={ user.sector } openFolder={ openFolder } />
+            <TabComponent sector={ userForm.sector } openFolder={ openFolder } sectores={userForm.sectores}/>
 
             <div className="Biblioteca__search">
                 <form onSubmit={handleSubmit} id="biblioteca">
