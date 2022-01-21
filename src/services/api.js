@@ -15,3 +15,7 @@ export const getUser = async (id) => {
 export const editUser = async (data, id) => {
     return await http.put(`/usuario/${id}`, data)
 }
+
+export const newUserPOST = async (data) => {
+    return await http.post(`/usuario`, data)
+}

@@ -6,16 +6,13 @@ import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import { v4 as uuidv4 } from 'uuid';
 import './NewUser.css'
-// import CreatableSelect from 'react-select/creatable';
-import sectores from '../../data/sectores';
+import CreatableSelect from 'react-select/creatable';
+import sectoresMock from '../../data/sectoresMock'
+import { newUserPOST } from '../../services/api'
+
 
 const NewUser = () => {
-    const [{ token, editOrNewUser }, dispatch] = useStateValue()
-    let headers = {
-        'Content-Type': 'application/json',
-        "token": `${token}`
-    }
-    const ruta = "https://internal-app-dpm.herokuapp.com";
+    const [{ editOrNewUser }, dispatch] = useStateValue()
 
     const [form, setForm] = useState({
         user: '',
@@ -26,11 +23,11 @@ const NewUser = () => {
         phone: '',
         birth: '',
         position: '',
-        sector: ''
+        sector: '',
+        sectores: []
     })
     const [role, setRole] = useState('USER_ROLE')
-    const [ sector, setSector ] = useState('')
-    const { user, password, nombre, apellido, email, phone, birth, position } = form
+    const { user, password, nombre, apellido, email, phone, birth, position, sectores, sector } = form
     const [img, setImg] = useState({})
     const [imgTemp, setImgTemp] = useState('')
     const [loadingImg, setLoadingImg] = useState(false)
@@ -41,8 +38,20 @@ const NewUser = () => {
     const [apellidoError, setApellidoError] = useState('')
     const [positionError, setPositionError] = useState('')
     const [sectorError, setSectorError] = useState('')
-
     const history = useHistory()
+    const [optionsSectores, setOptionsSectores] = useState(sectoresMock)
+    const [newOptionsSectores, setNewOptionsSectores] = useState([])
+
+    const handleSectores = (values) => {
+        const valuesToArray = values.map(item => item.value)
+        let hayNewValues = values.find(op => op.__isNew__ && !newOptionsSectores.includes(op))
+        if (hayNewValues) {
+            setOptionsSectores(optionsSectores.concat(hayNewValues))
+            setNewOptionsSectores(newOptionsSectores.concat(hayNewValues))
+        }
+        setForm({ ...form, sectores: valuesToArray })
+    }
+
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
     }
@@ -60,6 +69,7 @@ const NewUser = () => {
         }
         setLoadingImg(false)
     }
+
     const handleInputChange = (e) => {
         setForm({
             ...form,
@@ -70,157 +80,86 @@ const NewUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (user === "" || password === "" || nombre === "" || apellido === "" || position === "" || sector === "") {
-            if (user === "") {
-                setUserError('El nombre de usuario es requerido')
-            } else {
-                setUserError('')
-            }
-
-            if (password === "") {
-                setPasswordError('La contraseña es requerida')
-            } else {
-                setPasswordError('')
-            }
-
-            if (nombre === "") {
-                setNombreError('El nombre es requerido')
-            } else {
-                setNombreError('')
-            }
-
-            if (apellido === "") {
-                setApellidoError('El apellido es requerido')
-            } else {
-                setApellidoError('')
-            }
-
-            if (position === "") {
-                setPositionError('La posicion es requerida')
-            } else {
-                setPositionError('')
-            }
-
-            if (sector === "") {
-                setSectorError('El sector es requerido')
-            } else {
-                setSectorError('')
-            }
+            setUserError(user === "" ? 'El nombre de usuario es requerido' : '')
+            setPasswordError(password === "" ? 'La contraseña es requerida' : '')
+            setNombreError(nombre === "" ? 'El nombre es requerido' : '')
+            setApellidoError(apellido === "" ? 'El apellido es requerido' : '')
+            setPositionError(position === "" ? 'La posicion es requerida' : '')
+            setSectorError(sector === "" ? 'El sector es requerido' : '')
             return
         }
         setLoading(true)
-        const fileId = uuidv4();
+        
         /*crea un fileId y lo asigna para evitar la sobrecarga en storage de firebase */
-        if (imgTemp === "") {
-            await axios.post(`${ ruta }/usuario`,
-                {
-                    "nombre": `${nombre}`,
-                    "apellido": `${apellido}`,
-                    "user": `${user}`,
-                    "correo": `${email}`,
-                    "password": `${password}`,
-                    "role": `${role}`,
-                    "position": `${position}`,
-                    "sector": `${sector}`,
-                    "phone": `${phone}`,
-                    "birth": `${birth}`,
-                    "fileId": `${fileId}`
-                },
-                { headers })
-                .then(() => {
-                    setLoading(false)
-                    Swal.fire(
-                        'Éxito',
-                        'El usuario se ha creado con éxito',
-                        'success'
-                    ).then(resp => {
-                        if (resp) {
-                            dispatch({
-                                type: 'SET_EDIT_NEW_USER',
-                                editOrNewUser: !editOrNewUser
-                            })
-                            history.push('/directorioadmin')
-                        }
-                    })
-                }).catch(() => {
-                    Swal.fire(
-                        'Error',
-                        'Ha ocurrido un error, comuníquese con el administrador',
-                        'error'
-                    ).then((resp) => {
-                        if (resp) {
-                            setLoading(false)
-                        }
+        const fileId = uuidv4();
 
-                    })
-                })
-        } else if (imgTemp !== "") {
+        let newUser = {
+            "user": `${user}`,
+            "password":`${password}`,
+            "nombre": `${nombre}`,
+            "apellido": `${apellido}`,
+            "correo": `${email}`,
+            "phone": `${phone}`,
+            "birth": `${birth}`,
+            "position": `${position}`,
+            "sector": `${sector}`,
+            "role": `${role}`,
+            "sectores": sectores,
+            "fileId": `${fileId}`
+        }
+
+        if (imgTemp !== "") {
+            
             const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             const res = await storageRef.put(img)
             const url = await storageRef.getDownloadURL()
-            await axios.post(`${ ruta }/usuario`,
-                {
-                    "nombre": `${nombre}`,
-                    "apellido": `${apellido}`,
-                    "user": `${user}`,
-                    "correo": `${email}`,
-                    "password": `${password}`,
-                    "role": `${role}`,
-                    "position": `${position}`,
-                    "sector": `${sector}`,
-                    "phone": `${phone}`,
-                    "birth": `${birth}`,
-                    "image": `${url}`,
-                    "fileId": `${fileId}`
-                },
-                { headers })
-                .then(() => {
-                    setLoading(false)
-                    Swal.fire(
-                        'Éxito',
-                        'El usuario se ha creado con éxito',
-                        'success'
-                    ).then(resp => {
-                        if (resp) {
-                            dispatch({
-                                type: 'SET_EDIT_NEW_USER',
-                                editOrNewUser: !editOrNewUser
-                            })
-                            history.push('/directorioadmin')
-                        }
-                    })
-                }).catch(() => {
-                    Swal.fire(
-                        'Error',
-                        'Ha ocurrido un error, comuníquese con el administrador',
-                        'error'
-                    ).then((resp) => {
-                        if (resp) {
-                            setLoading(false)
-                        }
-
-                    })
-                })
+            newUser = {
+                ...newUser,
+                "image": `${url}`,
+                
+            }
         }
+
+        console.log("handleSubmit", newUser)
+
+        newUserPOST(newUser)
+        .then(() => {
+            setLoading(false)
+            Swal.fire(
+                'Éxito',
+                'El usuario se ha creado con éxito',
+                'success'
+            )
+            .then(resp => {
+                if (resp) {
+                    dispatch({
+                        type: 'SET_EDIT_NEW_USER',
+                        editOrNewUser: !editOrNewUser
+                    })
+                    history.push('/directorioadmin')
+                }
+            })
+        }).catch(() => {
+            Swal.fire(
+                'Error',
+                'Ha ocurrido un error, comuníquese con el administrador',
+                'error'
+            )
+            .then((resp) => {
+                if (resp) {
+                    setLoading(false)
+                }
+            })
+        })
     }
-    
+
     const handleRole = (e) => {
         setRole(e.target.value)
     }
 
-    const handleSector = (e) => {
-        setSector(e.target.value)
-    }
-
-    /* */
-
-    /* Para integrar con el crud de secttores */
-    // const NoOptionsMessage = "No hay sectores definidos";
-
-    // const handleSectores = ( e ) => {
-    //     setSector( e.value )
+    // const handleSector = (e) => {
+    //     setSector(e.target.value)
     // }
-    /**/
-
 
     const handleReturn = () => {
         history.push('/directorioadmin')
@@ -300,33 +239,32 @@ const NewUser = () => {
                             </div>
                         </div>
 
-                        {/* <div className="NewUser__data-row-combo">
-                            <label>Sector</label>
-                            <div className="select">
-                                <CreatableSelect
-                                    onChange={handleSectores}
-                                    options={optionsSectores}
-                                    placeholder="Elegir un sector"
-                                    formatCreateLabel={userInput => `Agregar: ${userInput}`}
-                                    classNamePrefix="react-select"
-                                    noOptionsMessage={NoOptionsMessage}
-                                    isDisabled={loading}
-                                />
-                            </div>
-                        </div> */}
-
                         <div className="NewUser__data-row">
                             <label>Sector</label>
                             <div>
-                                <select disabled={loading} onChange={handleSector} value={sector}>
+                                <select disabled={loading} onChange={handleInputChange} value={sector} name="sector">
                                     {
-                                        sectores.map( p => (  
-                                            <option value={ p.label }>{ p.label }</option>
+                                        optionsSectores && optionsSectores.map(p => (
+                                            <option value={p.label}>{p.label}</option>
                                         ))
-
                                     }
                                 </select>
                             </div>
+                        </div>
+
+                        <div className="NewUser__data-row">
+                            <label>Sectores</label>
+                            <CreatableSelect
+                                isMulti
+                                onChange={handleSectores}
+                                options={optionsSectores}
+                                placeholder="Elegir sectores"
+                                // formatCreateLabel={userInput => `Agregar: ${userInput}`}
+                                classNamePrefix="react-select"
+                                value={optionsSectores.filter(val => sectores?.includes(val.value))}
+                            // noOptionsMessage={NoOptionsMessage}
+                            //isDisabled={loading}
+                            />
                         </div>
 
                         <div className="NewUser__data-row">
