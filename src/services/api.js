@@ -7,3 +7,11 @@ export const getSliders = async () => {
 export const getCumples = async () => {
     return await http.get('cumples');
 }
+
+export const getUser = async (id) => {
+    return await http.get(`/usuario/${id}`)
+}
+
+export const editUser = async (data, id) => {
+    return await http.put(`/usuario/${id}`, data)
+}
