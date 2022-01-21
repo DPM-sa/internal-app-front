@@ -4,7 +4,15 @@ import { useHistory, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
-import sectores from '../../data/sectores';
+import CreatableSelect from 'react-select/creatable';
+import { useGetUser } from '../../hooks/useGetUser'
+import { editUser } from '../../services/api'
+import sectoresMock from '../../data/sectoresMock'
+
+
+const formatDateProfile = (date) => {
+    return date.substring(0, 10)
+}
 
 const EditUser = () => {
     const { id } = useParams()
@@ -19,15 +27,15 @@ const EditUser = () => {
         phone: '',
         birth: '',
         position: '',
-        sector: ''
+        sector: '',
+        sectores: []
     })
 
     const ruta = "https://internal-app-dpm.herokuapp.com";
 
     const [role, setRole] = useState('')
-    const [sector, setSector] = useState('');
     const [fileId, setFileId] = useState('')
-    const { user, password, nombre, apellido, email, phone, birth, position } = form
+    const { user, password, nombre, apellido, email, phone, birth, position, sector, sectores } = form
 
     const [img, setImg] = useState('')
     const [imgTemp, setImgTemp] = useState('')
@@ -41,55 +49,54 @@ const EditUser = () => {
     const [apellidoError, setApellidoError] = useState('')
     const [positionError, setPositionError] = useState('')
     const [sectorError, setSectorError] = useState('')
+    const userInfo = useGetUser(id)
+    const [optionsSectores, setOptionsSectores] = useState(sectoresMock)
+    const [newOptionsSectores, setNewOptionsSectores] = useState([])
 
-    const headers = {
-        'Content-Type': 'application/json',
-        "token": `${token}`
+    const handleSectores = (values) => {
+        const valuesToArray = values.map(item => item.value)
+        let hayNewValues = values.find(op => op.__isNew__ && !newOptionsSectores.includes(op))
+        if (hayNewValues) {
+            setOptionsSectores(optionsSectores.concat(hayNewValues))
+            setNewOptionsSectores(newOptionsSectores.concat(hayNewValues))
+        }
+        setForm({ ...form, sectores: valuesToArray })
     }
 
-    const getUser = async () => {
-        await axios.get(`${ ruta }/usuario/${id}`, { headers })
-            .then(resp => {
-                setForm({
-                    user: resp.data.user.user,
-                    nombre: resp.data.user.nombre,
-                    apellido: resp.data.user.apellido,
-                    email: resp.data.user.correo ? resp.data.user.correo : '',
-                    phone: resp.data.user.phone ? resp.data.user.phone : '',
-                    birth: resp.data.user.birth ? resp.data.user.birth : '',
-                    position: resp.data.user.position
-                })
-                setRole(resp.data.user.role)
-                setSector(resp.data.user.sector)
-                setFileId(resp.data.user.fileId)
-                setImg(resp.data.user.image ? resp.data.user.image : '')
-            })
-    }
+    useEffect(() => {
+        if (!userInfo.error) {
+            setForm(userInfo.userForm)
+            setRole(userInfo.role)
+            setFileId(userInfo.fileId)
+            setImg(userInfo.image)
+            let hayNuevosSectores = userInfo.userForm?.sectores?.filter(sec => !sectoresMock.find(mock => mock.value == sec))
+            if (hayNuevosSectores) {
+                let newSectores = hayNuevosSectores.map(sec => { return { value: sec, label: sec } })
+                let newArr = optionsSectores.concat(newSectores)
+                setOptionsSectores(newArr)
+            }
+        }
+    }, [userInfo]);
 
-    const formatDateProfile = (date) => {
-        return date.substring(0, 10)
-    }
     const handleInputChange = (e) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
         })
     }
-    useEffect(() => {
-        getUser()
-    }, [])
+
     const handleRole = (e) => {
         setRole(e.target.value)
     }
-    const handleSector = (e) => {
-        setSector(e.target.value)
-    }
+ 
     const handleReturn = () => {
         history.push('/directorioadmin')
     }
+
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
     }
+
     const handleFileChange = (e) => {
         setLoadingImg(true)
         const file = e.target.files[0]
@@ -106,47 +113,19 @@ const EditUser = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        //TODO: pasar todas estas validaciones a YUP y usar Formik.
         if (user === "" || nombre === "" || apellido === "" || position === "" || sector === "") {
-            if (user === "") {
-                setUserError('El nombre de usuario es requerido')
-            } else {
-                setUserError('')
-            }
-
-            if (password === "") {
-                setPasswordError('La contraseña es requerida')
-            } else {
-                setPasswordError('')
-            }
-
-            if (nombre === "") {
-                setNombreError('El nombre es requerido')
-            } else {
-                setNombreError('')
-            }
-
-            if (apellido === "") {
-                setApellidoError('El apellido es requerido')
-            } else {
-                setApellidoError('')
-            }
-
-            if (position === "") {
-                setPositionError('La posicion es requerida')
-            } else {
-                setPositionError('')
-            }
-
-            if (sector === "") {
-                setSectorError('El sector es requerido')
-            } else {
-                setSectorError('')
-            }
+            setUserError(user === "" ? 'El nombre de usuario es requerido' : '')
+            setPasswordError(password === "" ? 'La contraseña es requerida' : '')
+            setNombreError(nombre === "" ? 'El nombre es requerido' : '')
+            setApellidoError(apellido === "" ? 'El apellido es requerido' : '')
+            setPositionError(position === "" ? 'La posicion es requerida' : '')
+            setSectorError(sector === "" ? 'El sector es requerido' : '')
             return
         }
         setLoading(true)
 
-        let userEdit = {
+        let editedUser = {
             "user": `${user}`,
             "nombre": `${nombre}`,
             "apellido": `${apellido}`,
@@ -155,79 +134,55 @@ const EditUser = () => {
             "birth": `${birth}`,
             "position": `${position}`,
             "sector": `${sector}`,
-            "role": `${role}`
-        };
-
-        if ( password ) {
-            userEdit = { ...userEdit, password  }
+            "role": `${role}`,
+            "sectores": sectores
         }
 
-        if (imgTemp === "") {
-            await axios.put(`${ ruta }/usuario/${id}`, userEdit,
-                { headers })
-                .then(() => {
-                    setLoading(false)
-                    Swal.fire(
-                        'Éxito',
-                        'El usuario se ha actualizado con éxito',
-                        'success'
-                    ).then(resp => {
-                        if (resp) {
-                            dispatch({
-                                type: 'SET_EDIT_NEW_USER',
-                                editOrNewUser: !editOrNewUser
-                            })
-                            history.push('/directorioadmin')
-                        }
-                    })
-                }).catch(() => {
-                    Swal.fire(
-                        'Error',
-                        'Ha ocurrido un error, comuníquese con el administrador',
-                        'error'
-                    ).then((resp) => {
-                        if (resp) {
-                            setLoading(false)
-                        }
-                    })
-                })
-        } else if (imgTemp !== "") {
+        if (imgTemp !== "") {
             const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             const res = await storageRef.put(imgToUpload)
             const url = await storageRef.getDownloadURL()
-            await axios.put(`${ ruta }/usuario/${id}`, userEdit,
-                { headers })
-                .then(() => {
-                    setLoading(false)
-                    Swal.fire(
-                        'Éxito',
-                        'El usuario se ha actualizado con éxito',
-                        'success'
-                    ).then(resp => {
-                        if (resp) {
-                            dispatch({
-                                type: 'SET_EDIT_NEW_USER',
-                                editOrNewUser: !editOrNewUser
-                            })
-                            history.push('/directorioadmin')
-                        }
-                    })
-                }).catch(() => {
-                    Swal.fire(
-                        'Error',
-                        'Ha ocurrido un error, comuníquese con el administrador',
-                        'error'
-                    ).then((resp) => {
-                        if (resp) {
-                            setLoading(false)
-                        }
+            editedUser = { ...editedUser, "image": `${url}` }
+        }
 
+        if (password) {
+            editedUser = { ...editedUser, "password": `${password}` }
+        }
+
+        editUser(editedUser, id).then(() => {
+            setLoading(false)
+            Swal.fire(
+                'Éxito',
+                'El usuario se ha actualizado con éxito',
+                'success'
+            ).then(resp => {
+                if (resp) {
+                    dispatch({
+                        type: 'SET_EDIT_NEW_USER',
+                        editOrNewUser: !editOrNewUser
                     })
-                })
-        }   
+                    history.push('/directorioadmin')
+                }
+            })
+        }).catch(() => {
+            Swal.fire(
+                'Error',
+                'Ha ocurrido un error, comuníquese con el administrador',
+                'error'
+            ).then((resp) => {
+                if (resp) {
+                    setLoading(false)
+                }
+
+            })
+        })
     }
 
     const handleDeleteImage = () => {
+        const headers = {
+            'Content-Type': 'application/json',
+            "token": `${token}`
+        }
         setImg('')
         setImgTemp('')
         setImgToUpload({})
@@ -321,17 +276,30 @@ const EditUser = () => {
                         <div className="NewUser__data-row">
                             <label>Sector</label>
                             <div>
-                                <select disabled={loading} onChange={handleSector} value={sector}>
+                                <select disabled={loading} onChange={handleInputChange} value={sector} name='sector'>
                                     {
-                                        sectores.map( p => (  
+                                       optionsSectores && optionsSectores.map( p => (  
                                             <option value={ p.label }>{ p.label }</option>
                                         ))
-
                                     }
                                 </select>
                             </div>
                         </div>
 
+                        <div className="NewUser__data-row">
+                            <label>Sectores</label>
+                            <CreatableSelect
+                                isMulti
+                                onChange={handleSectores}
+                                options={optionsSectores}
+                                placeholder="Elegir sectores"
+                                // formatCreateLabel={userInput => `Agregar: ${userInput}`}
+                                classNamePrefix="react-select"
+                                value={optionsSectores.filter(val => sectores?.includes(val.value))}
+                            // noOptionsMessage={NoOptionsMessage}
+                            //isDisabled={loading}
+                            />
+                        </div>
                         <div className="NewUser__data-row">
                             <label>Rol</label>
                             <div>
@@ -343,6 +311,7 @@ const EditUser = () => {
                                 </select>
                             </div>
                         </div>
+
                         <div className="NewUser__data-buttons">
                             <button disabled={loading} type="submit">
                                 {
