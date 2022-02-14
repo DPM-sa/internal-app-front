@@ -55,30 +55,34 @@ const NavbarProfile = () => {
                         <div className="nav__menu">
                             <ul className="nav__list">
                                 <li className="nav__item">
-                                    <NavLink exact to="/home" activeClassName="active" className="nav__link">Inicio</NavLink>
+                                    <NavLink to="/home" activeClassName="active" className="nav__link">Inicio</NavLink>
                                 </li>
 
                                 <li className="nav__item">
-                                    <NavLink exact to="/directorio" activeClassName="active" className="nav__link">Directorio</NavLink>
+                                    <NavLink to="/directorio" activeClassName="active" className="nav__link">Directorio</NavLink>
                                 </li>
 
                                 <li className="nav__item">
-                                    <NavLink exact to="/sugerencias" activeClassName="active" className="nav__link">Sugerencias</NavLink>
+                                    <NavLink to="/comedor" activeClassName="active" className="nav__link">Comedor</NavLink>
                                 </li>
 
                                 <li className="nav__item">
-                                    <NavLink exact to="/biblioteca" activeClassName="active" className="nav__link">Biblioteca</NavLink>
+                                    <NavLink to="/sugerencias" activeClassName="active" className="nav__link">Sugerencias</NavLink>
+                                </li>
+
+                                <li className="nav__item">
+                                    <NavLink to="/biblioteca" activeClassName="active" className="nav__link">Biblioteca</NavLink>
                                 </li>
 
                                 <li className="nav__item dropdown">
                                     <span id="dropdownNav" data-bs-toggle="dropdown" className="nav__link dropdown-toggle">Mi Perfil</span>
 
-                                    <ul aria-labelledby="dropdownNav" class="dropdown-menu">
-                                        <li class="dropdown-item">
-                                            <NavLink exact to="/miperfil" class="nav__link">Mis Datos</NavLink>
+                                    <ul aria-labelledby="dropdownNav" classname="dropdown-menu">
+                                        <li classname="dropdown-item">
+                                            <NavLink to="/miperfil" classname="nav__link">Mis Datos</NavLink>
                                         </li>
-                                        <li class="dropdown-item">
-                                            <NavLink onClick={handleLogout} exact to="/login" class="nav__link">Cerrar Sesión</NavLink>
+                                        <li classname="dropdown-item">
+                                            <NavLink onClick={handleLogout} to="/login" classname="nav__link">Cerrar Sesión</NavLink>
                                         </li>
                                     </ul>
                                 </li>

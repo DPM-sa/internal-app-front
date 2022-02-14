@@ -367,7 +367,7 @@ const SliderAdmin = () => {
                             {
                                 loadingImg1
                                 && <div className="SliderAdmin-no-img" onClick={handlePictureClick1}>
-                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <i classname="fas fa-spinner fa-spin"></i>
                                     <p>Cargando...</p>
                                 </div>
                             }
@@ -375,7 +375,7 @@ const SliderAdmin = () => {
                                 (!loadingImg1 && img1 === "")
                                 &&
                                 <div className="SliderAdmin-no-img" onClick={handlePictureClick1}>
-                                    <i class="fas fa-plus"></i>
+                                    <i classname="fas fa-plus"></i>
                                     <p>Cargar imagen para slider 1</p>
                                 </div>
                             }
@@ -385,11 +385,11 @@ const SliderAdmin = () => {
                                     <img src={img1} />
                                     <div className="SliderAdmin-img-content">
                                         <p className="editImage" onClick={handlePictureClick1}>
-                                            <i class="fas fa-plus"></i>
+                                            <i classname="fas fa-plus"></i>
                                             Reemplazar imagen
                                         </p>
                                         <p className="editImage" onClick={handleDeleteImage1}>
-                                            <i class="fas fa-trash-alt"></i>
+                                            <i classname="fas fa-trash-alt"></i>
                                             Eliminar imagen
                                         </p>
                                     </div>
@@ -437,7 +437,7 @@ const SliderAdmin = () => {
                             {
                                 loadingImg2
                                 && <div className="SliderAdmin-no-img" onClick={handlePictureClick2}>
-                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <i classname="fas fa-spinner fa-spin"></i>
                                     <p>Cargando...</p>
                                 </div>
                             }
@@ -445,7 +445,7 @@ const SliderAdmin = () => {
                                 (!loadingImg2 && img2 === "")
                                 &&
                                 <div className="SliderAdmin-no-img" onClick={handlePictureClick2}>
-                                    <i class="fas fa-plus"></i>
+                                    <i classname="fas fa-plus"></i>
                                     <p>Cargar imagen para slider 2</p>
                                 </div>
                             }
@@ -455,11 +455,11 @@ const SliderAdmin = () => {
                                     <img src={img2} />
                                     <div className="SliderAdmin-img-content">
                                         <p className="editImage" onClick={handlePictureClick2}>
-                                            <i class="fas fa-plus"></i>
+                                            <i classname="fas fa-plus"></i>
                                             Reemplazar imagen
                                         </p>
                                         <p className="editImage" onClick={handleDeleteImage2}>
-                                            <i class="fas fa-trash-alt"></i>
+                                            <i classname="fas fa-trash-alt"></i>
                                             Eliminar imagen
                                         </p>
                                     </div>
@@ -507,7 +507,7 @@ const SliderAdmin = () => {
                             {
                                 loadingImg3
                                 && <div className="SliderAdmin-no-img" onClick={handlePictureClick3}>
-                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <i classname="fas fa-spinner fa-spin"></i>
                                     <p>Cargando...</p>
                                 </div>
                             }
@@ -515,7 +515,7 @@ const SliderAdmin = () => {
                                 (!loadingImg3 && img3 === "")
                                 &&
                                 <div className="SliderAdmin-no-img" onClick={handlePictureClick3}>
-                                    <i class="fas fa-plus"></i>
+                                    <i classname="fas fa-plus"></i>
                                     <p>Cargar imagen para slider 3</p>
                                 </div>
                             }
@@ -525,11 +525,11 @@ const SliderAdmin = () => {
                                     <img src={img3} />
                                     <div className="SliderAdmin-img-content">
                                         <p className="editImage" onClick={handlePictureClick3}>
-                                            <i class="fas fa-plus"></i>
+                                            <i classname="fas fa-plus"></i>
                                             Reemplazar imagen
                                         </p>
                                         <p className="editImage" onClick={handleDeleteImage3}>
-                                            <i class="fas fa-trash-alt"></i>
+                                            <i classname="fas fa-trash-alt"></i>
                                             Eliminar imagen
                                         </p>
                                     </div>

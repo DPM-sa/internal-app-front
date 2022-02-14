@@ -141,9 +141,9 @@ const Biblioteca = () => {
                     files.filter( f => f.sector === sector ).map
                     (file => (
                         <div key={file._id} className="Biblioteca__file" >
-                            <i class="far fa-file-alt Biblioteca__file-icon"></i>
+                            <i classname="far fa-file-alt Biblioteca__file-icon"></i>
                             <h5 className="card-title text-center">{file.title}</h5>
-                            <a href={file.url} download target="_blank" className="Biblioteca__file-download"><i class="fas fa-download"></i>Descargar</a>
+                            <a href={file.url} download target="_blank" className="Biblioteca__file-download"><i classname="fas fa-download"></i>Descargar</a>
                         </div>
                     ))
                 }

@@ -14,7 +14,7 @@ import Sugerencias from '../views/User/Sugerencias'
 import ModalPost from '../components/User/ModalPost'
 import ModalProfile from '../components/User/ModalProfile'
 
-import PostsAdmin from '../views/Admin/PostsAdmin'
+// import PostsAdmin from '../views/Admin/PostsAdmin'
 import NewPost from '../views/Admin/NewPost'
 import EditPost from '../views/Admin/EditPost'
 import PostComments from '../views/Admin/PostComments'
@@ -27,6 +27,12 @@ import EditFile from '../views/Admin/EditFile'
 import SliderAdmin from '../views/Admin/SliderAdmin'
 import SugerenciasAdmin from '../views/Admin/SugerenciasAdmin'
 import IndexAdmin from '../views/Admin/IndexAdmin'
+import ComedoresAdmin from '../views/Admin/ComedoresAdmin'
+import NewComedor from '../views/Admin/NewComedor'
+import EditComedor from '../views/Admin/EditComedor'
+import NewVianda from '../views/Admin/NewVianda'
+import ReservasDiarias from '../views/Admin/ReservasDiarias'
+import InformesMensuales from '../views/Admin/InformesMensuales'
 
 const AppRouter = () => {
     return (
@@ -38,6 +44,7 @@ const AppRouter = () => {
                 <AdminRoute path="/nuevopost" component={NewPost} />
                 <AdminRoute path="/editpost/:id" component={EditPost} />
                 <AdminRoute path="/directorioadmin" component={DirectorioAdmin} />
+                <AdminRoute path="/comedoresAdmin" component={ComedoresAdmin} />
                 <AdminRoute path="/bibliotecaadmin" component={BibliotecaAdmin} />
                 <AdminRoute path="/slideradmin" component={SliderAdmin} />
                 <AdminRoute path="/sugerenciasadmin" component={SugerenciasAdmin} />
@@ -47,6 +54,8 @@ const AppRouter = () => {
                 <PrivateRoute path="/biblioteca" component={Biblioteca} />
                 <PrivateRoute path="/miperfil" component={Profile} />
                 <PrivateRoute path="/sugerencias" component={Sugerencias} />
+                <PrivateRoute path="/comedor" component={Sugerencias} />
+                
                 <Redirect to="/home" />
             </Switch>
 
@@ -54,42 +63,54 @@ const AppRouter = () => {
                 <PrivateRoute path="/home/post/:id">
                     <ModalPost />
                 </PrivateRoute>
-            </Switch>
 
-            <Switch>
                 <PrivateRoute path="/directorio/profile/:id">
                     <ModalProfile />
                 </PrivateRoute>
-            </Switch>
 
-            <Switch>
                 <PrivateRoute path="/editpost/:id/comments">
                     <PostComments />
                 </PrivateRoute>
-            </Switch>
 
-            <Switch>
+
+
+           
                 <AdminRoute path="/directorioadmin/nuevousuario">
                     <NewUser />
                 </AdminRoute>
-            </Switch>
-
-            <Switch>
+    
                 <AdminRoute path="/directorioadmin/edituser/:id">
                     <EditUser />
                 </AdminRoute>
-            </Switch>
-
-            <Switch>
+      
                 <AdminRoute path="/bibliotecaadmin/newfile/:sector">
                     <NewFile />
                 </AdminRoute>
-            </Switch>
-
-            <Switch>
+          
                 <AdminRoute path="/bibliotecaadmin/editfile/:id">
                     <EditFile />
                 </AdminRoute>
+        
+                <AdminRoute path="/comedoresadmin/nuevo">
+                    <NewComedor />
+                </AdminRoute>
+          
+                <AdminRoute path="/comedoresadmin/edit/:id">
+                    <EditComedor />
+                </AdminRoute>
+           
+                <AdminRoute path="/comedoresadmin/newvianda/:id">
+                    <NewVianda />
+                </AdminRoute>
+         
+                <AdminRoute path="/comedoresadmin/reservasdiarias/:id">
+                    <ReservasDiarias />
+                </AdminRoute>
+
+                <AdminRoute path="/comedoresadmin/informesmensuales/:id">
+                    <InformesMensuales />
+                </AdminRoute>
+                
             </Switch>
         </>
     )

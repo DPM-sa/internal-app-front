@@ -159,7 +159,7 @@ const ModalPost = () => {
                                 {commentsPost.length}
                             </span>
                             <span>
-                                <i class="fas fa-tags"></i>
+                                <i classname="fas fa-tags"></i>
                                 {
                                     tags.map((tag, i) => (
                                         <span key={i} className="ModalPost__header-actions-tag">
@@ -187,7 +187,7 @@ const ModalPost = () => {
                             : <p className="ModalPost__content-comments-no-comment">No hay comentarios, realiza uno</p>
 
                     }
-                    <button className="ModalPost__back-button" onClick={handleClose}><i class="fas fa-chevron-left"></i> Volver</button>
+                    <button className="ModalPost__back-button" onClick={handleClose}><i classname="fas fa-chevron-left"></i> Volver</button>
                 </Modal.Body>
             </Modal>
         </>

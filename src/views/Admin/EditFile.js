@@ -162,7 +162,7 @@ const EditFile = () => {
 
                         <div className="NewFile__content-top-actions">
                             <button disabled={loading} onClick={handlePictureClick} type="button">
-                                <i class="fas fa-plus"></i>
+                                <i classname="fas fa-plus"></i>
                                 Cargar el nuevo archivo
                             </button>
                             <input disabled={loading} name="title" value={title} onChange={handleInputChange} type="text" placeholder="Titulo del archivo" />
@@ -189,14 +189,14 @@ const EditFile = () => {
                                         </>
                                         :
                                         <>
-                                            <i class="far fa-save"></i>
+                                            <i classname="far fa-save"></i>
                                             Guardar
                                         </>
                                 }
 
                             </button>
                             <button disabled={loading} onClick={handleReturn} type="button">
-                                <i class="fas fa-chevron-left"></i>
+                                <i classname="fas fa-chevron-left"></i>
                                 Volver
                             </button>
                         </div>

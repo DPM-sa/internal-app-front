@@ -213,7 +213,7 @@ const EditPost = () => {
                                             </button>
                                             :
                                             <button disabled={loadingImg || loading} type="button" onClick={handlePictureClick}>
-                                                <i class="fas fa-plus"></i>
+                                                <i classname="fas fa-plus"></i>
                                                 Cambiar imagen de publicacion
                                             </button>
                                     }
@@ -265,16 +265,16 @@ const EditPost = () => {
                                         </button>
                                         :
                                         <button disabled={loading || loadingImg} type="submit">
-                                            <i class="fas fa-plus"></i>
+                                            <i classname="fas fa-plus"></i>
                                             Guardar
                                         </button>
                                 }
                                 <button disabled={loading} onClick={handleWatchComments} type="button">
-                                    <i class="far fa-eye"></i>
+                                    <i classname="far fa-eye"></i>
                                     Ver comentarios
                                 </button>
                                 <button onClick={handleReturn} disabled={loading} type="button">
-                                    <i class="fas fa-chevron-left"></i>
+                                    <i classname="fas fa-chevron-left"></i>
                                     Volver atrás
                                 </button>
                             </div>

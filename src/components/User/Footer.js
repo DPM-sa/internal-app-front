@@ -29,12 +29,12 @@ const Footer = () => {
 
                     <div className="Footer__content-top-section">
                         <ul>
-                            <li><Link exact to="/home">Inicio</Link></li>
-                            <li><Link exact to="/directorio">Directorio</Link></li>
-                            <li><Link exact to="/sugerencias">Buzón de sugerencias</Link></li>
-                            <li><Link exact to="/biblioteca">Biblioteca</Link></li>
-                            <li><Link exact to="/miperfil">Modificá tu perfil</Link></li>
-                            <li><Link onClick={handleLogout} exact to="/login">Cerrar sesión</Link></li>
+                            <li><Link to="/home">Inicio</Link></li>
+                            <li><Link to="/directorio">Directorio</Link></li>
+                            <li><Link to="/sugerencias">Buzón de sugerencias</Link></li>
+                            <li><Link to="/biblioteca">Biblioteca</Link></li>
+                            <li><Link to="/miperfil">Modificá tu perfil</Link></li>
+                            <li><Link onClick={handleLogout} to="/login">Cerrar sesión</Link></li>
                         </ul>
                     </div>
 

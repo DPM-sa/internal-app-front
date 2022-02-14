@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import Swal from 'sweetalert2'
@@ -243,6 +242,7 @@ const NewUser = () => {
                             <label>Sector</label>
                             <div>
                                 <select disabled={loading} onChange={handleInputChange} value={sector} name="sector">
+                                    <option value=''>Seleccionar sector...</option>
                                     {
                                         optionsSectores && optionsSectores.map(p => (
                                             <option value={p.label}>{p.label}</option>
@@ -257,7 +257,7 @@ const NewUser = () => {
                             <CreatableSelect
                                 isMulti
                                 onChange={handleSectores}
-                                options={optionsSectores}
+                                optionsname={optionsSectores}
                                 placeholder="Elegir sectores"
                                 // formatCreateLabel={userInput => `Agregar: ${userInput}`}
                                 classNamePrefix="react-select"
@@ -279,11 +279,11 @@ const NewUser = () => {
                         </div>
                         <div className="NewUser__data-buttons">
                             <button disabled={loading} type="submit">
-                                <i class="far fa-save"></i>
+                                <i classname="far fa-save"></i>
                                 Guardar
                             </button>
                             <button disabled={loading} onClick={handleReturn} type="button">
-                                <i class="fas fa-chevron-left"></i>
+                                <i classname="fas fa-chevron-left"></i>
                                 Cancelar
                             </button>
                         </div>
@@ -307,7 +307,7 @@ const NewUser = () => {
                                         </>
                                         :
                                         <>
-                                            <i class="fas fa-plus"></i>
+                                            <i classname="fas fa-plus"></i>
                                             <p>Cargar imagen de perfil</p>
                                         </>}
                                 </button>

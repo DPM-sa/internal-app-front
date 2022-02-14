@@ -322,13 +322,13 @@ const EditUser = () => {
                                         </>
                                         :
                                         <>
-                                            <i class="far fa-save"></i>
+                                            <i classname="far fa-save"></i>
                                             Guardar
                                         </>
                                 }
                             </button>
                             <button disabled={loading} onClick={handleReturn} type="button">
-                                <i class="fas fa-chevron-left"></i>
+                                <i classname="fas fa-chevron-left"></i>
                                 Cancelar
                             </button>
                         </div>
@@ -347,11 +347,11 @@ const EditUser = () => {
                             <>
                                 <img src={img} className="Profile-pic" alt="Profile-pic" />
                                 <p className={loading ? 'editImage disabled' : 'editImage'} onClick={handlePictureClick}>
-                                    <i class="fas fa-plus"></i>
+                                    <i classname="fas fa-plus"></i>
                                     Cambiar foto de perfil
                                 </p>
                                 <p className={loading ? 'editImage disabled' : 'editImage'} onClick={handleDeleteImage}>
-                                    <i class="fas fa-trash-alt"></i>
+                                    <i classname="fas fa-trash-alt"></i>
                                     Eliminar foto de perfil
                                 </p>
                             </>
@@ -361,11 +361,11 @@ const EditUser = () => {
                             && <>
                                 <img alt="Profile-pic" src={imgTemp} className="Profile-pic" />
                                 <p className={loading ? 'editImage disabled' : 'editImage'} onClick={handlePictureClick}>
-                                    <i class="fas fa-plus"></i>
+                                    <i classname="fas fa-plus"></i>
                                     Cambiar foto de perfil
                                 </p>
                                 <p className={loading ? 'editImage disabled' : 'editImage'} onClick={handleDeleteImage}>
-                                    <i class="fas fa-trash-alt"></i>
+                                    <i classname="fas fa-trash-alt"></i>
                                     Eliminar foto de perfil
                                 </p>
                             </>
@@ -380,7 +380,7 @@ const EditUser = () => {
                                     </>
                                     :
                                     <>
-                                        <i class="fas fa-plus"></i>
+                                        <i classname="fas fa-plus"></i>
                                         <p>Cargar imagen de perfil</p>
                                     </>}
                             </button>

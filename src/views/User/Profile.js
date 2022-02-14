@@ -100,16 +100,16 @@ const Profile = () => {
             <div className="Profile">
                 <div className="card-body">
                     <div className="d-flex flex-column align-items-center text-center">
-                        {imageProfile ? <img src={imageProfile} className="profile-image-medium rounded-circle mb-2" width="150" /> : <i class="far fa-user no-image-profile-medium mb-2"></i>}
+                        {imageProfile ? <img src={imageProfile} className="profile-image-medium rounded-circle mb-2" width="150" /> : <i classname="far fa-user no-image-profile-medium mb-2"></i>}
                         {editProfile && !loadingImg
                             &&
                             <>
                                 <p className="editImage" onClick={handlePictureClick}>
-                                    <i class="fas fa-plus"></i>
+                                    <i classname="fas fa-plus"></i>
                                     Cambiar foto de perfil
                                 </p>
                                 <p className="editImage" onClick={handleDeleteImage}>
-                                    <i class="fas fa-trash-alt"></i>
+                                    <i classname="fas fa-trash-alt"></i>
                                     Eliminar foto de perfil
                                 </p>
                             </>

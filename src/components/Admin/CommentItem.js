@@ -172,7 +172,7 @@ const CommentItem = ({ comment }) => {
                         delay={{ show: 100, hide: 100 }}
                         overlay={renderTooltipDelete}
                     >
-                        <i onClick={() => handleDeleteComment(comment._id)} class="fas fa-trash-alt"></i>
+                        <i onClick={() => handleDeleteComment(comment._id)} className="fas fa-trash-alt"></i>
                     </OverlayTrigger>
                 </span>
             </div>

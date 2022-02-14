@@ -55,7 +55,7 @@ const UserProfileInfo = ({ }) => {
             </div>
             <div className="Profile__data-row-button">
                 <button onClick={handleEdit} className="Profile__data-button">
-                    <i class="fas fa-pen"></i>
+                    <i classname="fas fa-pen"></i>
                     Editar
                 </button>
             </div>

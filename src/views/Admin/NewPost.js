@@ -186,7 +186,7 @@ const NewPost = () => {
                                                     Espere...
                                                 </>
                                                 : <>
-                                                    <i class="fas fa-plus"></i>
+                                                    <i classname="fas fa-plus"></i>
                                                     Cargar imagen para publicacion
                                                 </>
                                         }
@@ -242,14 +242,14 @@ const NewPost = () => {
                                             </>
                                             :
                                             <>
-                                                <i class="fas fa-plus"></i>
+                                                <i classname="fas fa-plus"></i>
                                                 Publicar
                                             </>
                                     }
 
                                 </button>
                                 <button onClick={handleReturn} disabled={loading || loadingImg} type="button">
-                                    <i class="fas fa-chevron-left"></i>
+                                    <i classname="fas fa-chevron-left"></i>
                                     Volver atrás
                                 </button>
                             </div>

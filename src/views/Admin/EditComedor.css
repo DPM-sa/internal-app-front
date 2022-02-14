@@ -1,0 +1,233 @@
+.NewComedor__content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.NewComedor__data {
+    flex: 0 1 calc(60% - 1rem);
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.NewComedor__data-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.NewComedor__data-row label {
+    flex: 0 1 calc(29% - 1rem);
+}
+
+.NewComedor__data-row div {
+    flex: 0 1 calc(69% - 1rem);
+}
+
+.NewComedor__data-row input {
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 40px;
+    padding: 5px;
+    outline: none;
+    color: white;
+}
+
+.NewComedor__data-row input:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.NewComedor__data-row select {
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 40px;
+    padding: 5px;
+    outline: none;
+    color: white;
+}
+
+.NewComedor__data-row select:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.NewComedor__data-row select option {
+    color: black;
+}
+
+.NewComedor__data-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    margin-bottom: 10px;
+}
+
+.NewComedor__data-buttons button {
+    margin-left: 10px;
+}
+
+.NewComedor__data-buttons button i {
+    margin-right: 5px;
+}
+
+.NewComedor__data-buttons button:first-of-type {
+    background-color: white;
+    color: #004580;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 40px;
+}
+
+.NewComedor__data-buttons button:last-of-type {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 3px 10px;
+    border-radius: 40px;
+}
+
+.NewComedor__data-buttons button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.NewComedor__pic {
+    flex: 0 1 calc(25% - 1rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Upload-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: none;
+    background-color: white;
+    color: #004580;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.Upload-pic:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.Upload-pic i {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.Upload-pic p {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.Profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: 2px solid white;
+    object-fit: cover;
+}
+
+.editImage.disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+.NewComedor__data-row .submitError{
+    color: red;
+}
+
+.NewComedor__data-row-combo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.NewComedor__data-row-combo .select {
+    width: calc(69% - 1rem);
+    color: white;
+}
+
+.NewComedor__data-row-combo .react-select__control.react-select__control {
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+}
+
+.NewComedor__data-row-combo .react-select__single-value {
+    color: white;
+}
+
+.NewComedor__data-row-combo .react-select__placeholder.react-select__placeholder {
+    color: white;
+}
+
+.descargas-btn{
+    color: white;
+    background-color: transparent;
+    padding: 20px;
+    width: 100%;
+    margin: 0 15px 15px 0;
+    font-size: 23px;
+    border-radius: 20px;
+    border: white 1px solid;
+}
+
+.BibliotecaAdmin-files.cards{
+    justify-content: left !important;
+}
+.BibliotecaAdmin-files.cards > .BibliotecaAdmin-file{
+    margin: 10px !important;
+    border: #ffffff 1px solid !important;
+    color: #ffffff;
+    font-size: 25px;
+    height: 100%;
+}
+.BibliotecaAdmin-file-actions.cards{
+    justify-content:space-around !important;
+}
+
+@media screen and (max-width:767px) {
+    .NewComedor__content {
+        flex-direction: column;
+    }
+    .NewComedor__pic {
+        order: -1;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .PostsAdmin .Biblioteca__search {
+        flex-direction: row;
+    }
+    .BibliotecaAdmin-file.cards {
+        flex: 0 1 calc(33% - 1rem);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .BibliotecaAdmin-file.cards {
+        flex: 0 1 calc(25% - 1rem);
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .BibliotecaAdmin-file.cards {
+        flex: 0 1 calc(20% - 1rem);
+    }
+}

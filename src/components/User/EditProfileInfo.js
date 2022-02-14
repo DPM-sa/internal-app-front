@@ -137,7 +137,7 @@ const EditProfileInfo = ({ imageProfile }) => {
             <div className="Profile__data-row-button">
                 <div>
                     <button onClick={handleEdit}>
-                        <i class="fas fa-chevron-left"></i>
+                        <i classname="fas fa-chevron-left"></i>
                         Volver
                     </button>
                 </div>
@@ -148,7 +148,7 @@ const EditProfileInfo = ({ imageProfile }) => {
                             <button disabled type="submit">Espere...</button>
                             :
                             <button type="submit">
-                                <i class="far fa-save"></i>
+                                <i classname="far fa-save"></i>
                                 Guardar
                             </button>
                     }

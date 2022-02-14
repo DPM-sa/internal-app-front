@@ -222,7 +222,7 @@ const BibliotecaAdmin = () => {
                                 <Folders openFolder={ openFolder } actualFolder={ sector }  />
                             }
 
-                            <div className="root-title"><i class="far fa-folder"></i> { sector }</div>
+                            <div className="root-title"><i classname="far fa-folder"></i> { sector }</div>
                             
                             <div className="Biblioteca__search">
                                 <form onSubmit={handleSubmit} id="biblioteca">
@@ -252,7 +252,7 @@ const BibliotecaAdmin = () => {
                                     files.filter( f => f.sector === sector ).map
                                     (file => (
                                         <div key={file._id} className="BibliotecaAdmin-file">
-                                            <i class="far fa-file-alt Biblioteca__file-icon"></i>
+                                            <i classname="far fa-file-alt Biblioteca__file-icon"></i>
                                             <p>{file.title}</p>
                                             <div className="BibliotecaAdmin-file-actions">
                                                 <OverlayTrigger
@@ -261,7 +261,7 @@ const BibliotecaAdmin = () => {
                                                     overlay={renderTooltipDownload}
                                                 >
                                                     <a href={file.url} target="_blank" download>
-                                                        <i class="fas fa-download"></i>
+                                                        <i classname="fas fa-download"></i>
                                                     </a>
                                                 </OverlayTrigger>
                                                 <OverlayTrigger
@@ -279,7 +279,7 @@ const BibliotecaAdmin = () => {
                                                     delay={{ show: 100, hide: 100 }}
                                                     overlay={renderTooltipEdit}
                                                 >
-                                                    <i onClick={() => editFile(file._id)} class="fas fa-pen"></i>
+                                                    <i onClick={() => editFile(file._id)} classname="fas fa-pen"></i>
                                                 </OverlayTrigger>
                                                 <OverlayTrigger
                                                     placement="top"
@@ -301,7 +301,7 @@ const BibliotecaAdmin = () => {
                                                 >
                                                     <i
                                                         onClick={() => handleDeleteFile(file)}
-                                                        class="fas fa-trash-alt"
+                                                        classname="fas fa-trash-alt"
                                                     ></i>
                                                 </OverlayTrigger>
                                             </div>

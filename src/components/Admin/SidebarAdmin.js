@@ -24,7 +24,7 @@ const SidebarAdmin = () => {
     
     return (
         <div className="sidebar">
-            <div class="sidebar__content">
+            <div className="sidebar__content">
                 <div className="sidebar__content-img">
                     <img alt="logo" src={window.location.origin + "/assets/logo-footer.png"} className="sidebar__logo" />
                 </div>
@@ -34,46 +34,52 @@ const SidebarAdmin = () => {
                     { admin &&
                     <>
                     <li className="sidebar__options-item">
-                        <Link exact to="/admin">
-                            <i class="far fa-file-alt"></i>
+                        <Link to="/admin">
+                            <i className="far fa-file-alt"></i>
                             Publicaciones
                         </Link>
                     </li>
                     <li className="sidebar__options-item">
-                        <Link exact to="/sugerenciasadmin">
-                            <i class="far fa-envelope"></i>
+                        <Link to="/sugerenciasadmin">
+                            <i className="far fa-envelope"></i>
                             Buzon de sugerencias
                         </Link>
                     </li>
                     <li className="sidebar__options-item">
-                        <Link exact to="/directorioadmin">
-                            <i class="far fa-address-book"></i>
+                        <Link to="/directorioadmin">
+                            <i className="far fa-address-book"></i>
                             Directorio de usuarios
                         </Link>
                     </li>
                     <li className="sidebar__options-item">
-                        <Link exact to="/slideradmin">
-                            <i class="far fa-image"></i>
+                        <Link to="/slideradmin">
+                            <i className="far fa-image"></i>
                             Slider principal
                         </Link>
                     </li>
                     </>
                     }
                     <li className="sidebar__options-item">
-                        <Link exact to="/bibliotecaadmin">
-                            <i class="far fa-copy"></i>
+                        <Link to="/bibliotecaadmin">
+                            <i className="far fa-copy"></i>
                             Biblioteca
                         </Link>
                     </li>
                     <li className="sidebar__options-item">
-                        <Link exact to="/home">
-                            <i class="fas fa-mouse-pointer"></i>
+                        <Link to="/comedoresadmin">
+                            <i className="fa fa-cutlery"></i>
+                            Comedores
+                        </Link>
+                    </li>
+                    <li className="sidebar__options-item">
+                        <Link to="/home">
+                            <i className="fas fa-mouse-pointer"></i>
                             Ir al sitio
                         </Link>
                     </li>
                     <li className="sidebar__options-item">
-                        <Link onClick={handleLogout} exact to="/home">
-                            <i class="far fa-times-circle"></i>
+                        <Link onClick={handleLogout} to="/home">
+                            <i className="far fa-times-circle"></i>
                             Cerrar sesión
                         </Link>
                     </li>
@@ -84,7 +90,7 @@ const SidebarAdmin = () => {
                 </div>
             </div>
             <button onClick={handleShowSidebar} className="button-sidebar">
-                <i class="fas fa-bars icon"></i>
+                <i className="fas fa-bars icon"></i>
             </button>
         </div>
     )
