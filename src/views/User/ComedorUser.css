@@ -1,0 +1,20 @@
+.comedor-user-form > div{
+    width: 80vw;
+    color: #004580;
+    font-size: 20px;
+}
+
+.comedor-user-form > div >label{
+    min-width:  100px;
+    padding: 5px !important;
+}
+
+.comedor-user-form > div > input, 
+.comedor-user-form > div > select{
+    min-width: 300px;
+    border: 1px #004580 solid;
+    color: #004580;
+    border-radius: 13px;
+    padding: 5px;
+    font-size: 20px;
+}

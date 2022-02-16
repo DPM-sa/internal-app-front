@@ -33,6 +33,7 @@ import EditComedor from '../views/Admin/EditComedor'
 import NewVianda from '../views/Admin/NewVianda'
 import ReservasDiarias from '../views/Admin/ReservasDiarias'
 import InformesMensuales from '../views/Admin/InformesMensuales'
+import ComedorUser from '../views/User/ComedorUser'
 
 const AppRouter = () => {
     return (
@@ -54,7 +55,7 @@ const AppRouter = () => {
                 <PrivateRoute path="/biblioteca" component={Biblioteca} />
                 <PrivateRoute path="/miperfil" component={Profile} />
                 <PrivateRoute path="/sugerencias" component={Sugerencias} />
-                <PrivateRoute path="/comedor" component={Sugerencias} />
+                <PrivateRoute path="/comedor" component={ComedorUser} />
                 
                 <Redirect to="/home" />
             </Switch>
