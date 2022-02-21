@@ -26,7 +26,7 @@ const ReservasDiarias = () => {
                 </div>
                 <div style={{ padding: 15 }}>
                     <CancelarBtn
-                        title='< Volver'
+                        title=' Volver'
                         handleBtn={() => history.push(`/comedoresadmin/edit/${id}`)}
                         style={{
                             backgroundColor: 'transparent',

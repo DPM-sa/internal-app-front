@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router'
 import Swal from 'sweetalert2'
 // import { useStateValue } from '../../StateProvider'
 import './NewUser.css'
-import { newViandaPOST } from '../../services/api'
+import { editViandabyId } from '../../services/api'
 import CreatableSelect from 'react-select/creatable';
 import { DAYS } from '../../utils/days';
+import { useGetVianda } from '../../hooks/useGetVianda'
 
-const NewVianda = () => {
+const EditVianda = () => {
     const { id } = useParams();
     const history = useHistory();
     const [form, setForm] = useState({
@@ -21,6 +22,16 @@ const NewVianda = () => {
     const { nombre, descripcion, cantidad, diassemana, precio } = form;
     const [loading, setLoading] = useState(false);
     const [nombreError, setNombreError] = useState('');
+    const vianda = useGetVianda(id)
+
+
+    useEffect(() => {
+      if(vianda){
+          setForm(vianda)
+      }
+    }, [vianda])
+    
+
 
     const handleInputChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -34,11 +45,11 @@ const NewVianda = () => {
             return
         }
 
-        newViandaPOST({ ...form, comedorId: id })
+        editViandabyId(form, id)
             .then(() => {
                 setLoading(false)
                 Swal
-                    .fire('Éxito', 'La vianda se ha creado con éxito', 'success')
+                    .fire('Éxito', 'Los cambios se guardaron correctamente', 'success')
                     .then(resp => {
                         if (resp) { handleReturn() }
                     })
@@ -58,13 +69,13 @@ const NewVianda = () => {
     }
 
     const handleReturn = () => {
-        history.push(`/comedoresadmin/edit/${id}`)
+        history.push(`/comedoresadmin/edit/${vianda?.comedorId}`)
     }
 
     return (
         <div className="PostComments">
             <div className="PostComments__container">
-                <h1>Crear nueva vianda</h1>
+                <h1>Editar vianda {vianda?.nombre}</h1>
                 <div className="NewUser__content">
 
                     <form onSubmit={handleSubmit} className="NewUser__data">
@@ -156,4 +167,4 @@ const NewVianda = () => {
     )
 }
 
-export default NewVianda
+export default EditVianda

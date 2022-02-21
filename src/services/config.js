@@ -3,8 +3,8 @@ import { getToken } from "../utils/auth-helper.js";
 
 
 // const API_URL = process.env.REACT_APP_API_URL
-const API_URL = 'https://internal-app-dpm.herokuapp.com/'
-//const API_URL = 'http://localhost:4000/'
+// const API_URL = 'https://internal-app-dpm.herokuapp.com/'
+const API_URL = 'http://localhost:4000/'
 
 const getInstance = () => {
 	const token = getToken();

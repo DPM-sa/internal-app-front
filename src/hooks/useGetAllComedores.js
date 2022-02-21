@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import * as api from '../services/api'
 import { reverseUsers, sortGreatest, orderUsers } from '../utils/helpers'
 
-export const useGetAllComedores = (editOrNewUser, typeOrder) => {
+export const useGetAllComedores = (editOrNewUser='', typeOrder='alfabetico') => {
     const [comedores, setComedores] = useState([])
     const [loadingComedores, setLoadingComedores] = useState(false)
 

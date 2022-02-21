@@ -34,6 +34,7 @@ import NewVianda from '../views/Admin/NewVianda'
 import ReservasDiarias from '../views/Admin/ReservasDiarias'
 import InformesMensuales from '../views/Admin/InformesMensuales'
 import ComedorUser from '../views/User/ComedorUser'
+import EditVianda from '../views/Admin/EditVianda'
 
 const AppRouter = () => {
     return (
@@ -102,6 +103,10 @@ const AppRouter = () => {
            
                 <AdminRoute path="/comedoresadmin/newvianda/:id">
                     <NewVianda />
+                </AdminRoute>
+
+                <AdminRoute path="/comedoresadmin/viandasedit/:id">
+                    <EditVianda />
                 </AdminRoute>
          
                 <AdminRoute path="/comedoresadmin/reservasdiarias/:id">

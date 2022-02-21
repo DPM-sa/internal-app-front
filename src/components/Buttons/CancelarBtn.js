@@ -30,7 +30,7 @@ const getStyle = (variation) => {
     }
 }
 
-export const CancelarBtn = ({ loading = false, handleBtn, title='Cancelar', variation='none', ...props }) => {
+export const CancelarBtn = ({ loading = false, handleBtn, title='Cancelar', variation='none', logo=true, ...props }) => {
     return (
         <button 
             disabled={loading} 
@@ -39,7 +39,7 @@ export const CancelarBtn = ({ loading = false, handleBtn, title='Cancelar', vari
             style={getStyle(variation)}
             {...props}
         >
-            <i className="fas fa-chevron-left"></i>
+            {logo && <i className="fas fa-chevron-left"></i>}
             {title}
         </button>
     )

@@ -13,6 +13,36 @@ import { GuardarBtn } from '../../components/Buttons/GuardarBtn'
 import { CancelarBtn } from '../../components/Buttons/CancelarBtn'
 import { CardVianda } from '../../components/Cards/CardVianda'
 
+const Turno = ({
+    data,
+    onChange = () => { },
+    index,
+    handleDelete = () => { }
+}) => {
+
+    const handleInputChange = (e) => {
+        onChange({ ...data, [e.target.name]: e.target.value, index })
+    }
+
+    return (
+        <div className="NewComedor__data-row">
+            <div>
+                <input onChange={handleInputChange} type="text" name="nombre" value={data?.nombre} />
+            </div>
+            <div align="right" style={{ display: 'flex' }}>
+                <div>
+                    <input style={{ width: '75%' }} onChange={handleInputChange} type="time" name="desde" value={data?.desde} />
+                </div>
+                <div>
+                    <input style={{ width: '75%' }} onChange={handleInputChange} type="time" name="hasta" value={data?.hasta} />
+                </div>
+            </div>
+            <span style={{ width: 30, marginLeft: 5 }}>
+                <i className="fas fa-trash-alt" onClick={() => handleDelete(index)} ></i>
+            </span>
+        </div>
+    )
+}
 
 const EditComedor = () => {
     const { id } = useParams()
@@ -21,19 +51,24 @@ const EditComedor = () => {
         nombre: '',
         cantidadturnos: '',
         horamaximareserva: '',
-        diassemana: []
+        diassemana: [],
+        turnos: []
     })
-    const { nombre, cantidadturnos, diassemana, horamaximareserva } = form
-    const [loading, setLoading] = useState(false)
+    const {
+        nombre,
+        cantidadturnos,
+        diassemana,
+        horamaximareserva,
+        turnos
+    } = form
 
+    const [loading, setLoading] = useState(false)
     const [nombreError, setNombreError] = useState('')
     const [cantidadTurnosError, setCantidadTurnosError] = useState('');
     const [horamaximareservaError, setHoramaximareservaError] = useState('');
-
     const comedorInfo = useGetComedor(id)
-    const { viandas, loadingViandas } = useGetViandasComedor(id)
+    const { viandas, loadingViandas, getViandas } = useGetViandasComedor(id)
 
-    console.log(viandas)
 
     useEffect(() => {
         if (!comedorInfo.error && comedorInfo.comedorForm) {
@@ -43,6 +78,28 @@ const EditComedor = () => {
 
     const handleInputChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
+    }
+
+    const handleTurnosChange = (e) => {
+        setForm({ ...form, turnos: turnos.map((t, i) => i == e.index ? e : t) })
+    }
+
+    const AddNewTurno = () => {
+        setForm({
+            ...form,
+            turnos: turnos.concat({
+                nombre: 'ingresar nombre...',
+                desde: '',
+                hasta: ''
+            })
+        })
+    }
+
+    const handleDeleteTurno = (turno) => {
+        setForm({
+            ...form,
+            turnos: turnos.filter((t, i) => i !== turno)
+        })
     }
 
     const handleSubmit = async (e) => {
@@ -124,9 +181,14 @@ const EditComedor = () => {
 
                         </div>
 
+                        {turnos && turnos.map((t, index) => {
+                            return <Turno data={t} key={index} onChange={handleTurnosChange} index={index} handleDelete={handleDeleteTurno} />
+                        })}
+
+
                         <div className="NewComedor__data-buttons">
-                            <GuardarBtn loading={loading} />
-                            <CancelarBtn loading={loading} handleBtn={() => history.push('/comedoresadmin')} />
+                            <GuardarBtn loading={loading} variation='dark' />
+                            <CancelarBtn loading={loading} variation='dark' handleBtn={() => history.push('/comedoresadmin')} />
                         </div>
                     </form>
 
@@ -138,7 +200,16 @@ const EditComedor = () => {
                             <p>+</p>
                             <p>Añadir vianda</p>
                         </button>
+                        <br />
+                        <button
+                            onClick={AddNewTurno}
+                            className="Upload-pic"
+                        >
+                            <p>+</p>
+                            <p>Añadir turno</p>
+                        </button>
                     </div>
+
 
                     <div className="NewComedor__pic">
                         <DescargasBtn
@@ -156,7 +227,7 @@ const EditComedor = () => {
                 <div className="BibliotecaAdmin-files cards">
                     {loadingViandas && <p>Cargando...</p>}
                     {!loadingViandas &&
-                        viandas.map(item => <CardVianda item={item} key={item._id} />)}
+                        viandas.map(item => <CardVianda item={item} key={item._id} handleRefresh={getViandas}/>)}
                 </div>
             </div>
         </div>

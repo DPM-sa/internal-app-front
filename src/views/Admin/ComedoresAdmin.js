@@ -8,8 +8,9 @@ import * as api from '../../services/api';
 import './DirectorioAdmin.css';
 import * as swalAlerts from '../../alerts/SwalAlerts';
 import { CardInfo } from '../../components/Cards/CardInfo';
-import { useGetAllComedores } from '../../hooks/useGetAlllComedores';
+import { useGetAllComedores } from '../../hooks/useGetAllComedores';
 import { formatFecha } from '../../utils/helpers';
+import { useGetInformesMensuales } from '../../hooks/useGetInformesMensuales';
 
 const renderTooltipSee = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -44,6 +45,8 @@ const ComedoresAdmin = () => {
         loadingComedores,
         getComedores
     } = useGetAllComedores(editOrNewUser, typeOrder)
+    const {reservasTotales} = useGetInformesMensuales()
+
 
     const handleEditComedor = async (comedor, action) => {
         if (comedor.habilitado && action === "ver") return
@@ -110,8 +113,8 @@ const ComedoresAdmin = () => {
                                 <span>+</span>
                                 <p style={{ padding: 5 }}>Crear un nuevo comedor</p>
                             </Link>
-                            <CardInfo title='Estádisticas de “mm/aaaa”' />
-                            <CardInfo title='Viandas solicitadas' value={0} />
+                            <CardInfo title='Estadísticas de “02/2022”' />
+                            <CardInfo title='Viandas solicitadas' value={reservasTotales} />
                             <CardInfo title='Turnos solicitados' value={0} />
                         </div>
 

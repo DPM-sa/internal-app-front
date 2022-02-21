@@ -56,11 +56,30 @@ export const getViandasbyComedorId = async (id) => {
     return await http.get(`/vianda/comedor/${id}`)
 }
 
+export const getViandabyId = async (id) => {
+    return await http.get(`/vianda/${id}`)
+}
+
+export const editViandabyId = async (data, id) => {
+    return await http.put(`/vianda/${id}`, data)
+}
+
 export const getReservasDiarias = async (id) => {
     return await http.get(`/comedor/${id}/reservas`)
 }
 
 export const getInformesMensuales = async (id) => {
-    return await http.get(`/`) //TODO: falta crear el endpoint en backend
+    return await http.get(`/comedor/informes/mensuales`) 
 }
 
+export const newReservaVianda = async (data) => {
+    return await http.post(`/comedor/${data.comedorId}/reservas`, data)
+}
+
+export const getReservasUsuario = async (id) => {
+    return await http.get(`/comedor/reservas/usuario`)
+}
+
+export const cancelarReserva = async (id) => {
+    return await http.put(`/comedor/reserva/cancelar`, { idreserva: id })
+}

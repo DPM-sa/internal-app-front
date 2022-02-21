@@ -10,9 +10,8 @@ export const useGetInformesMensuales = (id) => {
         setLoading(true)
         getInformesMensuales(id)
             .then(resp => {
-                console.log(resp)
                 if (resp.data) {
-                   // setInformes(resp.data.data)
+                   setInformes(resp.data.viandas)
                 }
                 setLoading(false)
                 setError('')
@@ -23,5 +22,5 @@ export const useGetInformesMensuales = (id) => {
             })
     }, [])
 
-    return { informes, loading, error }
+    return { informes, loading, error, reservasTotales: informes?.length }
 }
