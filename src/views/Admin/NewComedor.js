@@ -111,11 +111,11 @@ const NewComedor = () => {
 
                         <div className="NewUser__data-buttons">
                             <button disabled={loading} type="submit">
-                                <i classname="far fa-save"></i>
+                                <i className="far fa-save"></i>
                                 Guardar
                             </button>
                             <button disabled={loading} onClick={handleReturn} type="button">
-                                <i classname="fas fa-chevron-left"></i>
+                                <i className="fas fa-chevron-left"></i>
                                 Cancelar
                             </button>
                         </div>

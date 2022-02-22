@@ -46,7 +46,7 @@ const ModalProfile = () => {
             <Modal.Header closeButton></Modal.Header>
             <Modal.Body>
                 <div className="d-flex flex-column align-items-center text-center">
-                    {user.image ? <img src={user.image} className="profile-image-medium rounded-circle" /> : <i classname="far fa-user no-image-profile-medium"></i>}
+                    {user.image ? <img src={user.image} className="profile-image-medium rounded-circle" /> : <i className="far fa-user no-image-profile-medium"></i>}
                     <div className="mt-3">
                         <h4 className="Profile__name">{user.nombre} {user.apellido}</h4>
                         <p className="Profile__info">{user.position && user.position}</p>
@@ -87,7 +87,7 @@ const ModalProfile = () => {
                         <div><p>{user.sector && user.sector}</p></div>
                     </div>
                     <button className="ModalPost__back-button" onClick={handleClose}>
-                        <i classname="fas fa-chevron-left"></i> Volver
+                        <i className="fas fa-chevron-left"></i> Volver
                     </button>
                 </div>
             </Modal.Body>

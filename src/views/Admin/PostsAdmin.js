@@ -223,7 +223,7 @@ const PostsAdmin = () => {
                                                         delay={{ show: 100, hide: 100 }}
                                                         overlay={renderTooltipEdit}
                                                     >
-                                                        <i onClick={() => editPost(post._id)} classname="fas fa-pen"></i>
+                                                        <i onClick={() => editPost(post._id)} className="fas fa-pen"></i>
                                                     </OverlayTrigger>
                                                     <OverlayTrigger
                                                         placement="top"
@@ -245,7 +245,7 @@ const PostsAdmin = () => {
                                                     >
                                                         <i
                                                             onClick={() => handleDeletePost(post)}
-                                                            classname="fas fa-trash-alt"
+                                                            className="fas fa-trash-alt"
                                                         ></i>
                                                     </OverlayTrigger>
                                                 </span>

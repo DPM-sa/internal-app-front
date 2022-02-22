@@ -74,7 +74,7 @@ const Sugerencias = () => {
                         <textarea name="content" value={content} onChange={handleInputChange} className="Sugerencias__textarea" rows="3" placeholder="Desarrolla aquí tu sugerencia, mientras más información brindes mejor…"></textarea>
                     </div>
                     <button type="submit" className="Sugerencias__button">
-                        <i classname="far fa-paper-plane"></i>
+                        <i className="far fa-paper-plane"></i>
                         Enviar
                     </button>
                 </form>

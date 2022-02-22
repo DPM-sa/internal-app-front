@@ -5,16 +5,16 @@ const Options = () => {
     return (
         <div className="Options">
             <Link to="/sugerencias" className="Option">
-                <i classname="far fa-envelope"></i>Buzón de sugerencias
+                <i className="far fa-envelope"></i>Buzón de sugerencias
             </Link>
             <Link to="/biblioteca" className="Option">
-                <i classname="far fa-file-alt"></i> Biblioteca de archivos
+                <i className="far fa-file-alt"></i> Biblioteca de archivos
             </Link>
             <Link to="/miperfil" className="Option">
-                <i classname="far fa-user"></i> Modificá tu perfil
+                <i className="far fa-user"></i> Modificá tu perfil
             </Link>
             <Link to="/directorio" className="Option">
-                <i classname="far fa-address-book"></i>Directorio de usuarios
+                <i className="far fa-address-book"></i>Directorio de usuarios
             </Link>
         </div>
     )

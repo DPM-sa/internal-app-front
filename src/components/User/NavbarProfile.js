@@ -77,12 +77,12 @@ const NavbarProfile = () => {
                                 <li className="nav__item dropdown">
                                     <span id="dropdownNav" data-bs-toggle="dropdown" className="nav__link dropdown-toggle">Mi Perfil</span>
 
-                                    <ul aria-labelledby="dropdownNav" classname="dropdown-menu">
-                                        <li classname="dropdown-item">
-                                            <NavLink to="/miperfil" classname="nav__link">Mis Datos</NavLink>
+                                    <ul aria-labelledby="dropdownNav" className="dropdown-menu">
+                                        <li className="dropdown-item">
+                                            <NavLink to="/miperfil" className="nav__link">Mis Datos</NavLink>
                                         </li>
-                                        <li classname="dropdown-item">
-                                            <NavLink onClick={handleLogout} to="/login" classname="nav__link">Cerrar Sesión</NavLink>
+                                        <li className="dropdown-item">
+                                            <NavLink onClick={handleLogout} to="/login" className="nav__link">Cerrar Sesión</NavLink>
                                         </li>
                                     </ul>
                                 </li>

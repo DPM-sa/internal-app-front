@@ -119,7 +119,7 @@ const Login = () => {
                                     </div>
                                     {
                                         !loading ?
-                                            <button disabled={username === "" || password === ""} name="login" className="Login__button" type="submit"><i classname="fas fa-check"></i> Iniciar sesión</button>
+                                            <button disabled={username === "" || password === ""} name="login" className="Login__button" type="submit"><i className="fas fa-check"></i> Iniciar sesión</button>
                                             :
                                             <button disabled name="login" className="Login__button" type="submit">Espere...</button>
                                     }

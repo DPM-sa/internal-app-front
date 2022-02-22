@@ -137,7 +137,7 @@ const Directorio = () => {
                         !loading && users.map(user => (
                             <li key={user._id} className="Directorio__list-control">
                                 <Link to={`/directorio/profile/${user._id}`} className="Directorio__list-control-section name">
-                                    {user.image ? <img className="profile-image-small" src={user.image} /> : <i classname="far fa-user no-image-profile-small"></i>}
+                                    {user.image ? <img className="profile-image-small" src={user.image} /> : <i className="far fa-user no-image-profile-small"></i>}
                                     {user.nombre} {user.apellido}
                                 </Link>
                                 <div className="Directorio__list-control-section">

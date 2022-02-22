@@ -121,7 +121,7 @@ const NewFile = () => {
 
                         <div className="NewFile__content-top-actions">
                             <button disabled={loading} onClick={handlePictureClick} type="button">
-                                <i classname="fas fa-plus"></i>
+                                <i className="fas fa-plus"></i>
                                 Cargar el nuevo archivo
                             </button>
                             <input disabled={loading} name="title" value={title} onChange={handleInputChange} type="text" placeholder="Titulo del archivo" />
@@ -154,14 +154,14 @@ const NewFile = () => {
                                         </>
                                         :
                                         <>
-                                            <i classname="far fa-save"></i>
+                                            <i className="far fa-save"></i>
                                             Guardar
                                         </>
                                 }
 
                             </button>
                             <button disabled={loading} onClick={handleReturn} type="button">
-                                <i classname="fas fa-chevron-left"></i>
+                                <i className="fas fa-chevron-left"></i>
                                 Volver
                             </button>
                         </div>

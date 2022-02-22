@@ -136,7 +136,7 @@ const NewVianda = () => {
                                 disabled={loading}
                                 type="submit"
                             >
-                                <i classname="far fa-save"></i>
+                                <i className="far fa-save"></i>
                                 Guardar
                             </button>
                             <button
@@ -144,7 +144,7 @@ const NewVianda = () => {
                                 onClick={handleReturn}
                                 type="button"
                             >
-                                <i classname="fas fa-chevron-left"></i>
+                                <i className="fas fa-chevron-left"></i>
                                 Volver
                             </button>
                         </div>

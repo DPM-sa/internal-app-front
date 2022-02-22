@@ -59,12 +59,12 @@ const Comment = ({ comment }) => {
             <div className="comment-box">
                 <div className="comment-box-top">
                     <span className="commenter-pic">
-                        {userComment.image ? <img className="profile-image-small" src={userComment.image} /> : <i classname="far fa-user no-image-profile-small"></i>}
+                        {userComment.image ? <img className="profile-image-small" src={userComment.image} /> : <i className="far fa-user no-image-profile-small"></i>}
                     </span>
                     <span className="commenter-name">
                         {userComment.nombre} {userComment.apellido}<span className="comment-time">{commentDate(comment.date)}</span>
                     </span>
-                    {user._id === userId && <i onClick={handleShow} classname="icon-delete-comment fas fa-trash-alt"></i>}
+                    {user._id === userId && <i onClick={handleShow} className="icon-delete-comment fas fa-trash-alt"></i>}
                 </div>
                 <p className="comment-txt">
                     {comment.content}
