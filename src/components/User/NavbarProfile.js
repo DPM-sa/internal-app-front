@@ -67,6 +67,11 @@ const NavbarProfile = () => {
                                 </li>
 
                                 <li className="nav__item">
+                                    <NavLink to="/reuniones" activeClassName="active" className="nav__link">Sala de reuniones</NavLink>
+                                </li>
+
+
+                                <li className="nav__item">
                                     <NavLink to="/sugerencias" activeClassName="active" className="nav__link">Sugerencias</NavLink>
                                 </li>
 

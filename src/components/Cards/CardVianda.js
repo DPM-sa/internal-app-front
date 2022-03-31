@@ -61,9 +61,9 @@ export const CardVianda = ({
     return (
         <div key={item._id} className="BibliotecaAdmin-file cards">
             <i className="far fa-file-alt Biblioteca__file-icon"></i>
-            <p>{item.nombre}</p>
+            <p>{item.nombrereunion}</p>
             <div className="BibliotecaAdmin-file-actions cards">
-                {item.habilitado ?
+                {/* {item.habilitado ?
                     <OverlayTrigger
                         placement="top"
                         delay={{ show: 100, hide: 100 }}
@@ -79,9 +79,9 @@ export const CardVianda = ({
                     >
                         <i onClick={() => handleActivar(item._id)} className='button-watch-hidden fas fa-eye-slash'></i>
                     </OverlayTrigger>
-                }
+                } */}
 
-
+{/* 
                 <OverlayTrigger
                     placement="top"
                     delay={{ show: 100, hide: 100 }}
@@ -90,7 +90,7 @@ export const CardVianda = ({
                     <i
                         onClick={() => history.push(`/comedoresadmin/viandasedit/${item?._id}`)}
                         className="fas fa-pen"></i>
-                </OverlayTrigger>
+                </OverlayTrigger> */}
 
 
 

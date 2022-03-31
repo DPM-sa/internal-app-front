@@ -72,6 +72,12 @@ const SidebarAdmin = () => {
                         </Link>
                     </li>
                     <li className="sidebar__options-item">
+                        <Link to="/reunionesadmin">
+                            <i className="fa fa-group"></i>
+                            Reuniones
+                        </Link>
+                    </li>
+                    <li className="sidebar__options-item">
                         <Link to="/home">
                             <i className="fas fa-mouse-pointer"></i>
                             Ir al sitio

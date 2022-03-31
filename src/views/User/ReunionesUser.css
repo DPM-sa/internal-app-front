@@ -1,0 +1,31 @@
+.reuniones-user-form > div{
+    width: 80vw;
+    color: #004580;
+    font-size: 20px;
+}
+
+.reuniones-user-form > div >label{
+    min-width:  200px;
+    padding: 5px !important;
+}
+
+.reuniones-user-form > div > input, 
+.reuniones-user-form > div > select{
+    min-width: 300px;
+    border: 1px #004580 solid;
+    color: #004580;
+    border-radius: 13px;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.tabla-mis-reservas > tr >td , 
+.tabla-mis-reservas > tr >th 
+{
+    padding: 10px;
+    color: #004580;
+}
+
+.css-2b097c-container{
+    max-width: 500px;
+}

@@ -35,6 +35,10 @@ import ReservasDiarias from '../views/Admin/ReservasDiarias'
 import InformesMensuales from '../views/Admin/InformesMensuales'
 import ComedorUser from '../views/User/ComedorUser'
 import EditVianda from '../views/Admin/EditVianda'
+import SalaReunionesAdmin from '../views/Admin/SalaReunionesAdmin'
+import NewSala from '../views/Admin/NewSala'
+import EditSala from '../views/Admin/EditSala'
+import ReunionesUser from '../views/User/ReunionesUser'
 
 const AppRouter = () => {
     return (
@@ -47,6 +51,7 @@ const AppRouter = () => {
                 <AdminRoute path="/editpost/:id" component={EditPost} />
                 <AdminRoute path="/directorioadmin" component={DirectorioAdmin} />
                 <AdminRoute path="/comedoresAdmin" component={ComedoresAdmin} />
+                <AdminRoute path="/reunionesAdmin" component={SalaReunionesAdmin} />
                 <AdminRoute path="/bibliotecaadmin" component={BibliotecaAdmin} />
                 <AdminRoute path="/slideradmin" component={SliderAdmin} />
                 <AdminRoute path="/sugerenciasadmin" component={SugerenciasAdmin} />
@@ -57,6 +62,7 @@ const AppRouter = () => {
                 <PrivateRoute path="/miperfil" component={Profile} />
                 <PrivateRoute path="/sugerencias" component={Sugerencias} />
                 <PrivateRoute path="/comedor" component={ComedorUser} />
+                <PrivateRoute path="/reuniones" component={ReunionesUser} />
                 
                 <Redirect to="/home" />
             </Switch>
@@ -69,54 +75,53 @@ const AppRouter = () => {
                 <PrivateRoute path="/directorio/profile/:id">
                     <ModalProfile />
                 </PrivateRoute>
-
                 <PrivateRoute path="/editpost/:id/comments">
                     <PostComments />
                 </PrivateRoute>
-
-
 
            
                 <AdminRoute path="/directorioadmin/nuevousuario">
                     <NewUser />
                 </AdminRoute>
-    
                 <AdminRoute path="/directorioadmin/edituser/:id">
                     <EditUser />
                 </AdminRoute>
-      
+
+
                 <AdminRoute path="/bibliotecaadmin/newfile/:sector">
                     <NewFile />
                 </AdminRoute>
-          
                 <AdminRoute path="/bibliotecaadmin/editfile/:id">
                     <EditFile />
                 </AdminRoute>
         
+
                 <AdminRoute path="/comedoresadmin/nuevo">
                     <NewComedor />
                 </AdminRoute>
-          
                 <AdminRoute path="/comedoresadmin/edit/:id">
                     <EditComedor />
                 </AdminRoute>
-           
                 <AdminRoute path="/comedoresadmin/newvianda/:id">
                     <NewVianda />
                 </AdminRoute>
-
                 <AdminRoute path="/comedoresadmin/viandasedit/:id">
                     <EditVianda />
                 </AdminRoute>
-         
                 <AdminRoute path="/comedoresadmin/reservasdiarias/:id">
                     <ReservasDiarias />
                 </AdminRoute>
-
                 <AdminRoute path="/comedoresadmin/informesmensuales/:id">
                     <InformesMensuales />
                 </AdminRoute>
-                
+
+
+                <AdminRoute path="/reunionesadmin/nuevo">
+                    <NewSala />
+                </AdminRoute>
+                <AdminRoute path="/reunionesadmin/edit/:id">
+                    <EditSala />
+                </AdminRoute>
             </Switch>
         </>
     )
