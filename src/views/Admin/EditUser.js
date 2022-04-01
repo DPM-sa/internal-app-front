@@ -9,10 +9,11 @@ import { useGetUser } from '../../hooks/useGetUser'
 import { editUser } from '../../services/api'
 import sectoresMock from '../../data/sectoresMock'
 
-
 const formatDateProfile = (date) => {
     return date.substring(0, 10)
 }
+
+const ruta = "https://internal-app-dpm.herokuapp.com";
 
 const EditUser = () => {
     const { id } = useParams()
@@ -20,7 +21,7 @@ const EditUser = () => {
     const [{ token, editOrNewUser }, dispatch] = useStateValue()
     const [form, setForm] = useState({
         user: '',
-        password: null,
+        password: '',
         nombre: '',
         apellido: '',
         email: '',
@@ -30,17 +31,12 @@ const EditUser = () => {
         sector: '',
         sectores: []
     })
-
-    const ruta = "https://internal-app-dpm.herokuapp.com";
-
     const [role, setRole] = useState('')
     const [fileId, setFileId] = useState('')
     const { user, password, nombre, apellido, email, phone, birth, position, sector, sectores } = form
-
     const [img, setImg] = useState('')
     const [imgTemp, setImgTemp] = useState('')
     const [imgToUpload, setImgToUpload] = useState({})
-
     const [loadingImg, setLoadingImg] = useState(false)
     const [loading, setLoading] = useState(false)
     const [userError, setUserError] = useState('')
@@ -52,6 +48,8 @@ const EditUser = () => {
     const userInfo = useGetUser(id)
     const [optionsSectores, setOptionsSectores] = useState(sectoresMock)
     const [newOptionsSectores, setNewOptionsSectores] = useState([])
+    const [cambiarPassword, setCambiarPassword] = useState(false)
+    
 
     const handleSectores = (values) => {
         const valuesToArray = values.map(item => item.value)
@@ -202,7 +200,8 @@ const EditUser = () => {
             <div className="PostComments__container">
                 <h1>Editar usuario</h1>
                 <div className="NewUser__content">
-                    <form onSubmit={handleSubmit} className="NewUser__data">
+                    
+                    <form onSubmit={handleSubmit} className="NewUser__data" >
                         <div className="NewUser__data-row">
                             <label>Nombre de usuario</label>
                             <div>
@@ -216,7 +215,8 @@ const EditUser = () => {
                         <div className="NewUser__data-row">
                             <label>Contraseña</label>
                             <div>
-                                <input disabled={loading} onChange={handleInputChange} type="password" name="password" value={password} />
+                                {!cambiarPassword && <button className='btn btn-light' onClick={()=>setCambiarPassword(true)}>Cambiar password</button>}
+                                {cambiarPassword && <input disabled={loading} onChange={handleInputChange} type="password" name="password" value={password} />}
                                 {
                                     passwordError && !password
                                     && <span className="submitError">{passwordError}</span>

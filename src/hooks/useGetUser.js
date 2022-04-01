@@ -25,7 +25,8 @@ export const useGetUser = (id) => {
                             birth: resp.data.user.birth ? resp.data.user.birth : '',
                             position: resp.data.user.position,
                             sector: resp.data.user.sector,
-                            sectores: resp.data.user.sectores
+                            sectores: resp.data.user.sectores,
+                            password: null
                         },
                         role: resp.data.user.role,
                         fileId: resp.data.user.fileId,

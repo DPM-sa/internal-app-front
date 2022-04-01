@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Modal } from 'react-bootstrap'
+import { CloseButton, Modal } from 'react-bootstrap'
 import { useStateValue } from '../../StateProvider'
 import axios from 'axios'
 import './ModalPost.css'
@@ -139,7 +139,7 @@ const ModalPost = () => {
     return (
         <>
             <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton >
                     <img src={imgUrl} className="ModalPost__header-img" />
                     <div className="ModalPost__header-content">
                         <div className="ModalPost-header-top">

@@ -1,3 +1,4 @@
+
 .fade.ModalPost.modal.show {
     padding-left: 0;
 }
@@ -27,7 +28,7 @@
     color: white;
     width: 100%;
     height: 320px;
-    background: linear-gradient( 180deg, rgba(255, 255, 255, 0.3) 0%, rgba(0, 0, 0, 0.7) 50%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(0, 0, 0, 0.7) 50%);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     display: flex;
@@ -57,12 +58,14 @@
 .ModalPost button.close {
     position: absolute;
     color: white;
-    right: -0.1%;
+    left: 10px;
     background: #004580;
     margin: 10px;
     padding: 2px 8px;
     border-radius: 40px;
     opacity: 1;
+    width: 50px;
+    height: 50px;
 }
 
 .ModalPost__header-actions {
@@ -208,13 +211,16 @@
         font-size: 13px;
         top: -5px;
     }
+
     .comments .commenter-pic {
         width: 40px;
         height: 40px;
     }
+
     .comments .commenter-name a {
         display: block;
     }
+
     .comments .commenter-name .comment-time {
         display: block;
         margin-left: 0px;
@@ -226,13 +232,16 @@
         font-size: 13px;
         top: -5px;
     }
+
     .comments .commenter-pic {
         width: 40px;
         height: 40px;
     }
+
     .comments .commenter-name a {
         display: block;
     }
+
     .comments .commenter-name .comment-time {
         display: block;
         margin-left: 0px;
