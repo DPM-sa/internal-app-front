@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const sortGreatest = (arr) => {
     for (let i = 0; i < arr.length; i++) {
         for (let j = i; j < arr.length; j++) {
@@ -41,5 +43,25 @@ export const formatFecha = (fecha) => {
         return arr[2] + "/" + arr[1] + "/" + arr[0];
     } catch {
         return fecha;
+    }
+}
+
+
+export const validarFechaLimite = (fecha) => {
+    let current_date = moment();
+    let limitDate = moment(fecha);
+    return limitDate.isAfter(current_date)
+}
+
+
+export const validarHoraLimite = (horaLimite, fecha) => {
+    let current_time = moment().format('HH:mma')
+    current_time = moment(current_time, 'HH:mma')
+    let limitTime = moment(horaLimite, 'HH:mma')
+
+    if (validarFechaLimite(fecha)) {
+        return true
+    } else {
+        return limitTime.isAfter(current_time)
     }
 }

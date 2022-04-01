@@ -57,14 +57,6 @@ const SidebarAdmin = () => {
                             Slider principal
                         </Link>
                     </li>
-                    </>
-                    }
-                    <li className="sidebar__options-item">
-                        <Link to="/bibliotecaadmin">
-                            <i className="far fa-copy"></i>
-                            Biblioteca
-                        </Link>
-                    </li>
                     <li className="sidebar__options-item">
                         <Link to="/comedoresadmin">
                             <i className="fa fa-cutlery"></i>
@@ -77,6 +69,15 @@ const SidebarAdmin = () => {
                             Reuniones
                         </Link>
                     </li>
+                    </>
+                    }
+                    <li className="sidebar__options-item">
+                        <Link to="/bibliotecaadmin">
+                            <i className="far fa-copy"></i>
+                            Biblioteca
+                        </Link>
+                    </li>
+           
                     <li className="sidebar__options-item">
                         <Link to="/home">
                             <i className="fas fa-mouse-pointer"></i>

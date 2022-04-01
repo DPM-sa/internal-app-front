@@ -20,7 +20,7 @@ const EditUser = () => {
     const [{ token, editOrNewUser }, dispatch] = useStateValue()
     const [form, setForm] = useState({
         user: '',
-        password: '',
+        password: null,
         nombre: '',
         apellido: '',
         email: '',
@@ -116,7 +116,6 @@ const EditUser = () => {
         //TODO: pasar todas estas validaciones a YUP y usar Formik.
         if (user === "" || nombre === "" || apellido === "" || position === "" || sector === "") {
             setUserError(user === "" ? 'El nombre de usuario es requerido' : '')
-            setPasswordError(password === "" ? 'La contraseña es requerida' : '')
             setNombreError(nombre === "" ? 'El nombre es requerido' : '')
             setApellidoError(apellido === "" ? 'El apellido es requerido' : '')
             setPositionError(position === "" ? 'La posicion es requerida' : '')

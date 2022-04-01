@@ -56,13 +56,15 @@ const AppRouter = () => {
                 <AdminRoute path="/slideradmin" component={SliderAdmin} />
                 <AdminRoute path="/sugerenciasadmin" component={SugerenciasAdmin} />
 
+                <PrivateRoute path="/comedor" component={ComedorUser} />
+                <PrivateRoute path="/reuniones" component={ReunionesUser} />
+
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/directorio" component={Directorio} />
                 <PrivateRoute path="/biblioteca" component={Biblioteca} />
                 <PrivateRoute path="/miperfil" component={Profile} />
                 <PrivateRoute path="/sugerencias" component={Sugerencias} />
-                <PrivateRoute path="/comedor" component={ComedorUser} />
-                <PrivateRoute path="/reuniones" component={ReunionesUser} />
+               
                 
                 <Redirect to="/home" />
             </Switch>

@@ -1,3 +1,4 @@
+
 .comedor-user-form > div{
     width: 80vw;
     color: #004580;
@@ -5,13 +6,16 @@
 }
 
 .comedor-user-form > div >label{
-    min-width:  100px;
+    width:  200px;
+    max-width: 100%;
     padding: 5px !important;
+    text-align: left;
 }
 
 .comedor-user-form > div > input, 
 .comedor-user-form > div > select{
-    min-width: 500px;
+    width:  350px;
+    max-width: 100%;
     border: 1px #004580 solid;
     color: #004580;
     border-radius: 13px;
@@ -19,9 +23,11 @@
     font-size: 20px;
 }
 
+
+
 .tabla-mis-reservas > tr >td , 
 .tabla-mis-reservas > tr >th 
 {
-    padding: 10px;
+    padding: 5px;
     color: #004580;
 }

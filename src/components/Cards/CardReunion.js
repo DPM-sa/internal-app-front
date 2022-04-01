@@ -7,28 +7,28 @@ import { editViandabyId } from '../../services/api';
 
 const renderTooltipSee = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-        Habilitar vianda
+        Habilitar reunion
     </Tooltip>
 );
 const renderTooltipEdit = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-        Editar vianda
+        Editar reunion
     </Tooltip>
 );
 const renderTooltipHide = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-        Desactivar vianda
+        Desactivar reunion
     </Tooltip>
 );
 const renderTooltipDelete = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-        Eliminar vianda
+        Eliminar reunion
     </Tooltip>
 );
 
 
 
-export const CardVianda = ({
+export const CardReunion = ({
     item,
     handleRefresh
 }) => {
@@ -61,7 +61,7 @@ export const CardVianda = ({
     return (
         <div key={item._id} className="BibliotecaAdmin-file cards">
             <i className="far fa-file-alt Biblioteca__file-icon"></i>
-            <p>{item.nombre}</p>
+            <p>{item.nombrereunion}</p>
             <div className="BibliotecaAdmin-file-actions cards">
                 {item.habilitado ?
                     <OverlayTrigger

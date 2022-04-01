@@ -119,7 +119,7 @@ const NewVianda = () => {
                         </div>
 
                         <div className="NewUser__data-row">
-                            <label>precio</label>
+                            <label>Precio</label>
                             <div>
                                 <input
                                     disabled={loading}

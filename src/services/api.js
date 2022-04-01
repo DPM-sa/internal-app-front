@@ -118,3 +118,7 @@ export const getReunionesReservasUsuario = async () => {
 export const getReservasbySalaId = async (id) => {
     return await http.get(`/sala/${id}/reservas`)
 }
+
+export const cancelarReservaSala = async (data) => {
+    return await http.put(`/sala/reserva/cancelar`, { idreserva: data._id })
+}

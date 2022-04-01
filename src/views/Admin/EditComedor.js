@@ -224,11 +224,13 @@ const EditComedor = () => {
 
                 </div>
 
-                <div className="BibliotecaAdmin-files cards">
+                <div className="BibliotecaAdmin-files cards" >
                     {loadingViandas && <p>Cargando...</p>}
                     {!loadingViandas &&
                         viandas.map(item => <CardVianda item={item} key={item._id} handleRefresh={getViandas}/>)}
                 </div>
+
+
             </div>
         </div>
     )

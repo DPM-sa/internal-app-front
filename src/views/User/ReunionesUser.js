@@ -8,26 +8,17 @@ import './ComedorUser.css'
 import './ReunionesUser.css'
 import { GuardarBtn } from '../../components/Buttons/GuardarBtn'
 import { useGetAllSalas } from '../../hooks/useGetAllSalas'
-import { cancelarReserva, newReservaSala } from '../../services/api'
+import { cancelarReservaSala, newReservaSala } from '../../services/api'
 import Swal from 'sweetalert2'
 import { useHistory } from 'react-router-dom'
 import { useGetReunionesReservasUsuario } from '../../hooks/useGetReunionesReservasUsuario'
-import { useGetVianda } from '../../hooks/useGetVianda'
 import { DAYS } from '../../utils/days'
 import CreatableSelect from 'react-select/creatable';
 import moment from 'moment'
 
-const ViandaInfo = ({ id, cantidad }) => {
-    const info = useGetVianda(id);
-    return <>
-        <td>{info?.nombre}</td>
-        <td>{cantidad}</td>
-        <td>{cantidad * info?.precio}</td>
-    </>
-}
 
 const MisReservas = ({ reservas, salas, refreshReservas }) => {
-    const handleCancelarReserva = (idReserva) => {
+    const handleCancelarReserva = (reserva) => {
         Swal.fire({
             title: '¿Estás seguro que deseas cancelar?',
             text: "No podrás deshacer los cambios",
@@ -38,22 +29,22 @@ const MisReservas = ({ reservas, salas, refreshReservas }) => {
             confirmButtonText: 'Si, deseo cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // cancelarReserva(idReserva)
-                //     .then(resp => {
-                //         Swal.fire(
-                //             'Cancelado!',
-                //             'Tu reserva ha sido cancelada',
-                //             'success'
-                //         ).then(() => refreshReservas())
-                //     }
-                //     )
-                //     .catch(e =>
-                //         Swal.fire(
-                //             'Ha ocurrido un error!',
-                //             'Tu reserva no pudo ser cancelada',
-                //             'error'
-                //         )
-                //     )
+                cancelarReservaSala(reserva)
+                    .then(resp => {
+                        Swal.fire(
+                            'Cancelado!',
+                            'Tu reserva ha sido cancelada',
+                            'success'
+                        ).then(() => refreshReservas())
+                    }
+                    )
+                    .catch(e =>
+                        Swal.fire(
+                            'Ha ocurrido un error!',
+                            'Tu reserva no pudo ser cancelada',
+                            'error'
+                        )
+                    )
 
             }
         })
@@ -68,7 +59,7 @@ const MisReservas = ({ reservas, salas, refreshReservas }) => {
                     <tr>
                         <th>Sala</th>
                         <th>Nombre de la reunión</th>
-                        <th>Fecha</th>
+                        <th style={{width:100}}>Fecha</th>
                         <th>Hora inicio</th>
                         <th>Hora fin</th>
                         <th></th>
@@ -86,7 +77,7 @@ const MisReservas = ({ reservas, salas, refreshReservas }) => {
                                         Cancelar reserva
                                         <span style={{ width: 30, marginLeft: 5 }}>
                                             <i
-                                                onClick={() => handleCancelarReserva(reserva._id)}
+                                                onClick={() => handleCancelarReserva(reserva)}
                                                 className="fas fa-trash-alt" ></i>
                                         </span>
                                     </> : 'Cancelado'}
@@ -140,14 +131,14 @@ const ReunionesUser = () => {
         if (_sala[0].horarioapertura) {
             let horaApertura = moment(`${_sala[0].horarioapertura}am`, 'HH:mma');
             let inicioUser = moment(`${e.target.value}am`, 'HH:mma');
-            if(inicioUser.isAfter(horaApertura)){
-                setForm({...form, horainicio: e.target.value})
+            if (inicioUser.isAfter(horaApertura)) {
+                setForm({ ...form, horainicio: e.target.value })
                 setErrorHoraInicio('')
-            }else{
-                setForm({...form, horainicio: ''})
+            } else {
+                setForm({ ...form, horainicio: '' })
                 setErrorHoraInicio(`Abre a partir de las ${_sala[0].horarioapertura}`)
             }
-     
+
         }
     }
 
@@ -156,11 +147,11 @@ const ReunionesUser = () => {
         if (_sala[0].horariocierre) {
             let horariocierre = moment(`${_sala[0].horariocierre}am`, 'HH:mma');
             let horaFinUser = moment(`${e.target.value}am`, 'HH:mma');
-            if(horaFinUser.isBefore(horariocierre)){
-                setForm({...form, horafin: e.target.value})
+            if (horaFinUser.isBefore(horariocierre)) {
+                setForm({ ...form, horafin: e.target.value })
                 setErrorHoraFin('')
-            }else{
-                setForm({...form, horafin: ''})
+            } else {
+                setForm({ ...form, horafin: '' })
                 setErrorHoraFin(`La sala cierra a las  ${_sala[0].horariocierre}`)
             }
         }
@@ -199,15 +190,20 @@ const ReunionesUser = () => {
     return (
         <>
             <NavbarProfile />
-            <Banner image={"./assets/header-reserva-sala-reuniones.jpg"} title={'Organizá una reunión'} content={'Aquí puedes reservar la sala de reuniones'} link={false} />
+            <Banner
+                image={"./assets/header-reserva-sala-reuniones.jpg"}
+                title={'Organizá una reunión'}
+                content={'Aquí puedes reservar la sala de reuniones'}
+                linkto={'reuniones'}
+            />
 
-            <div className="Sugerencias">
-                <h3>
-                    Completá el formulario y reservá la sala de reuniones
-                </h3>
+            <div className="Sugerencias" id="reuniones" style={{ paddingTop: 50 }}>
 
-                <div style={{ paddingBottom: 50, borderBottom: '2px solid #004580' }}>
-                    <form className='reuniones-user-form' onSubmit={handleSubmit}>
+                <div style={{ paddingBottom: 50, borderBottom: '2px solid #004580' }} align='center' >
+                    <h3>
+                        Completá el formulario y reservá la sala de reuniones
+                    </h3>
+                    <form className='comedor-user-form' onSubmit={handleSubmit}>
                         <div>
                             <label>Sala</label>
                             <select required name='salaId' value={salaId} onChange={handleInputChange}>
@@ -238,7 +234,7 @@ const ReunionesUser = () => {
                         </div>
                         <div>
                             <label>Nombre de la reunión</label>
-                            <input required type='text' name='nombrereunion' value={nombrereunion} onChange={handleInputChange}/>
+                            <input required type='text' name='nombrereunion' value={nombrereunion} onChange={handleInputChange} />
                         </div>
                         <br />
                         <div>
@@ -268,10 +264,10 @@ const ReunionesUser = () => {
 
                 </div>
 
-                <MisReservas 
-                    reservas={reservas} 
-                    salas={salas} 
-                    refreshReservas={refreshReservas} 
+                <MisReservas
+                    reservas={reservas}
+                    salas={salas}
+                    refreshReservas={refreshReservas}
                 />
 
             </div>

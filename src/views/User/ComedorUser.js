@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom'
 import { useGetReservasUsuario } from '../../hooks/useGetReservasUsuario'
 import { useGetVianda } from '../../hooks/useGetVianda'
 import { DAYS } from '../../utils/days'
+import { validarHoraLimite } from '../../utils/helpers'
 
 const ViandaInfo = ({ id, cantidad }) => {
     const info = useGetVianda(id);
@@ -25,8 +26,9 @@ const ViandaInfo = ({ id, cantidad }) => {
     </>
 }
 
+
 const MisReservas = ({ reservas, comedores, refreshReservas }) => {
-    const handleCancelarReserva = (idReserva) => {
+    const handleCancelarReserva = (idReserva, fecha) => {
         Swal.fire({
             title: '¿Estás seguro que deseas cancelar?',
             text: "No podrás deshacer los cambios",
@@ -37,23 +39,30 @@ const MisReservas = ({ reservas, comedores, refreshReservas }) => {
             confirmButtonText: 'Si, deseo cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                cancelarReserva(idReserva)
-                    .then(resp => {
-                        Swal.fire(
-                            'Cancelado!',
-                            'Tu reserva ha sido cancelada',
-                            'success'
-                        ).then(()=>refreshReservas())
-                    }
+                if (validarHoraLimite('12:00am', fecha)) {
+                    cancelarReserva(idReserva)
+                        .then(resp => {
+                            Swal.fire(
+                                'Cancelado!',
+                                'Tu reserva ha sido cancelada',
+                                'success'
+                            ).then(() => refreshReservas())
+                        }
+                        )
+                        .catch(e =>
+                            Swal.fire(
+                                'Ha ocurrido un error!',
+                                'Tu reserva no pudo ser cancelada',
+                                'error'
+                            )
+                        )
+                } else {
+                    Swal.fire(
+                        'Lo sentimos.',
+                        'Ya es muy tarde para cancelar la reserva',
+                        'error'
                     )
-                    .catch(e => 
-                        Swal.fire(
-                            'Ha ocurrido un error!',
-                            'Tu reserva no pudo ser cancelada',
-                            'error'
-                        )    
-                    )
-
+                }
             }
         })
     }
@@ -89,7 +98,7 @@ const MisReservas = ({ reservas, comedores, refreshReservas }) => {
                                         Cancelar reserva
                                         <span style={{ width: 30, marginLeft: 5 }}>
                                             <i
-                                                onClick={() => handleCancelarReserva(reserva._id)}
+                                                onClick={() => handleCancelarReserva(reserva._id, reserva.date.substring(0, 10))}
                                                 className="fas fa-trash-alt" ></i>
                                         </span>
                                     </> : 'Cancelado'}
@@ -104,28 +113,43 @@ const MisReservas = ({ reservas, comedores, refreshReservas }) => {
     )
 }
 
+const initialState = {
+    cantidad: 1,
+    date: '',
+    turno: '',
+    vianda: '',
+    total: ''
+}
+
 const ComedorUser = () => {
     const history = useHistory()
     const { comedores } = useGetAllComedores();
     const [turnosDisponibles, setTurnosDisponibles] = useState([])
-    const [form, setForm] = useState({ cantidad: 1 })
+    const [form, setForm] = useState({ ...initialState, comedorId: '' })
     const { comedorId, date, turno, vianda, cantidad, total } = form;
     const { viandas } = useGetViandasComedor(comedorId)
     const [loading, setLoading] = useState(false)
     const { reservas, refreshReservas } = useGetReservasUsuario()
     const [day, setDay] = useState('')
+    const [today, setToday] = useState('')
 
     const handleInputChange = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
 
-        if(e.target.name==='date'){
-            let selectedDay = new Date(e.target.value);
-            selectedDay = selectedDay.getDay()
-            //console.log(DAYS[selectedDay]?.value);
-            setDay(DAYS[selectedDay]?.value)
+    const handleInputDate = (e) => {
+        let selectedDay = new Date(e.target.value);
+        selectedDay = selectedDay.getDay();
+        let diaSemanaSeleccionado = DAYS[selectedDay]?.value
+        setToday(diaSemanaSeleccionado)
+        let _comedor = comedores.filter(comedor => comedor._id === comedorId);
+        let esDiaValido = _comedor[0].diassemana.includes(diaSemanaSeleccionado)
+        if (!esDiaValido) {
+            setForm({ ...form, date: '' })
+            setDay(`Solo esta habilitado los dias (${_comedor[0].diassemana.map(d => d)})`)
+        } else {
+            setForm({ ...form, date: e.target.value })
+            setDay('')
         }
     }
 
@@ -133,7 +157,7 @@ const ComedorUser = () => {
         if (comedorId) {
             const selected = comedores.find(c => c._id === comedorId)
             setTurnosDisponibles(selected.turnos || [])
-            setForm({ ...form, cantidad: 1, precio: '', total: '', vianda: '' })
+            setForm({ ...form, ...initialState })
         }
     }, [comedorId])
 
@@ -148,71 +172,89 @@ const ComedorUser = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setLoading(true)
-        newReservaVianda({ ...form, viandas: [vianda] }) //por ahora solo se puede reservar de a 1 vianda
-            .then(() => {
-                setLoading(false)
-                Swal.fire('Éxito', 'Su reserva se ha realizado con éxito', 'success')
-                    .then(resp => {
-                        if (resp) {
-                            history.push('/home')
-                        }
-                    })
-            })
-            .catch(() => {
-                Swal.fire('Error', 'Ha ocurrido un error, comuníquese con el administrador', 'error')
-                    .then((resp) => {
-                        if (resp) { setLoading(false) }
-                    })
-            })
+        setLoading(true);
+
+        if (validarHoraLimite('12:00am', form.date)) {
+            newReservaVianda({ ...form, viandas: [vianda] }) //por ahora solo se puede reservar de a 1 vianda
+                .then(() => {
+                    setLoading(false)
+                    Swal.fire('Éxito', 'Su reserva se ha realizado con éxito', 'success')
+                        .then(resp => {
+                            if (resp) {
+                                history.push('/home')
+                            }
+                        })
+                })
+                .catch(() => {
+                    Swal.fire('Error', 'Ha ocurrido un error, comuníquese con el administrador', 'error')
+                        .then((resp) => {
+                            if (resp) { setLoading(false) }
+                        })
+                })
+        } else {
+            Swal.fire('Lo sentimos.', 'No es posible realizar una reserva en la fecha indicada.', 'error')
+                .then((resp) => {
+                    if (resp) { setLoading(false) }
+                })
+        }
+
+
     }
 
     return (
         <>
             <NavbarProfile />
-            <Banner image={"./assets/header-comedor.jpg"} title={'Reservá tu vianda'} content={'Aquí podés reservar tu lugar para mañana en los comedores de la empresa'} link={false} />
+            <Banner
+                image={"./assets/header-comedor.jpg"}
+                title={'Reservá tu vianda'}
+                content={'Aquí podés reservar tu lugar para mañana en los comedores de la empresa'}
+                linkto={'comedor'}
+            />
 
-            <div className="Sugerencias">
+            <div className="Sugerencias" id="comedor" align='center' style={{ paddingTop: 50 }}>
                 <h3>
                     Completa el formulario y reservá tu vianda
                 </h3>
 
                 <div style={{ paddingBottom: 50, borderBottom: '2px solid #004580' }}>
                     <form className='comedor-user-form' onSubmit={handleSubmit}>
-                        <div>
+                        <div >
                             <label>Comedor</label>
                             <select required name='comedorId' value={comedorId} onChange={handleInputChange}>
-                                <option>Seleccionar...</option>
+                                <option value=''>Seleccionar...</option>
                                 {comedores && comedores.map(c => <option value={c._id} key={c._id}>{c.nombre}</option>)}
                             </select>
                         </div>
+
                         <div>
                             <label>Fecha</label>
-                            <input required type='date' name='date' value={date} onChange={handleInputChange} />
-                            <span style={{fontSize:10, marginLeft: 5}}>{day}</span>
+                            <input required type='date' name='date' value={date} onChange={handleInputDate} disabled={!comedorId} />
+                            {day && <span style={{ fontSize: 10, marginLeft: 5, color: 'red', display: 'block', paddingLeft: 100, marginBottom: 30 }}>{day}</span>}
                         </div>
+
                         <div>
                             <label>Turno</label>
-                            <select required name='turno' value={turno} onChange={handleInputChange}>
+                            <select required name='turno' value={turno} onChange={handleInputChange} disabled={!comedorId} >
                                 <option>Seleccionar...</option>
-                                {turnosDisponibles && turnosDisponibles.map(t => <option value={t._id}>{t.nombre}</option>)}
+                                {turnosDisponibles && turnosDisponibles.map(t => <option value={t._id} key={t._id}>{t.nombre}</option>)}
                             </select>
                         </div>
                         <div>
                             <label>Vianda</label>
-                            <select required name='vianda' value={vianda} onChange={handleInputChange}>
+                            <select required name='vianda' value={vianda} onChange={handleInputChange} >
                                 <option>Seleccionar...</option>
-                                {viandas && viandas.filter(v=>v.habilitado && v.diassemana.includes(day)).map(v => <option value={v._id}>{v.nombre + ' -  $' + v.precio}</option>)}
+                                {viandas && viandas.filter(v => v.habilitado && v.diassemana.includes(today)).map(v => <option value={v._id} key={v._id}>{v.nombre + ' -  $' + v.precio}</option>)}
                             </select>
                         </div>
                         <div>
                             <label>Cantidad</label>
-                            <input required type='number' value={cantidad} name='cantidad' onChange={handleInputChange} />
+                            <input disabled type='number' value={cantidad} name='cantidad' onChange={handleInputChange} />
                         </div>
                         <div>
                             <label>Total</label>
                             <input required type='number' disabled value={total} />
                         </div>
+
                         {!loading && <div >
                             <GuardarBtn title='Reservar' variation='blue' logo={false} />
                         </div>}
@@ -221,7 +263,7 @@ const ComedorUser = () => {
 
                 </div>
 
-                <MisReservas reservas={reservas} comedores={comedores} refreshReservas={refreshReservas}/>
+                <MisReservas reservas={reservas} comedores={comedores} refreshReservas={refreshReservas} />
 
             </div>
 

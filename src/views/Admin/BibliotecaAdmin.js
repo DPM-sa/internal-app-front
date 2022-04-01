@@ -23,7 +23,7 @@ const BibliotecaAdmin = () => {
         search: ''
     })
     const { search } = form
-    const admin = ( user.role === "ADMIN_ROLE" );
+    const admin = ( user.role === "ADMIN_ROLE" || user.role === 'EDITOR_ROLE');
 
     const initialFolder = admin ? "General" : user.sector;
 

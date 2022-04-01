@@ -10,7 +10,7 @@ import { useGetSala } from '../../hooks/useGetSala'
 import { useGetReservasReuniones } from '../../hooks/useGetReservasReuniones'
 import { GuardarBtn } from '../../components/Buttons/GuardarBtn'
 import { CancelarBtn } from '../../components/Buttons/CancelarBtn'
-import { CardVianda } from '../../components/Cards/CardVianda'
+import { CardReunion } from '../../components/Cards/CardReunion'
 
 
 const EditSala = () => {
@@ -201,7 +201,7 @@ const EditSala = () => {
                 <div className="BibliotecaAdmin-files cards">
                     {loadingReservas && <p>Cargando...</p>}
                     {!loadingReservas &&
-                        reservas.map(item => <CardVianda item={item} key={item._id} handleRefresh={getReservasReuniones} />)}
+                        reservas.map(item => <CardReunion item={item} key={item._id} handleRefresh={getReservasReuniones} />)}
                 </div>
             </div>
         </div>
