@@ -15,6 +15,7 @@ import { useGetReunionesReservasUsuario } from '../../hooks/useGetReunionesReser
 import { DAYS } from '../../utils/days'
 import CreatableSelect from 'react-select/creatable';
 import moment from 'moment'
+import { useGetDisponibilidadSala } from '../../hooks/useGetDisponibilidadSala'
 
 
 const MisReservas = ({ reservas, salas, refreshReservas }) => {
@@ -59,7 +60,7 @@ const MisReservas = ({ reservas, salas, refreshReservas }) => {
                     <tr>
                         <th>Sala</th>
                         <th>Nombre de la reunión</th>
-                        <th style={{width:100}}>Fecha</th>
+                        <th style={{ width: 100 }}>Fecha</th>
                         <th>Hora inicio</th>
                         <th>Hora fin</th>
                         <th></th>
@@ -92,6 +93,20 @@ const MisReservas = ({ reservas, salas, refreshReservas }) => {
     )
 }
 
+var format = 'HH:mma'
+const isBetween = (horainicio, horafin, inicioUser) => {
+    var beforeTime = moment(horainicio, format),
+        afterTime = moment(horafin, format);
+    return inicioUser.isBetween(beforeTime, afterTime)
+}
+const validarDisponibilidad = async (inicioUser, arrayReservas) => {
+    let ocupados = await arrayReservas.map(reserva => {
+        return isBetween(reserva.horainicio + 'am', reserva.horafin + 'am', inicioUser) ? true : false
+    })
+    console.log('ocupados', ocupados)
+    return !ocupados.includes(true)
+}
+
 const ReunionesUser = () => {
     const history = useHistory()
     const { salas } = useGetAllSalas();
@@ -102,6 +117,8 @@ const ReunionesUser = () => {
     const [day, setDay] = useState('')
     const [errorHoraInicio, setErrorHoraInicio] = useState('')
     const [errorHoraFin, setErrorHoraFin] = useState('')
+    const { reservasDelDia } = useGetDisponibilidadSala(salaId, date)
+
 
     const handleInputChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -126,14 +143,28 @@ const ReunionesUser = () => {
         }
     }
 
-    const handleHoraInicio = (e) => {
+    const handleHoraInicio = async (e) => {
+        const horaElegida = e.target.value;
         let _sala = salas.filter(sala => sala._id === salaId);
         if (_sala[0].horarioapertura) {
             let horaApertura = moment(`${_sala[0].horarioapertura}am`, 'HH:mma');
-            let inicioUser = moment(`${e.target.value}am`, 'HH:mma');
+            let inicioUser = moment(`${horaElegida}am`, 'HH:mma');
+
             if (inicioUser.isAfter(horaApertura)) {
-                setForm({ ...form, horainicio: e.target.value })
-                setErrorHoraInicio('')
+                if (reservasDelDia) {
+                    const estaDisponible = await validarDisponibilidad(inicioUser, reservasDelDia)
+                    console.log("estaDisponible", estaDisponible)
+
+                    if (estaDisponible) {
+                        console.log(horaElegida)
+                        setForm({ ...form, horainicio: horaElegida })
+                        setErrorHoraInicio('')
+                    } else {
+                        setForm({ ...form, horainicio: '' })
+                        setErrorHoraInicio(`La sala ya fue reservada en ese horario`)
+                    }
+                }
+
             } else {
                 setForm({ ...form, horainicio: '' })
                 setErrorHoraInicio(`Abre a partir de las ${_sala[0].horarioapertura}`)
@@ -142,28 +173,34 @@ const ReunionesUser = () => {
         }
     }
 
-    const handleHoraFin = (e) => {
+    const handleHoraFin = async (e) => {
+        const horaElegida = e.target.value;
         let _sala = salas.filter(sala => sala._id === salaId);
         if (_sala[0].horariocierre) {
             let horariocierre = moment(`${_sala[0].horariocierre}am`, 'HH:mma');
-            let horaFinUser = moment(`${e.target.value}am`, 'HH:mma');
+            let horaFinUser = moment(`${horaElegida}am`, 'HH:mma');
+
             if (horaFinUser.isBefore(horariocierre)) {
-                setForm({ ...form, horafin: e.target.value })
-                setErrorHoraFin('')
+
+                if (reservasDelDia) {
+                    const estaDisponible = await validarDisponibilidad(horaFinUser, reservasDelDia)
+                    console.log("estaDisponible", estaDisponible)
+
+                    if (estaDisponible) {
+                        console.log(horaElegida)
+                        setForm({ ...form, horafin: horaElegida })
+                        setErrorHoraFin('')
+                    } else {
+                        setForm({ ...form, horafin: '' })
+                        setErrorHoraFin(`La sala ya fue reservada en ese horario`)
+                    }
+                }
             } else {
                 setForm({ ...form, horafin: '' })
                 setErrorHoraFin(`La sala cierra a las  ${_sala[0].horariocierre}`)
             }
         }
     }
-
-
-    useEffect(() => {
-        if (salaId) {
-
-        }
-    }, [salaId])
-
 
     const handleSubmit = async (e) => {
         e.preventDefault()

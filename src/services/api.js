@@ -120,5 +120,9 @@ export const getReservasbySalaId = async (id) => {
 }
 
 export const cancelarReservaSala = async (data) => {
-    return await http.put(`/sala/reserva/cancelar`, { idreserva: data._id })
+    return await http.put(`/sala/reserva/cancelar`, { ...data, idreserva: data._id })
+}
+
+export const getDisponibilidadSala = async (salaId, date) => {
+    return await http.get(`/sala/disponibilidad/${salaId}/${date}`)
 }
