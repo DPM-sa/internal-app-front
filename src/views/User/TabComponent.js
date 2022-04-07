@@ -19,8 +19,6 @@ export const TabComponent = ({ sector, openFolder, sectores = [] }) => {
         setTabItems(_tabs.concat(otherSectores))
     }, [sectores]);
     
-    // console.log(tabItems)
-
     return (
         <div className="tab-component">
             {tabItems.map(f => (

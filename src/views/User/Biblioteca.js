@@ -10,57 +10,49 @@ import Banner from '../../components/User/Banner'
 import { TabComponent } from './TabComponent'
 import { useGetUser } from '../../hooks/useGetUser'
 
+function sortGreatest(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i; j < arr.length; j++) {
+            if (arr[i].title.toLowerCase() > arr[j].title.toLowerCase()) {
+                let temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            };
+        };
+    };
+    return arr;
+};
+
+const reverseFiles = (arr) => {
+    return arr.sort((a, b) => {
+        return new Date(b.date).getTime()
+            - new Date(a.date).getTime()
+    })
+}
+
+const orderFiles = (arr) => {
+    return arr.sort((a, b) => {
+        return new Date(a.date).getTime()
+            - new Date(b.date).getTime()
+    })
+}
+
 const Biblioteca = () => {
     const [{ token, user }] = useStateValue()
     const { userForm } = useGetUser(user._id)
     const [files, setFiles] = useState([])
     const [loading, setLoading] = useState(false)
     const [typeOrder, setTypeOrder] = useState('alfabetico')
-    const [ sector, setSector ] = useState("General");
-    const [form, setForm] = useState({
-        search: ''
-    })
+    const [sector, setSector] = useState("General");
+    const [form, setForm] = useState({ search: '' })
     const { search } = form
+    const headers = { 'Content-Type': 'application/json', "token": `${token}` }
 
-    const headers = {
-        'Content-Type': 'application/json',
-        "token": `${token}`
-    }
+    useEffect(() => { window.scrollTo(0, 0) }, [])
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
-
-    function sortGreatest(arr) {
-        for (let i = 0; i < arr.length; i++) {
-            for (let j = i; j < arr.length; j++) {
-                if (arr[i].title.toLowerCase() > arr[j].title.toLowerCase()) {
-                    let temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                };
-            };
-        };
-        return arr;
-    };
-
-    const reverseFiles = (arr) => {
-        return arr.sort((a, b) => {
-            return new Date(b.date).getTime()
-                - new Date(a.date).getTime()
-        })
-    }
-
-    const orderFiles = (arr) => {
-        return arr.sort((a, b) => {
-            return new Date(a.date).getTime()
-                - new Date(b.date).getTime()
-        })
-    }
-
-    const getFiles = async () => {
+    const getFiles = () => {
         setLoading(true)
-        await axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
+        axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
             .then(resp => {
                 if (typeOrder === 'alfabetico') {
                     setFiles(sortGreatest(resp.data.filesDB))
@@ -73,38 +65,26 @@ const Biblioteca = () => {
             })
     }
 
-    
-
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        await axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
+        axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
             .then(resp => {
                 setFiles(resp.data.filesDB.filter(file => file.title.toLowerCase().includes(search.toLowerCase())))
             })
     }
 
-    const handleInputChange = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
-    }
+    const handleInputChange = (e) => { setForm({ ...form, [e.target.name]: e.target.value }) }
 
-    useEffect(() => {
-        getFiles()
-    }, [typeOrder])
+    useEffect(() => { getFiles() }, [typeOrder])
 
-
-    const openFolder = ( sector ) => {
-        setSector( sector );
-    } 
+    const openFolder = (sector) => { setSector(sector); }
 
     return (
         <>
             <NavbarProfile />
             <Banner image={'./assets/banner-biblioteca.jpg'} title={'Biblioteca'} content={'Encontrá aquí materiales a disposición para todos los colaboradores de DPM'} linkto={'biblioteca'} />
-            
-            <TabComponent sector={ userForm.sector } openFolder={ openFolder } sectores={userForm.sectores}/>
+
+            <TabComponent sector={userForm.sector} openFolder={openFolder} sectores={userForm.sectores} />
 
             <div className="Biblioteca__search">
                 <form onSubmit={handleSubmit} id="biblioteca">
@@ -126,26 +106,17 @@ const Biblioteca = () => {
             </div>
 
             <div className="Biblioteca__files-section">
-                {
-                    loading && <SpinnerComponent />
-                }
-                {
-                    (!loading && files.length === 0)
-                    &&
-                    <p>
-                        No existen archivos con ese nombre
-                    </p>
-                }
-                {
-                    !loading &&
-                    files.filter( f => f.sector === sector ).map
-                    (file => (
-                        <div key={file._id} className="Biblioteca__file" >
-                            <i className="far fa-file-alt Biblioteca__file-icon"></i>
-                            <h5 className="card-title text-center">{file.title}</h5>
-                            <a href={file.url} download target="_blank" className="Biblioteca__file-download"><i className="fas fa-download"></i>Descargar</a>
-                        </div>
-                    ))
+                {loading && <SpinnerComponent />}
+                {!loading && files.length === 0 && <p>No existen archivos con ese nombre</p>}
+                {!loading &&
+                    files.filter(f => f.sector === sector).map
+                        (file => (
+                            <div key={file._id} className="Biblioteca__file" >
+                                <i className="far fa-file-alt Biblioteca__file-icon"></i>
+                                <h5 className="card-title text-center">{file.title}</h5>
+                                <a href={file.url} download target="_blank" className="Biblioteca__file-download"><i className="fas fa-download"></i>Descargar</a>
+                            </div>
+                        ))
                 }
             </div>
             <WhatsappBtn />
