@@ -92,20 +92,43 @@ const MisReservas = ({ reservas, salas, refreshReservas }) => {
         </>
     )
 }
-
 var format = 'HH:mma'
-const isBetween = (horainicio, horafin, inicioUser) => {
+const gethoraMomentFormat = (hora) => {
+    return hora.substring(0, 2) == '12' ? moment(hora + 'pm', 'HH:mma') : moment(hora + 'am', 'HH:mma')
+}
+
+const isBetween = (horainicio, horafin, horaUser) => {
     var beforeTime = moment(horainicio, format),
         afterTime = moment(horafin, format);
-    return inicioUser.isBetween(beforeTime, afterTime)
+    return horaUser.isBetween(beforeTime, afterTime)
 }
-const validarDisponibilidad = async (inicioUser, arrayReservas) => {
+const isBefore = (horaLimite, horaUser) => {
+    var beforeTime = moment(horaLimite, format);
+    return horaUser.isBefore(beforeTime)
+}
+const isAfter = (horaLimite, horaUser) => {
+    var afterTime = moment(horaLimite, format);
+    return horaUser.isAfter(afterTime)
+}
+
+const validarDisponibilidad = async (hora, arrayReservas) => {
     let ocupados = await arrayReservas.map(reserva => {
-        return isBetween(reserva.horainicio + 'am', reserva.horafin + 'am', inicioUser) ? true : false
+        return isBetween(reserva.horainicio + 'am', reserva.horafin + 'am', hora) ? true : false
     })
-    console.log('ocupados', ocupados)
     return !ocupados.includes(true)
 }
+
+
+const validarSihayReservasIntermedias = async (horainicio, horafin, arrayReservas) => {
+    let ocupados = await arrayReservas.map(reserva => {
+        return isBefore(reserva.horainicio + 'am', horainicio + 'am') &&
+            isAfter(reserva.horafin + 'am', horafin + 'am')
+            ? true : false
+    })
+    console.log('validarSihayReservasIntermedias > ocupados', ocupados)
+    return !ocupados.includes(true)
+}
+
 
 const ReunionesUser = () => {
     const history = useHistory()
@@ -180,11 +203,16 @@ const ReunionesUser = () => {
             let horariocierre = moment(`${_sala[0].horariocierre}am`, 'HH:mma');
             let horaFinUser = moment(`${horaElegida}am`, 'HH:mma');
 
+            console.log('horaElegida', horaFinUser)
+            console.log('horaElegida 2', gethoraMomentFormat(horaElegida))
+
             if (horaFinUser.isBefore(horariocierre)) {
 
                 if (reservasDelDia) {
                     const estaDisponible = await validarDisponibilidad(horaFinUser, reservasDelDia)
+                    const nohayreservasIntermedias = await validarSihayReservasIntermedias(horainicio, horaFinUser, reservasDelDia)
                     console.log("estaDisponible", estaDisponible)
+                    console.log("nohayreservasIntermedias", nohayreservasIntermedias)
 
                     if (estaDisponible) {
                         console.log(horaElegida)
@@ -245,7 +273,7 @@ const ReunionesUser = () => {
                             <label>Sala</label>
                             <select required name='salaId' value={salaId} onChange={handleInputChange}>
                                 <option>Seleccionar...</option>
-                                {salas && salas.map(c => <option value={c._id} key={c._id}>{c.nombre}</option>)}
+                                {salas && salas.map(sala => sala.habilitado && <option value={sala._id} key={sala._id}>{sala.nombre}</option>)}
                             </select>
                         </div>
                         <div>

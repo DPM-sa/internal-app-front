@@ -14,25 +14,25 @@ import { useGetInformesMensuales } from '../../hooks/useGetInformesMensuales';
 
 const renderTooltipSee = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-        Ver reunión
+        Ver sala
     </Tooltip>
 );
 
 const renderTooltipEdit = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-        Editar reunión
+        Editar sala
     </Tooltip>
 );
 
 const renderTooltipHide = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-        Ocultar reunión
+        Ocultar sala
     </Tooltip>
 );
 
 const renderTooltipDelete = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-        Eliminar reunión
+        Eliminar sala
     </Tooltip>
 );
 
@@ -48,51 +48,51 @@ const SalaReunionesAdmin = () => {
     const { reservasTotales } = useGetInformesMensuales()
 
 
-    const handleEditComedor = async (comedor, action) => {
-        if (comedor.habilitado && action === "ver") return
-        if (!comedor.habilitado && action === "ocultar") return
+    const handleEditComedor = async (sala, action) => {
+        if (sala.habilitado && action === "ver") return
+        if (!sala.habilitado && action === "ocultar") return
         if (action === 'ver') {
             swalAlerts
-                .activar('comedor')
+                .activar('sala')
                 .then((result) => {
                     if (result.isConfirmed) {
-                        api.editComedor({ ...comedor, "habilitado": true }, comedor._id).then(() => getSalas())
+                        api.editSala({ ...sala, "habilitado": true }, sala._id).then(() => getSalas())
                     }
                 })
         } else if (action === 'ocultar') {
             swalAlerts
-                .desactivar('comedor')
+                .desactivar('sala')
                 .then((result) => {
                     if (result.isConfirmed) {
-                        api.editComedor({ ...comedor, "habilitado": false }, comedor._id).then(() => getSalas())
+                        api.editSala({ ...sala, "habilitado": false }, sala._id).then(() => getSalas())
                     }
                 })
         }
     }
 
-    const handleDeleteComedor = async (user) => {
-        // swalAlerts
-        //     .eliminarUsuario()
-        //     .then(async (result) => {
-        //         if (result.isConfirmed) {
-        //             if (!user.image || user.image === "") {
-        //                 api.deleteUser(user._id)
-        //                     .then(() => {
-        //                         getSalas()
-        //                     })
-        //             } else {
-        //                 const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
-        //                 storageRef.delete()
-        //                     .then(() => {
-        //                         api.deleteUser(user._id)
-        //                             .then(() => {
-        //                                 getSalas()
-        //                             })
-        //                     })
-        //             }
-        //         }
-        //     })
-    }
+    // const handleDeleteComedor = async (user) => {
+    //     swalAlerts
+    //         .eliminarUsuario()
+    //         .then(async (result) => {
+    //             if (result.isConfirmed) {
+    //                 if (!user.image || user.image === "") {
+    //                     api.deleteUser(user._id)
+    //                         .then(() => {
+    //                             getSalas()
+    //                         })
+    //                 } else {
+    //                     const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
+    //                     storageRef.delete()
+    //                         .then(() => {
+    //                             api.deleteUser(user._id)
+    //                                 .then(() => {
+    //                                     getSalas()
+    //                                 })
+    //                         })
+    //                 }
+    //             }
+    //         })
+    // }
 
     const handleEdit = (id) => {
         history.push(`reunionesadmin/edit/${id}`)
@@ -134,51 +134,57 @@ const SalaReunionesAdmin = () => {
                                                 <span className="posts-lists-control-actions">
 
                                                     {/* TODO: refactorizar, codigo repetido */}
-                                                    <OverlayTrigger
-                                                        placement="top"
-                                                        delay={{ show: 100, hide: 100 }}
-                                                        overlay={renderTooltipSee}
-                                                    >
-                                                        <i
-                                                           // onClick={() => handleEditComedor(comedor, 'ver')}
-                                                            className={sala.habilitado ? 'button-watch-post disabled far fa-eye' : 'button-watch-post far fa-eye'}
-                                                        />
-                                                    </OverlayTrigger>
+
 
                                                     <OverlayTrigger
                                                         placement="top"
                                                         delay={{ show: 100, hide: 100 }}
                                                         overlay={renderTooltipEdit}
                                                     >
-                                                        <i 
-                                                             onClick={() => handleEdit(sala._id)} 
-                                                            className="fas fa-pen" 
-                                                        />
-                                                    </OverlayTrigger>
-
-                                                    <OverlayTrigger
-                                                        placement="top"
-                                                        delay={{ show: 100, hide: 100 }}
-                                                        overlay={renderTooltipHide}
-                                                    >
                                                         <i
-                                                           // onClick={() => handleEditComedor(comedor, 'ocultar')}
-                                                            className={sala.habilitado
-                                                                ? 'button-watch-hidden fas fa-eye-slash'
-                                                                : 'button-watch-hidden disabled fas fa-eye-slash'
-                                                            }
+                                                            onClick={() => handleEdit(sala._id)}
+                                                            className="fas fa-pen"
                                                         />
                                                     </OverlayTrigger>
 
+                                                    {sala.habilitado ?
+                                                        <OverlayTrigger
+                                                            placement="top"
+                                                            delay={{ show: 100, hide: 100 }}
+                                                            overlay={renderTooltipHide}
+                                                        >
+                                                            <i
+                                                                onClick={() => handleEditComedor(sala, 'ocultar')}
+                                                                className={sala.habilitado
+                                                                    ? 'button-watch-hidden fas fa-eye-slash'
+                                                                    : 'button-watch-hidden disabled fas fa-eye-slash'
+                                                                }
+                                                            />
+                                                        </OverlayTrigger>
+                                                        :
+                                                        <OverlayTrigger
+                                                            placement="top"
+                                                            delay={{ show: 100, hide: 100 }}
+                                                            overlay={renderTooltipSee}
+                                                        >
+                                                            <i
+                                                                onClick={() => handleEditComedor(sala, 'ver')}
+                                                                className={sala.habilitado ? 'button-watch-post disabled far fa-eye' : 'button-watch-post far fa-eye'}
+                                                            />
+                                                        </OverlayTrigger>
+
+
+                                                    }
+                                                    {/* 
                                                     <OverlayTrigger
                                                         placement="top"
                                                         delay={{ show: 100, hide: 100 }}
                                                         overlay={renderTooltipDelete}
                                                     >
                                                         <i 
-                                                            //onClick={() => handleDeleteComedor(comedor)} 
+                                                            onClick={() => handleDeleteComedor(sala)} 
                                                             className="fas fa-trash-alt" />
-                                                    </OverlayTrigger>
+                                                    </OverlayTrigger> */}
 
                                                 </span>
                                             </li>
