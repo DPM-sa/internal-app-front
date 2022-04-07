@@ -12,8 +12,7 @@ export const Folders = ({
     console.log(sectoresEditor)
 
     const _sectoresEditor = sectoresEditor.map(s => { return { "label": s } })
-    const sect = editor ?
-        [{ "label": "General" }, ..._sectoresEditor]
+    const sect = editor ? _sectoresEditor
         : [{ "label": "General" }, ...sectores]
 
     const setActivo = (sector) => openFolder(sector);
