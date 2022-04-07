@@ -50,7 +50,7 @@ export const CardReunion = ({
                     overlay={renderTooltipEdit}
                 >
                     <i
-                        onClick={() => history.push(`/comedoresadmin/viandasedit/${item?._id}`)}
+                        onClick={() => history.push(`/reunionesadmin/editreunion/${item?._id}`)}
                         className="fas fa-pen"></i>
                 </OverlayTrigger>
 

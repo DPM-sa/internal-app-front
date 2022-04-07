@@ -111,6 +111,8 @@ export const newReservaSala = async (data) => {
     return await http.post(`/sala/${data.salaId}/reservas`, data)
 }
 
+//Reuniones
+
 export const getReunionesReservasUsuario = async () => {
     return await http.get(`/sala/reservas/usuario`)
 }
@@ -126,3 +128,17 @@ export const cancelarReservaSala = async (data) => {
 export const getDisponibilidadSala = async (salaId, date) => {
     return await http.get(`/sala/disponibilidad/${salaId}/${date}`)
 }
+
+export const getReunion = async (id) => {
+    return await http.get(`/sala/reunion/${id}`)
+}
+
+export const editReunion = async (data, id) => {
+    return await http.put(`/sala/reunion/${id}`, data)
+}
+
+export const deleteSala = async (id) => {
+    return await http.delete(`/sala/${id}`)
+}
+
+

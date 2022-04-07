@@ -39,6 +39,7 @@ import SalaReunionesAdmin from '../views/Admin/SalaReunionesAdmin'
 import NewSala from '../views/Admin/NewSala'
 import EditSala from '../views/Admin/EditSala'
 import ReunionesUser from '../views/User/ReunionesUser'
+import EditReunion from '../views/Admin/EditReunion'
 
 const AppRouter = () => {
     return (
@@ -123,6 +124,9 @@ const AppRouter = () => {
                 </AdminRoute>
                 <AdminRoute path="/reunionesadmin/edit/:id">
                     <EditSala />
+                </AdminRoute>
+                <AdminRoute path="/reunionesadmin/editreunion/:id">
+                    <EditReunion />
                 </AdminRoute>
             </Switch>
         </>

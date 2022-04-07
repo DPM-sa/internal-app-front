@@ -70,29 +70,16 @@ const SalaReunionesAdmin = () => {
         }
     }
 
-    // const handleDeleteComedor = async (user) => {
-    //     swalAlerts
-    //         .eliminarUsuario()
-    //         .then(async (result) => {
-    //             if (result.isConfirmed) {
-    //                 if (!user.image || user.image === "") {
-    //                     api.deleteUser(user._id)
-    //                         .then(() => {
-    //                             getSalas()
-    //                         })
-    //                 } else {
-    //                     const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
-    //                     storageRef.delete()
-    //                         .then(() => {
-    //                             api.deleteUser(user._id)
-    //                                 .then(() => {
-    //                                     getSalas()
-    //                                 })
-    //                         })
-    //                 }
-    //             }
-    //         })
-    // }
+    const handleDeleteSala = (sala) => {
+        swalAlerts
+            .eliminar('sala')
+            .then(() => {
+                api.deleteSala(sala._id)
+                    .then(() => {
+                        getSalas()
+                    })
+            })
+    }
 
     const handleEdit = (id) => {
         history.push(`reunionesadmin/edit/${id}`)
@@ -175,16 +162,16 @@ const SalaReunionesAdmin = () => {
 
 
                                                     }
-                                                    {/* 
+                                                    
                                                     <OverlayTrigger
                                                         placement="top"
                                                         delay={{ show: 100, hide: 100 }}
                                                         overlay={renderTooltipDelete}
                                                     >
                                                         <i 
-                                                            onClick={() => handleDeleteComedor(sala)} 
+                                                            onClick={() => handleDeleteSala(sala)} 
                                                             className="fas fa-trash-alt" />
-                                                    </OverlayTrigger> */}
+                                                    </OverlayTrigger>
 
                                                 </span>
                                             </li>
