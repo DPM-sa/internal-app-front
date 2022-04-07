@@ -141,4 +141,6 @@ export const deleteSala = async (id) => {
     return await http.delete(`/sala/${id}`)
 }
 
-
+export const eliminarReservaSala = async (id) => {
+    return await http.delete(`/sala/reuniones/${id}`)
+}

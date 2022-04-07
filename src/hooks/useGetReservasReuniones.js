@@ -5,7 +5,7 @@ export const useGetReservasReuniones = (id) => {
     const [reservas, setReservas] = useState([]);
     const [loadingReservas, setLoadingReservas] = useState(false)
 
-    const getReservas = () => {
+    const getReservasReuniones = () => {
         if (id) {
             console.log('get reservas...')
             setLoadingReservas(true)
@@ -24,8 +24,8 @@ export const useGetReservasReuniones = (id) => {
     }
 
     useEffect(() => {
-        getReservas()
+        getReservasReuniones()
     }, [id])
 
-    return { reservas, loadingReservas, getReservas }
+    return { reservas, loadingReservas, getReservasReuniones }
 }

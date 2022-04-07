@@ -2,7 +2,7 @@ import React from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { editViandabyId, cancelarReservaSala } from '../../services/api';
+import { cancelarReservaSala, eliminarReservaSala } from '../../services/api';
 
 
 const renderTooltipEdit = (props) => (
@@ -11,9 +11,15 @@ const renderTooltipEdit = (props) => (
     </Tooltip>
 );
 
-const renderTooltipDelete = (props) => (
+const renderTooltipCancelar = (props) => (
     <Tooltip id="button-tooltip" {...props}>
         cancelar reunion
+    </Tooltip>
+);
+
+const renderTooltipDelete = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+        Eliminar reunion
     </Tooltip>
 );
 
@@ -21,21 +27,34 @@ const renderTooltipDelete = (props) => (
 
 export const CardReunion = ({
     item,
-    handleRefresh = () =>{}
+    handleRefresh = () => { }
 }) => {
 
     const history = useHistory()
 
-    const handleDesactivar = (id) => {
+    const handleDesactivar = () => {
         cancelarReservaSala({ ...item, habilitado: false })
             .then(() => {
                 Swal.fire('Éxito', 'La reunion se ha cancelado con éxito', 'success')
-                .then(() => handleRefresh())
+                    .then(() => handleRefresh())
             })
             .catch(() => {
                 Swal.fire('Error', 'Ha ocurrido un error, comuníquese con el administrador', 'error')
             })
     }
+
+    const handleEliminar = () => {
+        eliminarReservaSala(item._id)
+            .then(() => {
+                Swal.fire('Éxito', 'La reunion se ha eliminado con éxito', 'success')
+                    .then(() => handleRefresh())
+            })
+            .catch(() => {
+                Swal.fire('Error', 'Ha ocurrido un error, comuníquese con el administrador', 'error')
+            })
+    }
+
+
 
 
     return (
@@ -55,17 +74,28 @@ export const CardReunion = ({
                 </OverlayTrigger>
 
 
-
                 <OverlayTrigger
                     placement="top"
                     delay={{ show: 100, hide: 100 }}
                     overlay={renderTooltipDelete}
                 >
                     <i
-                        onClick={() => handleDesactivar(item)}
+                        onClick={() => handleEliminar(item)}
                         className="fas fa-trash-alt"
                     ></i>
                 </OverlayTrigger>
+
+                {item.habilitado &&
+                    <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 100, hide: 100 }}
+                        overlay={renderTooltipCancelar}
+                    >
+                        <i
+                            onClick={() => handleDesactivar(item)}
+                            className="fas fa-ban"
+                        ></i>
+                    </OverlayTrigger>}
 
             </div>
         </div>
