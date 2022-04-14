@@ -79,6 +79,11 @@ const Biblioteca = () => {
 
     const openFolder = (sector) => { setSector(sector); }
 
+    const handleDownload = (file) => {
+        
+    }
+
+
     return (
         <>
             <NavbarProfile />
@@ -114,7 +119,10 @@ const Biblioteca = () => {
                             <div key={file._id} className="Biblioteca__file" >
                                 <i className="far fa-file-alt Biblioteca__file-icon"></i>
                                 <h5 className="card-title text-center">{file.title}</h5>
-                                <a href={file.url} download target="_blank" className="Biblioteca__file-download"><i className="fas fa-download"></i>Descargar</a>
+                                <a href={file.url} download target="_blank" className="Biblioteca__file-download">
+                                    <i className="fas fa-download"></i>Descargar
+                                </a>
+                                <button onClick={() => handleDownload(file)}>Descargar 2</button>
                             </div>
                         ))
                 }

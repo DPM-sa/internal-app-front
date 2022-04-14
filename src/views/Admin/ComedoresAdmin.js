@@ -45,7 +45,7 @@ const ComedoresAdmin = () => {
         loadingComedores,
         getComedores
     } = useGetAllComedores(editOrNewUser, typeOrder)
-    const {reservasTotales} = useGetInformesMensuales()
+    const { reservasTotales } = useGetInformesMensuales()
 
 
     const handleEditComedor = async (comedor, action) => {
@@ -70,31 +70,17 @@ const ComedoresAdmin = () => {
         }
     }
 
-    const handleDeleteComedor = async (user) => {
-        // swalAlerts
-        //     .eliminarUsuario()
-        //     .then(async (result) => {
-        //         if (result.isConfirmed) {
-        //             if (!user.image || user.image === "") {
-        //                 api.deleteUser(user._id)
-        //                     .then(() => {
-        //                         getComedores()
-        //                     })
-        //             } else {
-        //                 const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
-        //                 storageRef.delete()
-        //                     .then(() => {
-        //                         api.deleteUser(user._id)
-        //                             .then(() => {
-        //                                 getComedores()
-        //                             })
-        //                     })
-        //             }
-        //         }
-        //     })
+    const handleDeleteComedor = async (comedor) => {
+        swalAlerts
+            .eliminar('comedor')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    api.deleteComedor(comedor._id).then(() => getComedores())
+                }
+            })
     }
 
-    const editUser = (id) => {
+    const editComedor = (id) => {
         history.push(`comedoresadmin/edit/${id}`)
     }
 
@@ -133,39 +119,42 @@ const ComedoresAdmin = () => {
                                                 <span>{formatFecha(comedor.date)}</span>
                                                 <span className="posts-lists-control-actions">
 
-                                                    {/* TODO: refactorizar, codigo repetido */}
-                                                    <OverlayTrigger
-                                                        placement="top"
-                                                        delay={{ show: 100, hide: 100 }}
-                                                        overlay={renderTooltipSee}
-                                                    >
-                                                        <i
-                                                            onClick={() => handleEditComedor(comedor, 'ver')}
-                                                            className={comedor.habilitado ? 'button-watch-post disabled far fa-eye' : 'button-watch-post far fa-eye'}
-                                                        />
-                                                    </OverlayTrigger>
-
                                                     <OverlayTrigger
                                                         placement="top"
                                                         delay={{ show: 100, hide: 100 }}
                                                         overlay={renderTooltipEdit}
                                                     >
-                                                        <i onClick={() => editUser(comedor._id)} className="fas fa-pen" />
+                                                        <i onClick={() => editComedor(comedor._id)} className="fas fa-pen" />
                                                     </OverlayTrigger>
 
-                                                    <OverlayTrigger
-                                                        placement="top"
-                                                        delay={{ show: 100, hide: 100 }}
-                                                        overlay={renderTooltipHide}
-                                                    >
-                                                        <i
-                                                            onClick={() => handleEditComedor(comedor, 'ocultar')}
-                                                            className={comedor.habilitado
-                                                                ? 'button-watch-hidden fas fa-eye-slash'
-                                                                : 'button-watch-hidden disabled fas fa-eye-slash'
-                                                            }
-                                                        />
-                                                    </OverlayTrigger>
+                                                    {comedor.habilitado ?
+
+                                                        <OverlayTrigger
+                                                            placement="top"
+                                                            delay={{ show: 100, hide: 100 }}
+                                                            overlay={renderTooltipHide}
+                                                        >
+                                                            <i
+                                                                onClick={() => handleEditComedor(comedor, 'ocultar')}
+                                                                className={comedor.habilitado
+                                                                    ? 'button-watch-hidden fas fa-eye-slash'
+                                                                    : 'button-watch-hidden disabled fas fa-eye-slash'
+                                                                }
+                                                            />
+                                                        </OverlayTrigger>
+                                                        :
+                                                        <OverlayTrigger
+                                                            placement="top"
+                                                            delay={{ show: 100, hide: 100 }}
+                                                            overlay={renderTooltipSee}
+                                                        >
+                                                            <i
+                                                                onClick={() => handleEditComedor(comedor, 'ver')}
+                                                                className={comedor.habilitado ? 'button-watch-post disabled far fa-eye' : 'button-watch-post far fa-eye'}
+                                                            />
+                                                        </OverlayTrigger>
+
+                                                    }
 
                                                     <OverlayTrigger
                                                         placement="top"

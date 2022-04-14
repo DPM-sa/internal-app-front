@@ -48,6 +48,22 @@ export const editComedor = async (data, id) => {
     return await http.put(`/comedor/${id}`, data)
 }
 
+export const deleteComedor = async (id) => {
+    return await http.delete(`/comedor/${id}`)
+}
+
+export const descargarInformeDiario = async (comedorId, fecha) => {
+    return await http.get(`/comedor/informes/diario/${comedorId}/${fecha}`)
+}
+
+export const descargarInformeMensual = async (comedorId, mes) => {
+    return await http.get(`/comedor/informes/mensual/${comedorId}/${mes}`)
+}
+
+
+
+
+
 
 
 
@@ -72,7 +88,7 @@ export const newViandaPOST = async (data) => {
 
 // Reservas
 export const getReservasDiarias = async (id) => {
-    return await http.get(`/comedor/${id}/reservas`)
+    return await http.get(`/comedor/informes/diario/${id}`)
 }
 
 export const getInformesMensuales = async (id) => {
@@ -90,6 +106,7 @@ export const getReservasUsuario = async (id) => {
 export const cancelarReserva = async (id) => {
     return await http.put(`/comedor/reserva/cancelar`, { idreserva: id })
 }
+
 
 
 
@@ -144,3 +161,4 @@ export const deleteSala = async (id) => {
 export const eliminarReservaSala = async (id) => {
     return await http.delete(`/sala/reuniones/${id}`)
 }
+

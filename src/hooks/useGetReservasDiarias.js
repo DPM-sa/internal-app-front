@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getReservasDiarias } from '../services/api'
+import { formatFecha } from '../utils/helpers';
 
 export const useGetReservasDiarias = (id) => {
     const [reservas, setReservas] = useState([]);
@@ -10,9 +11,15 @@ export const useGetReservasDiarias = (id) => {
         setLoading(true)
         getReservasDiarias(id)
             .then(resp => {
-                console.log(resp)
                 if (resp.data) {
-                   // setReservas(resp.data.data)
+
+                    const filterUniqueData = [...new Map(resp.data.reservas.map(item =>
+                        [item['date'], item])).values()];
+
+                   setReservas(filterUniqueData.map(reserva => {return {
+                       ...reserva,
+                       formatteddate: formatFecha(reserva.date)
+                   }}))
                 }
                 setLoading(false)
                 setError('')

@@ -9,8 +9,6 @@ export const Folders = ({
     sectoresEditor = []
 }) => {
 
-    console.log(sectoresEditor)
-
     const _sectoresEditor = sectoresEditor.map(s => { return { "label": s } })
     const sect = editor ? _sectoresEditor
         : [{ "label": "General" }, ...sectores]

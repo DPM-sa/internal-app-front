@@ -173,9 +173,16 @@ const ComedorUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true);
+        const nombreComedor = await comedores.filter(c => c._id === comedorId)[0].nombre;
+        const nombreVianda = await viandas.filter(v => v._id === vianda)[0].nombre;
 
         if (validarHoraLimite('12:00am', form.date)) {
-            newReservaVianda({ ...form, viandas: [vianda] }) //por ahora solo se puede reservar de a 1 vianda
+            newReservaVianda({ 
+                ...form, 
+                viandas: [vianda],
+                nombreComedor,
+                nombreVianda
+                })
                 .then(() => {
                     setLoading(false)
                     Swal.fire('Éxito', 'Su reserva se ha realizado con éxito', 'success')
@@ -222,7 +229,7 @@ const ComedorUser = () => {
                             <label>Comedor</label>
                             <select required name='comedorId' value={comedorId} onChange={handleInputChange}>
                                 <option value=''>Seleccionar...</option>
-                                {comedores && comedores.map(c => <option value={c._id} key={c._id}>{c.nombre}</option>)}
+                                {comedores && comedores.map(c => c.habilitado && <option value={c._id} key={c._id}>{c.nombre}</option>)}
                             </select>
                         </div>
 

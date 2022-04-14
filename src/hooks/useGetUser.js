@@ -13,7 +13,6 @@ export const useGetUser = (id) => {
     useEffect(() => {
         getUser(id)
             .then(resp => {
-                console.log(resp.data)
                 if (resp.data) {
                     setUserInfo({
                         userForm:{
