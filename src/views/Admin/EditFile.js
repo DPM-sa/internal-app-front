@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
+import { v4 as uuidv4 } from 'uuid';
 
 const EditFile = () => {
     const { id } = useParams()
@@ -22,6 +23,8 @@ const EditFile = () => {
     const [filename, setFilename] = useState('')
     const [fileTemp, setFileTemp] = useState('')
     const [fileId, setFileId] = useState('')
+   // const [ fileExtension, setFileExtension] = useState('')
+
 
     const [loading, setLoading] = useState(false)
     const [titleError, setTitleError] = useState('')
@@ -31,9 +34,11 @@ const EditFile = () => {
     }
 
     const handleFileChange = (e) => {
-        setFilename(e.target.files[0].name)
-        setFileTemp(e.target.files[0].name)
+        let name = e.target.files[0].name
+        setFilename(name)
+        setFileTemp(name)
         setFile(e.target.files[0])
+       // setFileExtension(name.substring(name.lastIndexOf('.')+1,name.length))
     }
 
     const handleInputChange = (e) => {
@@ -55,7 +60,8 @@ const EditFile = () => {
         }
         setLoading(true)
         if (fileTemp !== "") {
-            const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}`)
+            let fileId = uuidv4()
+            const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}${filename}`)
             const res = await storageRef.put(file)
             const url = await storageRef.getDownloadURL()
             setFilename(url)

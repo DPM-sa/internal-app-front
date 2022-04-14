@@ -7,12 +7,13 @@ import { useStateValue } from '../../StateProvider'
 import { v4 as uuidv4 } from 'uuid';
 import './NewFile.css'
 
+
+const ruta = "https://internal-app-dpm.herokuapp.com";
+
+
 const NewFile = () => {
     const [{ token, editOrNewFile }, dispatch] = useStateValue()
-
     const { sector } = useParams()
-    const ruta = "https://internal-app-dpm.herokuapp.com";
-
     const history = useHistory()
 
     const headers = {
@@ -20,13 +21,11 @@ const NewFile = () => {
         "token": `${token}`
     }
 
-    const [form, setForm] = useState({
-        title: ''
-    })
+    const [form, setForm] = useState({ title: '' })
     const { title } = form
-
     const [file, setFile] = useState({})
     const [filename, setFilename] = useState('')
+   // const [ fileExtension, setFileExtension] = useState('')
     const [loading, setLoading] = useState(false)
     const [titleError, setTitleError] = useState('')
     const [filenameError, setFilenameError] = useState('')
@@ -36,8 +35,10 @@ const NewFile = () => {
     }
 
     const handleFileChange = (e) => {
+        let name = e.target.files[0].name
         setFile(e.target.files[0])
-        setFilename(e.target.files[0].name)
+        setFilename(name)
+       // setFileExtension(name.substring(name.lastIndexOf('.')+1,name.length))
     }
 
     const handleInputChange = (e) => {
@@ -64,10 +65,11 @@ const NewFile = () => {
         }
         setLoading(true)
         let fileId = uuidv4()
-        const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}`)
+        const storageRef = storage.ref().child('BibliotecaFiles').child(`${fileId}${filename}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
-        await axios.post(`${ ruta }/file`,
+        
+        await axios.post(`${ruta}/file`,
             {
                 "title": `${title}`,
                 "url": `${url}`,
@@ -144,7 +146,7 @@ const NewFile = () => {
                     <div className="NewFile__content-bottom">
                         <p>Formatos aceptados</p>
                         <p>.doc / .xls / .xlsx / .pdf / .jpg / .jpeg / .png / .gif / .mp4</p>
-                        <p>Carpeta de destino: { sector }</p>
+                        <p>Carpeta de destino: {sector}</p>
                         <div className="NewFile-content-bottom-actions">
                             <button disabled={loading} type="submit">
                                 {
