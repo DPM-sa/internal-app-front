@@ -122,7 +122,6 @@ const Biblioteca = () => {
                                 <a href={file.url} download target="_blank" className="Biblioteca__file-download">
                                     <i className="fas fa-download"></i>Descargar
                                 </a>
-                                <button onClick={() => handleDownload(file)}>Descargar 2</button>
                             </div>
                         ))
                 }
