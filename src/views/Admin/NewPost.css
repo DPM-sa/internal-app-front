@@ -25,9 +25,9 @@ trix-toolbar .trix-button-group, trix-toolbar .trix-button-group button {
     border: none;
 }
 
-button.trix-button.trix-button--icon.trix-button--icon-redo, button.trix-button.trix-button--icon.trix-button--icon-undo, button.trix-button.trix-button--icon.trix-button--icon-attach, button.trix-button.trix-button--icon.trix-button--icon-increase-nesting-level, button.trix-button.trix-button--icon.trix-button--icon-decrease-nesting-level, button.trix-button.trix-button--icon.trix-button--icon-code, button.trix-button.trix-button--icon.trix-button--icon-quote, button.trix-button.trix-button--icon.trix-button--icon-heading-1 {
+/* button.trix-button.trix-button--icon.trix-button--icon-redo, button.trix-button.trix-button--icon.trix-button--icon-undo, button.trix-button.trix-button--icon.trix-button--icon-attach, button.trix-button.trix-button--icon.trix-button--icon-increase-nesting-level, button.trix-button.trix-button--icon.trix-button--icon-decrease-nesting-level, button.trix-button.trix-button--icon.trix-button--icon-code, button.trix-button.trix-button--icon.trix-button--icon-quote, button.trix-button.trix-button--icon.trix-button--icon-heading-1 {
     display: none;
-}
+} */
 
 trix-toolbar .trix-button:not(:first-child) {
     border-left: none;

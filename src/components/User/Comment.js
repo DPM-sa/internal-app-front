@@ -66,6 +66,7 @@ const Comment = ({ comment }) => {
                     </span>
                     {user._id === userId && <i onClick={handleShow} className="icon-delete-comment fas fa-trash-alt"></i>}
                 </div>
+                {comment.image && <img style={{width:300}} src={comment.image}/>}
                 <p className="comment-txt">
                     {comment.content}
                 </p>

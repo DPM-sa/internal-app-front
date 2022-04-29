@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
+import { ReactTrixRTEInput, ReactTrixRTEToolbar } from "react-trix-rte";
+import Trix from "trix";
 import './NewPost.css'
 import { storage } from '../../config/firebase';
 import { useStateValue } from '../../StateProvider';
@@ -8,11 +10,6 @@ import Swal from 'sweetalert2';
 import CreatableSelect from 'react-select/creatable';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { convertToRaw } from 'draft-js';
-import draftToHtmlPuri from "draftjs-to-html";
 
 
 const NewPost = () => {
@@ -23,7 +20,7 @@ const NewPost = () => {
         "token": `${token}`
     }
     const [title, setTitle] = useState('')
-    const [content, setContent] = useState()
+    const [content, setContent] = useState('')
     const [imgUrl, setImgUrl] = useState('')
     const [filename, setFilename] = useState('')
     const [tags, setTags] = useState([])
@@ -37,8 +34,13 @@ const NewPost = () => {
     const handleTitleChange = (event) => {
         setTitle(event.target.value)
     }
-    const handleContentChange = (value) => {
-        setContent(value)
+    const handleContentChange = (event) => {
+        setContent(event.target.value)
+    }
+
+    const onFileAccepted = (e) => {
+        // e.preventDefault()
+        console.log(e)
     }
 
     useEffect(() => {
@@ -48,70 +50,67 @@ const NewPost = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const htmlPuri = draftToHtmlPuri(
-            convertToRaw(content.getCurrentContent())
-          );
+        console.log(content)
+        // if (title === "" || content === "" || imgUrl === "") {
+        //     if (imgUrl === "") {
+        //         setImgError('La imagen es requerida')
+        //     } else {
+        //         setImgError('')
+        //     }
+        //     if (title === "") {
+        //         setTitleError('El titulo es requerido')
+        //     } else {
+        //         setTitleError('')
+        //     }
+        //     if (content === "") {
+        //         setContentError('La descripcion es requerida')
+        //     } else {
+        //         setContentError('')
+        //     }
+        //     return
+        // }
+        // setLoading(true)
+        // await axios.post('https://internal-app-dpm.herokuapp.com/post',
+        //     {
+        //         "title": `${title}`,
+        //         "content": `${content}`,
+        //         "image": `${imgUrl}`,
+        //         "tags": tags,
+        //         "fileId": `${fileId}`
+        //     },
+        //     { headers })
+        //     .then((resp) => {
+        //         console.log(resp.data)
+        //         Swal.fire(
+        //             'Exito',
+        //             'El post se ha subido con exito',
+        //             'success'
+        //         ).then((resp) => {
+        //             if (resp) {
+        //                 setLoading(false)
+        //                 setTitle('')
+        //                 setContent('')
+        //                 setImgUrl('')
+        //                 setFilename('')
+        //                 setTags([])
+        //                 setFileId('')
+        //                 history.push('/admin')
+        //             }
 
-        if (title === "" || content === "" || imgUrl === "" || htmlPuri === '' ) {
-            if (imgUrl === "") {
-                setImgError('La imagen es requerida')
-            } else {
-                setImgError('')
-            }
-            if (title === "") {
-                setTitleError('El titulo es requerido')
-            } else {
-                setTitleError('')
-            }
-            if (content === "") {
-                setContentError('La descripcion es requerida')
-            } else {
-                setContentError('')
-            }
-            return
-        }
-        setLoading(true)
-        await axios.post('https://internal-app-dpm.herokuapp.com/post',
-            {
-                "title": `${title}`,
-                "content": `${htmlPuri}`,
-                "image": `${imgUrl}`,
-                "tags": tags,
-                "fileId": `${fileId}`
-            },
-            { headers })
-            .then((resp) => {
-                console.log(resp.data)
-                Swal.fire(
-                    'Exito',
-                    'El post se ha subido con exito',
-                    'success'
-                ).then((resp) => {
-                    if (resp) {
-                        setLoading(false)
-                        setTitle('')
-                        setContent('')
-                        setImgUrl('')
-                        setFilename('')
-                        setTags([])
-                        setFileId('')
-                        history.push('/admin')
-                    }
+        //         })
+        //     })
+        //     .catch(() => {
+        //         Swal.fire(
+        //             'Error',
+        //             'Ha ocurrido un error, comuníquese con el administrador',
+        //             'error'
+        //         ).then((resp) => {
+        //             if (resp) {
+        //                 setLoading(false)
+        //             }
 
-                })
-            })
-            .catch(() => {
-                Swal.fire(
-                    'Error',
-                    'Ha ocurrido un error, comuníquese con el administrador',
-                    'error'
-                ).then((resp) => {
-                    if (resp) {
-                        setLoading(false)
-                    }
-
-                })
-            })
+        //         })
+        //     })
     }
     const handlePictureClick = () => {
         document.querySelector("#fileSelector").click()
@@ -140,7 +139,6 @@ const NewPost = () => {
             </>
         );
     };
-    
     const getTags = async () => {
         await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
             .then(resp => {
@@ -155,11 +153,9 @@ const NewPost = () => {
                 setOptionsTags(arrWithoutRepeated)
             })
     }
-    
     useEffect(() => {
         getTags()
     }, [])
-
     const [optionsTags, setOptionsTags] = useState([
         { value: 'Novedades generales', label: 'Novedades generales' },
         { value: 'Higiene y seguridad', label: 'Higiene y seguridad' },
@@ -174,40 +170,9 @@ const NewPost = () => {
         { value: 'Aniversarios', label: 'Aniversarios' },
         { value: 'Beneficios', label: 'Beneficios' },
     ])
-
     const handleReturn = () => {
         history.push('/admin')
     }
-
-    const uploadCallback = (file, callback) => {
-        return new Promise((resolve, reject) => {
-            const reader = new window.FileReader();
-            let _fileid = uuidv4()
-            reader.onloadend = async () => {
-                const form_data = new FormData();
-                form_data.append("file", file);
-                const storageRef = storage.ref().child('postImages').child(`${_fileid}`)
-                const res = await storageRef.put(file)
-                const url = await storageRef.getDownloadURL()
-                resolve({ data: { link: url } });
-            };
-            reader.readAsDataURL(file);
-        });
-    };
-
-    const config = {
-        image: {
-            uploadCallback: uploadCallback,
-            previewImage: true,
-            alt: { present: true, mandatory: false },
-            inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
-            defaultSize: {
-                height: 'auto',
-                width: '400px',
-              },
-        }
-    }
-
     return (
         <>
             <SidebarAdmin />
@@ -228,7 +193,9 @@ const NewPost = () => {
                                     <button disabled={loadingImg || loading} type="button" onClick={handlePictureClick}>
                                         {
                                             loadingImg
-                                                ? <>Espere...</>
+                                                ? <>
+                                                    Espere...
+                                                </>
                                                 : <>
                                                     <i className="fas fa-plus"></i>
                                                     Cargar imagen para publicacion
@@ -252,17 +219,24 @@ const NewPost = () => {
                             </div>
                             {filename && <span>{filename}</span>}
                             <div className="editor">
-                                <Editor
-                                    toolbar={config}
-                                    editorState={content}
-                                    toolbarClassName="toolbarClassName"
-                                    wrapperClassName="wrapperClassName"
-                                    editorClassName="editorClassName"
-                                    onEditorStateChange={handleContentChange}
-                                    placeholder="Ingresar texto..."
+                                {/* <ReactTrixRTEToolbar
+                                    toolbarId="react-trix-rte-editor"
+                                    toolbarActions={["bold", "italic", "strike", "link", "heading1", "quote", "code", "bullet", "number", "outdent", "indent", "attachFiles", "undo", "redo"]}
+                                /> */}
+
+                                <ReactTrixRTEInput
+                                    id="react-trix-1"
+                                    value={content}
+                                    onChange={handleContentChange}
+                                    placeholder="Insertar aquí texto de la publicación"
+                                    onFileAccepted={onFileAccepted}
                                 />
 
                             </div>
+                            <div style={{height: 400}}>
+                                    {content}
+                            </div>
+
                             {
                                 (contentError && !content)
                                 &&

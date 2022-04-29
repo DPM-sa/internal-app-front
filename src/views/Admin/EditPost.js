@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import "trix/dist/trix";
-import { TrixEditor } from "react-trix";
+// import { TrixEditor } from "react-trix";
 import './EditPost.css'
 import { storage } from '../../config/firebase';
 import { useStateValue } from '../../StateProvider';
@@ -9,6 +9,13 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useHistory, useParams } from 'react-router-dom'
 import CreatableSelect from 'react-select/creatable';
+
+import { v4 as uuidv4 } from 'uuid';
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { convertToRaw, ContentState, EditorState } from 'draft-js';
+import draftToHtmlPuri from "draftjs-to-html";
+import htmlToDraft from 'html-to-draftjs';
 
 const EditPost = () => {
     const history = useHistory()
@@ -40,7 +47,11 @@ const EditPost = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (title === "" || content === "" || imgUrl === "") {
+        const htmlPuri = draftToHtmlPuri(
+            convertToRaw(content.getCurrentContent())
+        );
+
+        if (title === "" || content === "" || imgUrl === "" || htmlPuri === '') {
             if (imgUrl === "") {
                 setImgError('La imagen es requerida')
             } else {
@@ -62,7 +73,7 @@ const EditPost = () => {
         await axios.put(`https://internal-app-dpm.herokuapp.com/post/${id}`,
             {
                 "title": `${title}`,
-                "content": `${content}`,
+                "content": `${htmlPuri}`,
                 "image": `${imgUrl}`,
                 "tags": tags
             },
@@ -142,8 +153,13 @@ const EditPost = () => {
     const getPost = async () => {
         await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
             .then(resp => {
+                const contentBlock = htmlToDraft(resp.data.post.content);
+                if (contentBlock) {
+                    const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                    const editorState = EditorState.createWithContent(contentState);
+                    setContent(editorState)
+                  }
                 setTitle(resp.data.post.title)
-                setContent(resp.data.post.content)
                 setTags(resp.data.post.tags)
                 setImgUrl(resp.data.post.image)
                 setFilename(resp.data.post.image)
@@ -182,11 +198,41 @@ const EditPost = () => {
                 trixEditor.value = resp.data.post.content
             })
     }
+
     const handleWatchComments = () => {
         history.push(`/editpost/${id}/comments`)
     }
     const handleReturn = () => {
         history.push('/admin')
+    }
+
+    const uploadCallback = (file, callback) => {
+        return new Promise((resolve, reject) => {
+            const reader = new window.FileReader();
+            let _fileid = uuidv4()
+            reader.onloadend = async () => {
+                const form_data = new FormData();
+                form_data.append("file", file);
+                const storageRef = storage.ref().child('postImages').child(`${_fileid}`)
+                const res = await storageRef.put(file)
+                const url = await storageRef.getDownloadURL()
+                resolve({ data: { link: url } });
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
+    const config = {
+        image: {
+            uploadCallback: uploadCallback,
+            previewImage: true,
+            alt: { present: true, mandatory: false },
+            inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
+            defaultSize: {
+                height: 'auto',
+                width: '400px',
+            },
+        }
     }
     return (
         <>
@@ -233,11 +279,20 @@ const EditPost = () => {
                             </div>
                             {filename && <span>{filename}</span>}
                             <div className="editor">
-                                <TrixEditor
+                                {/* <TrixEditor
                                     className="trix-editor-class"
                                     onChange={handleContentChange}
                                     value={content}
                                     onEditorReady={handleEditorReady}
+                                /> */}
+                                <Editor
+                                    toolbar={config}
+                                    editorState={content}
+                                    toolbarClassName="toolbarClassName"
+                                    wrapperClassName="wrapperClassName"
+                                    editorClassName="editorClassName"
+                                    onEditorStateChange={handleContentChange}
+                                    placeholder="Ingresar texto..."
                                 />
                             </div>
                             {

@@ -6,14 +6,13 @@ import axios from 'axios'
 import './ModalPost.css'
 import parse from 'html-react-parser'
 import Comment from './Comment'
+import { storage } from '../../config/firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 const ModalPost = () => {
     const [{ token, user, commentsPost }, dispatch] = useStateValue()
-
     const history = useHistory()
-
     const { id } = useParams()
-
     const [post, setPost] = useState({
         title: '',
         content: '',
@@ -23,9 +22,13 @@ const ModalPost = () => {
     const { title, content, likes, tags } = post
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [imgUrl, setImgUrl] = useState('')
+    const [imgUrlComment, setImgUrlComment] = useState('')
     const [form, setForm] = useState({
         comment: ''
     })
+    const [loadingImg, setLoadingImg] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [filename, setFilename] = useState('')
     const { comment } = form
 
     useEffect(() => {
@@ -79,16 +82,22 @@ const ModalPost = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (comment === "") return
-        await axios.post(`https://internal-app-dpm.herokuapp.com/post/${id}`,
-            {
-                "content": `${comment}`
-            },
-            { headers })
+        let _body = {
+            "content": `${comment}`
+        };
+
+        if (imgUrlComment) {
+            _body = { ..._body, image: imgUrlComment }
+        }
+        // let baseURL = 'http://localhost:4000';
+        await axios.post(`https://internal-app-dpm.herokuapp.com/post/${id}`, _body, { headers })
             .then(async () => {
                 getComments()
                 setForm({
                     comment: ''
                 })
+                setFilename('')
+                setImgUrlComment('')
             })
     }
 
@@ -136,6 +145,21 @@ const ModalPost = () => {
         return content.substring(0, 80) + "..."
     }
 
+    const handlePictureClick = () => {
+        document.querySelector("#fileSelector").click()
+    }
+    const handleFileChange = async (e) => {
+        setLoadingImg(true)
+        let fileId = uuidv4();
+        const file = e.target.files[0]
+        const storageRef = storage.ref().child('postImages').child(`${fileId}`)
+        const res = await storageRef.put(file)
+        const url = await storageRef.getDownloadURL()
+        setImgUrlComment(url)
+        setFilename(file.name)
+        setLoadingImg(false)
+    }
+
     return (
         <>
             <Modal size="lg" className="ModalPost" show={true} onHide={handleClose}>
@@ -172,12 +196,42 @@ const ModalPost = () => {
                     </div>
                 </Modal.Header>
                 <Modal.Body className="ModalPost__content">
+
                     {/*parse() parsea contenido html para luego renderizar */}
                     <p className="ModalPost__content-text">{parse(content)}</p>
+
                     <form onSubmit={handleSubmit} className="comment-box add-comment">
-                        <input value={comment} name="comment" onChange={handleInputChange} type="text" placeholder="Haz un comentario" autoComplete="off" className="ModalPost__content-input" />
+                        <input
+                            value={comment}
+                            name="comment"
+                            onChange={handleInputChange}
+                            type="text"
+                            placeholder="Haz un comentario"
+                            autoComplete="off"
+                            className="ModalPost__content-input"
+                        />
+                        <input
+                            id="fileSelector"
+                            type="file"
+                            name="file"
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                            accept="image/png, image/gif, image/jpeg"
+                        />
                         <button disabled={comment === ""} type="submit" className="ModalPost__content-button">Comentar</button>
+
+                        <button
+                            disabled={loadingImg || loading}
+                            type="button"
+                            onClick={handlePictureClick}
+                            className="ModalPost__content-button"
+                            style={{ backgroundColor: imgUrlComment !== '' ? 'green' : ''}}
+                        >
+                            {loadingImg ? <>Espere...</> : <i className="fas fa-image"/>}
+                        </button>
                     </form>
+
+
                     <label className="ModalPost__content-comments-label">Comentarios:</label>
                     {
                         commentsPost.length > 0
