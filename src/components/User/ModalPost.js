@@ -45,7 +45,7 @@ const ModalPost = () => {
     }
 
     const getPosts = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
+        await axios.get(`https://interno-web-backend.dpm.com.ar/posts`, { headers })
             .then(resp => {
                 dispatch({
                     type: "SET_POSTS",
@@ -55,7 +55,7 @@ const ModalPost = () => {
     }
 
     const getPost = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
+        await axios.get(`https://interno-web-backend.dpm.com.ar/post/${id}`, { headers })
             .then(resp => {
                 setPost({
                     title: resp.data.post.title,
@@ -90,7 +90,7 @@ const ModalPost = () => {
             _body = { ..._body, image: imgUrlComment }
         }
         // let baseURL = 'http://localhost:4000';
-        await axios.post(`https://internal-app-dpm.herokuapp.com/post/${id}`, _body, { headers })
+        await axios.post(`https://interno-web-backend.dpm.com.ar/post/${id}`, _body, { headers })
             .then(async () => {
                 getComments()
                 setForm({
@@ -102,7 +102,7 @@ const ModalPost = () => {
     }
 
     const getComments = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/comments`, { headers })
+        await axios.get(`https://interno-web-backend.dpm.com.ar/post/${id}/comments`, { headers })
             .then(async (resp) => {
                 dispatch({
                     type: 'SET_COMMENTS_POST',
@@ -112,9 +112,9 @@ const ModalPost = () => {
     }
 
     const handleLike = async () => {
-        await axios.put(`https://internal-app-dpm.herokuapp.com/post/${id}/like`, {}, { headers })
+        await axios.put(`https://interno-web-backend.dpm.com.ar/post/${id}/like`, {}, { headers })
             .then(async () => {
-                await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
+                await axios.get(`https://interno-web-backend.dpm.com.ar/post/${id}`, { headers })
                     .then(() => {
                         getPost()
                         getPosts()
