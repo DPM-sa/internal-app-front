@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useStateValue } from '../../StateProvider'
 import { Modal } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
+import { apiURL } from '../../config/api'
 
 
 const Comment = ({ comment }) => {
@@ -19,7 +20,7 @@ const Comment = ({ comment }) => {
     }
 
     const getUser = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${userId}`, { headers })
+        await axios.get(`${apiURL}/usuario/${userId}`, { headers })
             .then(resp => {
                 setUserComment(resp.data.user)
             })
@@ -37,7 +38,7 @@ const Comment = ({ comment }) => {
     const handleShow = () => setShow(true);
 
     const getComments = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/comments`, { headers })
+        await axios.get(`${apiURL}/post/${id}/comments`, { headers })
             .then(async (resp) => {
                 dispatch({
                     type: 'SET_COMMENTS_POST',
@@ -47,7 +48,7 @@ const Comment = ({ comment }) => {
     }
 
     const handleDelete = async () => {
-        await axios.delete(`https://internal-app-dpm.herokuapp.com/comment/${comment._id}`, { headers })
+        await axios.delete(`${apiURL}/comment/${comment._id}`, { headers })
             .then(() => {
                 getComments()
                 setShow(false)

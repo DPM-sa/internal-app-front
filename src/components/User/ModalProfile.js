@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap'
 import { useStateValue } from '../../StateProvider'
 import axios from 'axios'
 import './ModalProfile.css'
+import { apiURL } from '../../config/api'
 
 const ModalProfile = () => {
     const [{ token }] = useStateValue()
@@ -19,7 +20,7 @@ const ModalProfile = () => {
     }
 
     const getUser = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${id}`, { headers })
+        await axios.get(`${apiURL}/usuario/${id}`, { headers })
             .then(resp => {
                 setUser(resp.data.user)
             })

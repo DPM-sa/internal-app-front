@@ -6,6 +6,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import parse from 'html-react-parser'
+import { apiURL } from '../../config/api'
 
 const Post = ({ title, content, post, date }) => {
     const [{ token, user, openPost }] = useStateValue()
@@ -17,7 +18,7 @@ const Post = ({ title, content, post, date }) => {
     const [commentsLength, setCommentsLength] = useState([])
 
     const getComments = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/comments`, { headers })
+        await axios.get(`${apiURL}/comments`, { headers })
             .then(resp => {
                 setCommentsLength(resp.data.commentsDB)
             })

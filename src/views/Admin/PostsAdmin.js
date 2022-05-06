@@ -9,6 +9,7 @@ import moment from 'moment'
 import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import SearchBar from '../../components/User/SearchBar'
+import { apiURL } from '../../config/api'
 
 const PostsAdmin = () => {
     const history = useHistory()
@@ -26,7 +27,7 @@ const PostsAdmin = () => {
     const getPosts = async () => {
 
             setLoadingPosts(true)
-            await axios.get(`https://internal-app-dpm.herokuapp.com/allposts`, { headers })
+            await axios.get(`${apiURL}/allposts`, { headers })
                 .then(resp => {
                     let likes = resp.data.posts.map(item => item.likes)
                     setLikesQuantity(likes.flat(1).length)
@@ -44,7 +45,7 @@ const PostsAdmin = () => {
     }
 
     const getComments = async () => {
-            await axios.get(`https://internal-app-dpm.herokuapp.com/allcomments`, { headers })
+            await axios.get(`${apiURL}/allcomments`, { headers })
                         .then(resp => {
                             setCommentsQuantity(resp.data.commentsDB.length)
             })
@@ -101,7 +102,7 @@ const PostsAdmin = () => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/post/${post._id}`,
+                    await axios.put(`${apiURL}/post/${post._id}`,
                         {
                             "estado": !post.estado
                         }, { headers })
@@ -122,7 +123,7 @@ const PostsAdmin = () => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/post/${post._id}`,
+                    await axios.put(`${apiURL}/post/${post._id}`,
                         {
                             "estado": !post.estado
                         }, { headers })
@@ -148,7 +149,7 @@ const PostsAdmin = () => {
             if (result.isConfirmed) {
                 const storageRef = storage.ref().child('postImages').child(`${post.fileId}`)
                 storageRef.delete().then(async () => {
-                    await axios.delete(`https://internal-app-dpm.herokuapp.com/post/${post._id}`, { headers })
+                    await axios.delete(`${apiURL}/post/${post._id}`, { headers })
                         .then(() => {
                             getPosts()
                             getComments()

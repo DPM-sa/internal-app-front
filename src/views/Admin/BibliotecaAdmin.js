@@ -8,8 +8,8 @@ import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import './BibliotecaAdmin.css'
 import { Folders } from '../../components/Admin/Folders'
+import { apiURL } from '../../config/api'
 
-const ruta = "https://internal-app-dpm.herokuapp.com";
 
 const renderTooltipDownload = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -79,7 +79,7 @@ const BibliotecaAdmin = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.get(`${ruta}/allfiles`, { headers })
+        axios.get(`${apiURL}/allfiles`, { headers })
             .then(resp => {
                 setFiles(resp.data.filesDB.filter(file => file.title.toLowerCase().includes(search.toLowerCase())))
             })
@@ -92,7 +92,7 @@ const BibliotecaAdmin = () => {
     }
     const getFiles = () => {
         setLoadingFiles(true)
-        axios.get(`${ruta}/allfiles`, { headers })
+        axios.get(`${apiURL}/allfiles`, { headers })
             .then(resp => {
                 if (typeOrder === 'alfabetico') {
                     setFiles(sortGreatest(resp.data.filesDB))
@@ -128,7 +128,7 @@ const BibliotecaAdmin = () => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`${ruta}/file/${file._id}`,
+                    await axios.put(`${apiURL}/file/${file._id}`,
                         {
                             "estado": !file.estado
                         }, { headers })
@@ -149,7 +149,7 @@ const BibliotecaAdmin = () => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`${ruta}/file/${file._id}`,
+                    await axios.put(`${apiURL}/file/${file._id}`,
                         {
                             "estado": !file.estado
                         }, { headers })
@@ -175,7 +175,7 @@ const BibliotecaAdmin = () => {
             if (result.isConfirmed) {
                 const storageRef = storage.ref().child('BibliotecaFiles').child(`${file.fileId}`)
                 storageRef.delete().then(async () => {
-                    await axios.delete(`${ruta}/file/${file._id}`, { headers })
+                    await axios.delete(`${apiURL}/file/${file._id}`, { headers })
                         .then(() => {
                             getFiles()
                         })

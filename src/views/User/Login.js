@@ -4,6 +4,7 @@ import { useStateValue } from '../../StateProvider';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import './Login.css'
+import { apiURL } from '../../config/api';
 
 const Login = () => {
     const [{ }, dispatch] = useStateValue()
@@ -36,7 +37,7 @@ const Login = () => {
         e.preventDefault()
         setLoading(true)
         if (username === "" || password === "") return
-        await axios.post('https://internal-app-dpm.herokuapp.com/login',
+        await axios.post(`${apiURL}/login`,
             {
                 "user": `${username}`,
                 "password": `${password}`
@@ -69,7 +70,7 @@ const Login = () => {
         e.preventDefault()
         if (usernameRecover === "") return
         setLoadingRecover(true)
-        await axios.post('https://internal-app-dpm.herokuapp.com/recoverpassword',
+        await axios.post(`${apiURL}/recoverpassword`,
             {
                 "user": `${usernameRecover}`
             },

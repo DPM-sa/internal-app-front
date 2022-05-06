@@ -2,6 +2,7 @@ import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { apiURL } from '../../config/api'
 import { useStateValue } from '../../StateProvider'
 
 const SugerenciaItem = ({ sugerencia }) => {
@@ -23,7 +24,7 @@ const SugerenciaItem = ({ sugerencia }) => {
     );
 
     const getUser = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${sugerencia.userId}`, { headers })
+        await axios.get(`${apiURL}/usuario/${sugerencia.userId}`, { headers })
             .then(resp => {
                 setUserMessage(resp.data.user)
             })

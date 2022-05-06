@@ -9,6 +9,7 @@ import WhatsappBtn from '../../components/User/WhatsappBtn'
 import Banner from '../../components/User/Banner'
 import { TabComponent } from './TabComponent'
 import { useGetUser } from '../../hooks/useGetUser'
+import { apiURL } from '../../config/api'
 
 function sortGreatest(arr) {
     for (let i = 0; i < arr.length; i++) {
@@ -52,7 +53,7 @@ const Biblioteca = () => {
 
     const getFiles = () => {
         setLoading(true)
-        axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
+        axios.get(`${apiURL}/files`, { headers })
             .then(resp => {
                 if (typeOrder === 'alfabetico') {
                     setFiles(sortGreatest(resp.data.filesDB))
@@ -67,7 +68,7 @@ const Biblioteca = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.get(`https://internal-app-dpm.herokuapp.com/files`, { headers })
+        axios.get(`${apiURL}/files`, { headers })
             .then(resp => {
                 setFiles(resp.data.filesDB.filter(file => file.title.toLowerCase().includes(search.toLowerCase())))
             })

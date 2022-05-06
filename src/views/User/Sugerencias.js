@@ -6,6 +6,7 @@ import Banner from '../../components/User/Banner'
 import './Sugerencias.css'
 import axios from 'axios'
 import { useStateValue } from '../../StateProvider'
+import { apiURL } from '../../config/api'
 const Sugerencias = () => {
 
     const [{ token }] = useStateValue()
@@ -30,7 +31,7 @@ const Sugerencias = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (title === "" || content === "") return
-        await axios.post('https://internal-app-dpm.herokuapp.com/sendmessage',
+        await axios.post(`${apiURL}/sendmessage`,
             {
                 "title": `${title}`,
                 "content": `${content}`
@@ -45,7 +46,7 @@ const Sugerencias = () => {
             })
     }
     const getSugerencias = async () => {
-        await axios.get('https://internal-app-dpm.herokuapp.com/usermessages', { headers })
+        await axios.get(`${apiURL}/usermessages`, { headers })
             .then(resp => setSugerencias(resp.data.messages))
     }
 

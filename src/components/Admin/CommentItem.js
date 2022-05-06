@@ -5,6 +5,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useStateValue } from '../../StateProvider';
+import { apiURL } from '../../config/api';
 
 const CommentItem = ({ comment }) => {
 
@@ -19,7 +20,7 @@ const CommentItem = ({ comment }) => {
     }
 
     const getComments = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/allcomments`, { headers })
+        await axios.get(`${apiURL}/post/${id}/allcomments`, { headers })
             .then(async (resp) => {
                 dispatch({
                     type: 'SET_COMMENTS_POST',
@@ -29,7 +30,7 @@ const CommentItem = ({ comment }) => {
     }
 
     const getUser = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/usuario/${comment.userId}`, { headers })
+        await axios.get(`${apiURL}/usuario/${comment.userId}`, { headers })
             .then(resp => {
                 setUserComment(resp.data.user)
             })
@@ -84,7 +85,7 @@ const CommentItem = ({ comment }) => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/comment/${comment._id}`,
+                    await axios.put(`${apiURL}/comment/${comment._id}`,
                         {
                             "estado": !comment.estado
                         }, { headers })
@@ -105,7 +106,7 @@ const CommentItem = ({ comment }) => {
                     'Cancelar'
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await axios.put(`https://internal-app-dpm.herokuapp.com/comment/${comment._id}`,
+                    await axios.put(`${apiURL}/comment/${comment._id}`,
                         {
                             "estado": !comment.estado
                         }, { headers })
@@ -129,7 +130,7 @@ const CommentItem = ({ comment }) => {
                 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.delete(`https://internal-app-dpm.herokuapp.com/comment/${commentId}`, { headers })
+                await axios.delete(`${apiURL}/comment/${commentId}`, { headers })
                     .then(() => {
                         getComments()
                     })

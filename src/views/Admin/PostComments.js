@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { useStateValue } from '../../StateProvider'
 import CommentItem from '../../components/Admin/CommentItem'
 import './PostComments.css'
+import { apiURL } from '../../config/api'
 
 const PostComments = () => {
     const { id } = useParams()
@@ -19,7 +20,7 @@ const PostComments = () => {
 
     const getComments = async () => {
         setLoadingComments(true)
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}/allcomments`, { headers })
+        await axios.get(`${apiURL}/post/${id}/allcomments`, { headers })
             .then(async (resp) => {
                 console.log(resp)
                 dispatch({

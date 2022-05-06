@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
+import { apiURL } from '../../config/api'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import './SliderAdmin.css'
@@ -99,7 +100,7 @@ const SliderAdmin = () => {
             return
         }
         setLoadingForm1(true)
-        await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id1}`,
+        await axios.put(`${apiURL}/slider/${id1}`,
             {
                 "title": `${title1}`,
                 "content": `${content1}`,
@@ -143,7 +144,7 @@ const SliderAdmin = () => {
             return
         }
         setLoadingForm2(true)
-        await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id2}`,
+        await axios.put(`${apiURL}/slider/${id2}`,
             {
                 "title": `${title2}`,
                 "content": `${content2}`,
@@ -187,7 +188,7 @@ const SliderAdmin = () => {
             return
         }
         setLoadingForm3(true)
-        await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id3}`,
+        await axios.put(`${apiURL}/slider/${id3}`,
             {
                 "title": `${title3}`,
                 "content": `${content3}`,
@@ -211,7 +212,7 @@ const SliderAdmin = () => {
     }
 
     const getSlider = async () => {
-        await axios.get('https://internal-app-dpm.herokuapp.com/sliders', { headers })
+        await axios.get(`${apiURL}/sliders`, { headers })
             .then(resp => {
                 setForm1({
                     title1: resp.data.slidersDB[0].title,
@@ -254,7 +255,7 @@ const SliderAdmin = () => {
         const storageRef = storage.ref().child('sliderImages').child(`${id1}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
-        await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id1}`,
+        await axios.put(`${apiURL}/slider/${id1}`,
             {
                 "image": `${url}`
             },
@@ -268,7 +269,7 @@ const SliderAdmin = () => {
         setLoadingImg1(true)
         const storageRef = storage.ref().child('sliderImages').child(`${id1}`)
         storageRef.delete().then(async () => {
-            await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id1}`,
+            await axios.put(`${apiURL}/slider/${id1}`,
                 {
                     "image": ""
                 },
@@ -289,7 +290,7 @@ const SliderAdmin = () => {
         const storageRef = storage.ref().child('sliderImages').child(`${id2}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
-        await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id2}`,
+        await axios.put(`${apiURL}/slider/${id2}`,
             {
                 "image": `${url}`
             },
@@ -303,7 +304,7 @@ const SliderAdmin = () => {
         setLoadingImg2(true)
         const storageRef = storage.ref().child('sliderImages').child(`${id2}`)
         storageRef.delete().then(async () => {
-            await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id2}`,
+            await axios.put(`${apiURL}/slider/${id2}`,
                 {
                     "image": ""
                 },
@@ -324,7 +325,7 @@ const SliderAdmin = () => {
         const storageRef = storage.ref().child('sliderImages').child(`${id3}`)
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
-        await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id3}`,
+        await axios.put(`${apiURL}/slider/${id3}`,
             {
                 "image": `${url}`
             },
@@ -338,7 +339,7 @@ const SliderAdmin = () => {
         setLoadingImg3(true)
         const storageRef = storage.ref().child('sliderImages').child(`${id3}`)
         storageRef.delete().then(async () => {
-            await axios.put(`https://internal-app-dpm.herokuapp.com/slider/${id3}`,
+            await axios.put(`${apiURL}/slider/${id3}`,
                 {
                     "image": ""
                 },

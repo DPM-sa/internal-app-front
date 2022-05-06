@@ -6,9 +6,8 @@ import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import { v4 as uuidv4 } from 'uuid';
 import './NewFile.css'
+import { apiURL } from '../../config/api'
 
-
-const ruta = "https://internal-app-dpm.herokuapp.com";
 
 
 const NewFile = () => {
@@ -69,7 +68,7 @@ const NewFile = () => {
         const res = await storageRef.put(file)
         const url = await storageRef.getDownloadURL()
         
-        await axios.post(`${ruta}/file`,
+        await axios.post(`${apiURL}}/file`,
             {
                 "title": `${title}`,
                 "url": `${url}`,

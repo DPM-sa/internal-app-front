@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { apiURL } from '../../config/api'
 import { useStateValue } from '../../StateProvider'
 
 const EditProfileInfo = ({ imageProfile }) => {
@@ -32,7 +33,7 @@ const EditProfileInfo = ({ imageProfile }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
+        await axios.put(`${apiURL}/usuario/${user._id}`,
             {
                 "nombre": `${nombre}`,
                 "apellido": `${apellido}`,

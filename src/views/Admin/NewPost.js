@@ -13,6 +13,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { convertToRaw } from 'draft-js';
 import draftToHtmlPuri from "draftjs-to-html";
+import { apiURL } from '../../config/api';
 
 
 const NewPost = () => {
@@ -71,7 +72,7 @@ const NewPost = () => {
             return
         }
         setLoading(true)
-        await axios.post('https://internal-app-dpm.herokuapp.com/post',
+        await axios.post(`${apiURL}/post`,
             {
                 "title": `${title}`,
                 "content": `${htmlPuri}`,
@@ -142,7 +143,7 @@ const NewPost = () => {
     };
     
     const getTags = async () => {
-        await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
+        await axios.get(`${apiURL}/tags`, { headers })
             .then(resp => {
                 let arrTags = resp.data.arrayWithoutRepeatedTags
                 let arrTagsObj = arrTags.map(tag => ({ value: tag, label: tag }))

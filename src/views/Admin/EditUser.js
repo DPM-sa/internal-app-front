@@ -8,12 +8,11 @@ import CreatableSelect from 'react-select/creatable';
 import { useGetUser } from '../../hooks/useGetUser'
 import { editUser } from '../../services/api'
 import sectoresMock from '../../data/sectoresMock'
+import { apiURL } from '../../config/api'
 
 const formatDateProfile = (date) => {
     return date.substring(0, 10)
 }
-
-const ruta = "https://internal-app-dpm.herokuapp.com";
 
 const EditUser = () => {
     const { id } = useParams()
@@ -186,7 +185,7 @@ const EditUser = () => {
         if (img.startsWith('https://firebasestorage.googleapis.com/')) {
             const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             storageRef.delete().then(async () => {
-                await axios.put(`${ ruta }/usuario/${id}`,
+                await axios.put(`${ apiURL }/usuario/${id}`,
                     {
                         "image": ""
                     },

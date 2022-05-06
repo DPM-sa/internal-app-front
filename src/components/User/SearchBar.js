@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useStateValue } from '../../StateProvider'
 import axios from 'axios'
 import './SearchBar.css'
+import { apiURL } from '../../config/api'
 
 const SearchBar = () => {
     const [{ token, posts }, dispatch] = useStateValue()
@@ -18,7 +19,7 @@ const SearchBar = () => {
     }
 
     const getTags = async () => {
-        await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
+        await axios.get(`${apiURL}/tags`, { headers })
             .then(resp => {
                 setTags(resp.data.arrayWithoutRepeatedTags)
             })
@@ -71,7 +72,7 @@ const SearchBar = () => {
     }
 
     const getPostsBySearching = async (search) => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
+        await axios.get(`${apiURL}/posts`, { headers })
             .then(resp => {
                 dispatch({
                     type: "SET_POSTS",
@@ -81,7 +82,7 @@ const SearchBar = () => {
     }
 
     const getPostsByTag = async (tag) => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
+        await axios.get(`${apiURL}/posts`, { headers })
             .then(resp => {
                 console.log(resp.data)
                 dispatch({
@@ -93,7 +94,7 @@ const SearchBar = () => {
             })
     }
     const getPosts = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/posts`, { headers })
+        await axios.get(`${apiURL}/posts`, { headers })
             .then(resp => {
                 dispatch({
                     type: "SET_POSTS",

@@ -8,6 +8,7 @@ import Footer from '../../components/User/Footer'
 import EditProfileInfo from '../../components/User/EditProfileInfo'
 import UserProfileInfo from '../../components/User/UserProfileInfo'
 import { v4 as uuidv4 } from 'uuid';
+import { apiURL } from '../../config/api'
 
 const Profile = () => {
     const [{ user, token, editProfile }, dispatch] = useStateValue()
@@ -37,7 +38,7 @@ const Profile = () => {
             const storageRef = storage.ref().child('profileImages').child(`${fileId}`)
             const res = await storageRef.put(file)
             const url = await storageRef.getDownloadURL()
-            await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
+            await axios.put(`${apiURL}/usuario/${user._id}`,
                 {
                     "image": `${url}`,
                     "fileId": `${fileId}`
@@ -56,7 +57,7 @@ const Profile = () => {
             const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
             const res = await storageRef.put(file)
             const url = await storageRef.getDownloadURL()
-            await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
+            await axios.put(`${apiURL}/usuario/${user._id}`,
                 {
                     "image": `${url}`
                 },
@@ -77,7 +78,7 @@ const Profile = () => {
         setLoadingImg(true)
         const storageRef = storage.ref().child('profileImages').child(`${user.fileId}`)
         storageRef.delete().then(async () => {
-            await axios.put(`https://internal-app-dpm.herokuapp.com/usuario/${user._id}`,
+            await axios.put(`${apiURL}/usuario/${user._id}`,
                 {
                     "image": ""
                 },

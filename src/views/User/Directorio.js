@@ -8,6 +8,7 @@ import SpinnerComponent from '../../components/User/SpinnerComponent'
 import WhatsappBtn from '../../components/User/WhatsappBtn'
 import Banner from '../../components/User/Banner'
 import './Directorio.css'
+import { apiURL } from '../../config/api'
 
 const Directorio = () => {
     const [{ token }] = useStateValue()
@@ -57,7 +58,7 @@ const Directorio = () => {
 
     const getEmployees = async () => {
         setLoading(true)
-        await axios.get(`https://internal-app-dpm.herokuapp.com/usuarios`, { headers })
+        await axios.get(`${apiURL}/usuarios`, { headers })
             .then(resp => {
                 if (typeOrder === 'alfabetico') {
                     setUsers(sortGreatest(resp.data.usuarios))
@@ -83,7 +84,7 @@ const Directorio = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await axios.get(`https://internal-app-dpm.herokuapp.com/usuarios`, { headers })
+        await axios.get(`${apiURL}/usuarios`, { headers })
             .then(resp => {
                 setUsers(resp.data.usuarios.filter(user => user.nombre.toLowerCase().includes(search.toLowerCase())))
             })

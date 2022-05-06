@@ -16,6 +16,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { convertToRaw, ContentState, EditorState } from 'draft-js';
 import draftToHtmlPuri from "draftjs-to-html";
 import htmlToDraft from 'html-to-draftjs';
+import { apiURL } from '../../config/api';
 
 const EditPost = () => {
     const history = useHistory()
@@ -70,7 +71,7 @@ const EditPost = () => {
             return
         }
         setLoading(true)
-        await axios.put(`https://internal-app-dpm.herokuapp.com/post/${id}`,
+        await axios.put(`${apiURL}/post/${id}`,
             {
                 "title": `${title}`,
                 "content": `${htmlPuri}`,
@@ -151,7 +152,7 @@ const EditPost = () => {
     ])
 
     const getPost = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
+        await axios.get(`${apiURL}/post/${id}`, { headers })
             .then(resp => {
                 const contentBlock = htmlToDraft(resp.data.post.content);
                 if (contentBlock) {
@@ -168,7 +169,7 @@ const EditPost = () => {
     }
 
     const getTags = async () => {
-        await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
+        await axios.get(`${apiURL}/tags`, { headers })
             .then(resp => {
                 let arrTags = resp.data.arrayWithoutRepeatedTags
                 let arrTagsObj = arrTags.map(tag => ({ value: tag, label: tag }))
@@ -193,7 +194,7 @@ const EditPost = () => {
 
     const handleEditorReady = async () => {
         const trixEditor = document.querySelector('.trix-editor-class')
-        await axios.get(`https://internal-app-dpm.herokuapp.com/post/${id}`, { headers })
+        await axios.get(`${apiURL}/post/${id}`, { headers })
             .then(resp => {
                 trixEditor.value = resp.data.post.content
             })

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import CreatableSelect from 'react-select/creatable';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { apiURL } from '../../config/api';
 
 
 const NewPost = () => {
@@ -70,7 +71,7 @@ const NewPost = () => {
         //     return
         // }
         // setLoading(true)
-        // await axios.post('https://internal-app-dpm.herokuapp.com/post',
+        // await axios.post('${apiURL}/post',
         //     {
         //         "title": `${title}`,
         //         "content": `${content}`,
@@ -140,7 +141,7 @@ const NewPost = () => {
         );
     };
     const getTags = async () => {
-        await axios.get('https://internal-app-dpm.herokuapp.com/tags', { headers })
+        await axios.get(`${apiURL}/tags`, { headers })
             .then(resp => {
                 let arrTags = resp.data.arrayWithoutRepeatedTags
                 let arrTagsObj = arrTags.map(tag => ({ value: tag, label: tag }))

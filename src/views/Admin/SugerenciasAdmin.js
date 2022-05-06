@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import SidebarAdmin from '../../components/Admin/SidebarAdmin'
 import SugerenciaItem from '../../components/Admin/SugerenciaItem'
+import { apiURL } from '../../config/api'
 import { useStateValue } from '../../StateProvider'
 import './SugerenciasAdmin.css'
 const SugerenciasAdmin = () => {
@@ -14,7 +15,7 @@ const SugerenciasAdmin = () => {
     const [loadingSugerencias, setLoadingSugerencias] = useState(false)
     const getSugerencias = async () => {
         setLoadingSugerencias(true)
-        await axios.get(`https://internal-app-dpm.herokuapp.com/allmessages`, { headers })
+        await axios.get(`${apiURL}/allmessages`, { headers })
             .then(resp => {
                 setSugerencias(resp.data.messages)
                 setLoadingSugerencias(false)

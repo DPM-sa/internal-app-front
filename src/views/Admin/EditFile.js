@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import { storage } from '../../config/firebase'
 import { useStateValue } from '../../StateProvider'
 import { v4 as uuidv4 } from 'uuid';
+import { apiURL } from '../../config/api'
 
 const EditFile = () => {
     const { id } = useParams()
@@ -65,7 +66,7 @@ const EditFile = () => {
             const res = await storageRef.put(file)
             const url = await storageRef.getDownloadURL()
             setFilename(url)
-            await axios.put(`https://internal-app-dpm.herokuapp.com/file/${id}`,
+            await axios.put(`${apiURL}/file/${id}`,
                 {
                     "title": `${title}`,
                     "url": `${url}`
@@ -98,7 +99,7 @@ const EditFile = () => {
                     })
                 })
         } else if (fileTemp === "") {
-            await axios.put(`https://internal-app-dpm.herokuapp.com/file/${id}`,
+            await axios.put(`${apiURL}/file/${id}`,
                 {
                     "title": `${title}`
                 }, { headers })
@@ -138,7 +139,7 @@ const EditFile = () => {
     }
 
     const getFile = async () => {
-        await axios.get(`https://internal-app-dpm.herokuapp.com/file/${id}`, { headers })
+        await axios.get(`${apiURL}/file/${id}`, { headers })
             .then(resp => {
                 setForm({
                     title: resp.data.file.title
